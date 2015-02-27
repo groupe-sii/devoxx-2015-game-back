@@ -6,4 +6,14 @@ import fr.sii.survival.core.ext.annotation.Developer;
 @Developer(value="abaudet", name="Aurélien Baudet")
 public class BasicEnemyExtension implements EnemyExtension {
 
+	@Override
+	public void run() {
+		
+	}
+
+	@Override
+	public void init() {
+		
+	}
+
 }

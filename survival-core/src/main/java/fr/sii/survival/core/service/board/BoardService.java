@@ -4,8 +4,9 @@ import java.util.List;
 
 import fr.sii.survival.core.domain.Cell;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.listener.board.BoardListenerRegistry;
 
-public interface BoardService {
+public interface BoardService extends BoardListenerRegistry {
 	/**
 	 * Provide the list of players that are on the provided cell. If no player
 	 * is on the cell, then the list is empty.

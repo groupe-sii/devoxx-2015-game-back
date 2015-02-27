@@ -8,4 +8,14 @@ public class UnloadableEnemyExtension implements EnemyExtension {
 	public UnloadableEnemyExtension(String param) {
 		
 	}
+
+	@Override
+	public void run() {
+		
+	}
+
+	@Override
+	public void init() {
+		
+	}
 }

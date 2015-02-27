@@ -5,6 +5,8 @@ import java.util.List;
 import fr.sii.survival.core.domain.Board;
 import fr.sii.survival.core.domain.Cell;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.listener.board.BoardListener;
+import fr.sii.survival.core.listener.board.BoardListenerManager;
 
 /**
  * Simple board service that allows all players to be anywhere on the board.
@@ -25,10 +27,16 @@ public class SimpleBoardService implements BoardService {
 	 */
 	private CellProvider cellProvider;
 	
-	public SimpleBoardService(int rows, int cols, CellProvider cellProvider) {
+	/**
+	 * The registry for board listeners
+	 */
+	private BoardListenerManager listenerManager;
+	
+	public SimpleBoardService(int rows, int cols, CellProvider cellProvider, BoardListenerManager listenerManager) {
 		super();
 		board = new Board(rows, cols);
 		this.cellProvider = cellProvider;
+		this.listenerManager = listenerManager;
 	}
 
 	@Override
@@ -43,6 +51,7 @@ public class SimpleBoardService implements BoardService {
 			board.remove(player, old);
 		}
 		board.add(player, cell);
+		listenerManager.triggerMoved(player, old, cell);
 		return cell;
 	}
 
@@ -50,6 +59,7 @@ public class SimpleBoardService implements BoardService {
 	public Cell add(Player player) {
 		Cell cell = cellProvider.getCell(board);
 		board.add(player, cell);
+		listenerManager.triggerAdded(player, cell);
 		return cell;
 	}
 
@@ -59,7 +69,18 @@ public class SimpleBoardService implements BoardService {
 		if(cell!=null) {
 			board.remove(player, cell);
 		}
+		listenerManager.triggerRemoved(player, cell);
 		return cell;
+	}
+
+	@Override
+	public void addBoardListener(BoardListener listener) {
+		listenerManager.addBoardListener(listener);
+	}
+
+	@Override
+	public void removeBoardListener(BoardListener listener) {
+		listenerManager.removeBoardListener(listener);
 	}
 
 }

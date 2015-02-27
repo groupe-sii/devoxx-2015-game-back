@@ -4,6 +4,7 @@ import fr.sii.survival.core.domain.extension.Developer;
 import fr.sii.survival.core.ext.DeveloperProvider;
 import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.listener.action.ActionListener;
+import fr.sii.survival.core.listener.board.BoardListener;
 import fr.sii.survival.core.listener.player.PlayerListener;
 
 /**
@@ -38,6 +39,11 @@ public class DelegateExtensionService implements ExtensionService {
 	@Override
 	public Developer getDeveloper(Class<? extends EnemyExtension> type) {
 		return developerProvider.getDeveloper(type);
+	}
+
+	@Override
+	public Developer getDeveloper(BoardListener listener) {
+		return developerProvider.getDeveloper(listener);
 	}
 
 }

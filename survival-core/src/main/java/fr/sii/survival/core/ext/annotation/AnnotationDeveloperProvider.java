@@ -4,6 +4,7 @@ import fr.sii.survival.core.domain.extension.Developer;
 import fr.sii.survival.core.ext.DeveloperProvider;
 import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.listener.action.ActionListener;
+import fr.sii.survival.core.listener.board.BoardListener;
 import fr.sii.survival.core.listener.player.PlayerListener;
 
 public class AnnotationDeveloperProvider implements DeveloperProvider {
@@ -15,6 +16,11 @@ public class AnnotationDeveloperProvider implements DeveloperProvider {
 
 	@Override
 	public Developer getDeveloper(PlayerListener listener) {
+		return getDeveloperFromAnnotation(listener.getClass());
+	}
+
+	@Override
+	public Developer getDeveloper(BoardListener listener) {
 		return getDeveloperFromAnnotation(listener.getClass());
 	}
 

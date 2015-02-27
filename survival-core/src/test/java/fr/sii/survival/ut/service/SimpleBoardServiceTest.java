@@ -5,20 +5,28 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import fr.sii.survival.core.domain.Cell;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.board.FixedCellProvider;
 import fr.sii.survival.core.service.board.SimpleBoardService;
 import fr.sii.survival.mock.domain.MockWizard;
 
+@RunWith(MockitoJUnitRunner.class)
 public class SimpleBoardServiceTest {
+	@Mock
+	BoardListenerManager boardListenerManager;
+	
 	BoardService boardService;
 	
 	@Before
 	public void setUp() {
-		boardService = new SimpleBoardService(10, 10, new FixedCellProvider());
+		boardService = new SimpleBoardService(10, 10, new FixedCellProvider(), boardListenerManager);
 	}
 	
 	@Test
