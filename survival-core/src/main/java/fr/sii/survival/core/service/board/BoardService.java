@@ -30,4 +30,24 @@ public interface BoardService {
 	 *         if the player can't move
 	 */
 	public Cell move(Player player, Cell cell);
+
+	/**
+	 * Adds a player on the board. Automatically selects a cell where the player
+	 * will be placed.
+	 * 
+	 * @param player
+	 *            the player to add
+	 * @return the cell where the player is added
+	 */
+	public Cell add(Player player);
+
+	/**
+	 * Removes a player from the board.
+	 * 
+	 * @param player
+	 *            the player to remove
+	 * @return the cell where the player was before remove. If the player was
+	 *         not on the board, then returns null
+	 */
+	public Cell remove(Player player);
 }
