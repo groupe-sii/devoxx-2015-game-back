@@ -1,4 +1,4 @@
-package fr.sii.survival.ut;
+package fr.sii.survival.ut.service;
 
 import org.junit.Before;
 import org.junit.Test;

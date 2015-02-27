@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import fr.sii.survival.core.domain.extension.Developer;
+import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.listener.action.ActionListener;
 import fr.sii.survival.core.listener.player.PlayerListener;
 import fr.sii.survival.core.service.extension.ExtensionService;
@@ -23,6 +24,12 @@ public class ExtensionConfiguration {
 			
 			@Override
 			public Developer getDeveloper(ActionListener listener) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public Developer getDeveloper(Class<? extends EnemyExtension> type) {
 				// TODO Auto-generated method stub
 				return null;
 			}

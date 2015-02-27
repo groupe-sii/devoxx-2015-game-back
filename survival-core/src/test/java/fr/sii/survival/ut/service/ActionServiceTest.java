@@ -1,4 +1,4 @@
-package fr.sii.survival.ut;
+package fr.sii.survival.ut.service;
 
 public class ActionServiceTest {
 
