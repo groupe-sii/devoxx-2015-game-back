@@ -3,10 +3,14 @@ package fr.sii.survival.config;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import fr.sii.survival.WebSocketConfig;
+import fr.sii.survival.controller.ActionController;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.listener.action.ActionListenerManager;
 import fr.sii.survival.core.listener.action.SimpleActionListenerManager;
@@ -18,14 +22,17 @@ import fr.sii.survival.core.service.action.MoveImageActionManager;
 import fr.sii.survival.core.service.action.UpdateCurrentLifeActionManager;
 import fr.sii.survival.core.service.action.UpdateMaxLifeActionManager;
 import fr.sii.survival.core.service.board.BoardService;
-import fr.sii.survival.core.service.error.ErrorService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.core.service.player.PlayerService;
 
 @Configuration
 public class ActionConfiguration {
+	public static final String ACTION_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/action";
+	public static final String CLIENT_SEND_PREFIX = WebSocketConfig.CLIENT_SEND_PREFIX+"/action";
+
 	@Autowired
-	ErrorService errorService;
+	MessageService errorService;
 	
 	@Autowired
 	ExtensionService extensionService;
@@ -35,6 +42,14 @@ public class ActionConfiguration {
 	
 	@Autowired
 	PlayerService playerService;
+	
+	@Autowired
+	ActionController actionController;
+	
+	@PostConstruct
+	public void init() {
+		actionService().addActionListener(actionController);
+	}
 	
 	@Bean
 	public ActionService actionService() {

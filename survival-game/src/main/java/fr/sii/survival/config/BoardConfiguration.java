@@ -6,26 +6,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 
+import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.controller.GameBoardController;
-import fr.sii.survival.core.domain.player.Life;
-import fr.sii.survival.core.domain.player.SimpleLife;
-import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.listener.board.SimpleBoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.board.RandomCellProvider;
 import fr.sii.survival.core.service.board.SimpleBoardService;
-import fr.sii.survival.core.service.error.ErrorService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.message.MessageService;
 
 @Configuration
-@EnableScheduling
 public class BoardConfiguration {
+	public static final String BOARD_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/board";
+	
 	@Autowired
-	ErrorService errorService;
+	MessageService errorService;
 	
 	@Autowired
 	ExtensionService extensionService;
@@ -42,23 +39,6 @@ public class BoardConfiguration {
 	@PostConstruct
 	public void init() {
 		boardService().addBoardListener(boardController);
-	}
-	
-	@Scheduled(fixedDelay=1000)
-	public void test() {
-		boardService().add(new Wizard() {
-			
-			@Override
-			public void setLife(Life life) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public Life getLife() {
-				return new SimpleLife(1000);
-			}
-		});
 	}
 	
 	@Bean

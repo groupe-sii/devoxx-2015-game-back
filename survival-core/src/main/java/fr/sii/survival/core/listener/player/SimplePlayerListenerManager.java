@@ -6,21 +6,21 @@ import java.util.Map;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionListenerException;
 import fr.sii.survival.core.exception.PlayerListenerException;
-import fr.sii.survival.core.service.error.ErrorService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.message.MessageService;
 
 public class SimplePlayerListenerManager implements PlayerListenerManager {
 	private Map<String, PlayerListener> listeners;
 	
-	private ErrorService errorService;
+	private MessageService errorService;
 	
 	private ExtensionService extensionService;
 
-	public SimplePlayerListenerManager(ErrorService errorService, ExtensionService extensionService) {
+	public SimplePlayerListenerManager(MessageService errorService, ExtensionService extensionService) {
 		this(new HashMap<>(), errorService, extensionService);
 	}
 	
-	public SimplePlayerListenerManager(Map<String, PlayerListener> listeners, ErrorService errorService, ExtensionService extensionService) {
+	public SimplePlayerListenerManager(Map<String, PlayerListener> listeners, MessageService errorService, ExtensionService extensionService) {
 		super();
 		this.listeners = listeners;
 		this.errorService = errorService;

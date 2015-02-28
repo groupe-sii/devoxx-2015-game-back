@@ -1,4 +1,4 @@
-package fr.sii.survival.core.domain;
+package fr.sii.survival.core.domain.message;
 
 import fr.sii.survival.core.domain.extension.Developer;
 import fr.sii.survival.core.exception.GameException;

@@ -1,26 +1,27 @@
-package fr.sii.survival.core.listener.error;
+package fr.sii.survival.core.listener.message;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.sii.survival.core.domain.message.Message;
 import fr.sii.survival.core.exception.GameException;
 
 // TODO: manage locks to avoid concurrentmodifexception
-public class SimpleErrorListenerManager implements ErrorListenerManager {
+public class SimpleMessageListenerManager implements MessageListenerManager {
 
-	private Map<String, ErrorListener> listeners;
+	private Map<String, MessageListener> listeners;
 	
-	public SimpleErrorListenerManager() {
+	public SimpleMessageListenerManager() {
 		this(new HashMap<>());
 	}
 	
-	public SimpleErrorListenerManager(Map<String, ErrorListener> listeners) {
+	public SimpleMessageListenerManager(Map<String, MessageListener> listeners) {
 		super();
 		this.listeners = listeners;
 	}
 
 	@Override
-	public void addErrorListener(ErrorListener listener) {
+	public void addMessageListener(MessageListener listener) {
 		String key = getKey(listener);
 		if(!listeners.containsKey(key)) {
 			listeners.put(key, listener);
@@ -30,7 +31,7 @@ public class SimpleErrorListenerManager implements ErrorListenerManager {
 	}
 
 	@Override
-	public void removeErrorListener(ErrorListener listener) {
+	public void removeMessageListener(MessageListener listener) {
 		String key = getKey(listener);
 		if(listeners.containsKey(key)) {
 			listeners.remove(key);
@@ -39,7 +40,7 @@ public class SimpleErrorListenerManager implements ErrorListenerManager {
 
 	@Override
 	public void triggerError(GameException exception) {
-		for(ErrorListener listener : listeners.values()) {
+		for(MessageListener listener : listeners.values()) {
 			try {
 				listener.error(exception);
 			} catch(Throwable e) {
@@ -47,8 +48,19 @@ public class SimpleErrorListenerManager implements ErrorListenerManager {
 			}
 		}
 	}
-	
-	private String getKey(ErrorListener listener) {
+
+	@Override
+	public void triggerMessage(Message message) {
+		for(MessageListener listener : listeners.values()) {
+			try {
+				listener.message(message);
+			} catch(Throwable e) {
+				// TODO: log ?
+			}
+		}
+	}
+
+	private String getKey(MessageListener listener) {
 		return listener.getClass().toString();
 	}
 }

@@ -15,16 +15,16 @@ import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.ext.annotation.AnnotationDeveloperProvider;
 import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
 import fr.sii.survival.core.ext.registry.ExtensionRegistry;
-import fr.sii.survival.core.service.error.ErrorService;
 import fr.sii.survival.core.service.extension.DelegateExtensionService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.mock.ext.BasicEnemyExtension;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AutoDiscoveryExtensionRegistryTest {
 
 	@Mock
-	ErrorService errorService;
+	MessageService errorService;
 
 	ExtensionService extensionService;
 

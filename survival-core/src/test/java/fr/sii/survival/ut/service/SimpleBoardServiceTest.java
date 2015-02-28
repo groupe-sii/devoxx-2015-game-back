@@ -9,7 +9,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import fr.sii.survival.core.domain.Cell;
+import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;

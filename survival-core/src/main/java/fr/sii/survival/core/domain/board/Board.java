@@ -1,4 +1,4 @@
-package fr.sii.survival.core.domain;
+package fr.sii.survival.core.domain.board;
 
 import java.util.List;
 

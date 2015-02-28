@@ -3,6 +3,10 @@ package fr.sii.survival.core.domain;
 public class GameMessage {
 
 	
+	
+	public GameMessage() {
+		super();
+	}
 	public GameMessage(String action, String data) {
 		super();
 		this.action = action;

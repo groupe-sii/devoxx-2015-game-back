@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 
 import fr.sii.survival.core.domain.action.Action;
+import fr.sii.survival.core.domain.player.Life;
+import fr.sii.survival.core.domain.player.Player;
 
 public class GameModule extends Module {
 
@@ -19,7 +21,9 @@ public class GameModule extends Module {
 
 	@Override
 	public void setupModule(SetupContext context) {
-		context.setMixInAnnotations(Action.class, ActionMixin.class);
+		context.setMixInAnnotations(Action.class, JsonNameIdMixin.class);
+		context.setMixInAnnotations(Player.class, JsonNameIdMixin.class);
+		context.setMixInAnnotations(Life.class, JsonNameIdMixin.class);
 	}
 
 }

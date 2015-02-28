@@ -1,7 +1,7 @@
 package fr.sii.survival.core.service.board;
 
-import fr.sii.survival.core.domain.Board;
-import fr.sii.survival.core.domain.Cell;
+import fr.sii.survival.core.domain.board.Board;
+import fr.sii.survival.core.domain.board.Cell;
 
 /**
  * Cell provider that randomly provides cell position.

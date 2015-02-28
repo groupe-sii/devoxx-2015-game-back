@@ -2,8 +2,8 @@ package fr.sii.survival.core.service.board;
 
 import java.util.List;
 
-import fr.sii.survival.core.domain.Board;
-import fr.sii.survival.core.domain.Cell;
+import fr.sii.survival.core.domain.board.Board;
+import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.board.BoardListener;
 import fr.sii.survival.core.listener.board.BoardListenerManager;

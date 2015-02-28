@@ -7,20 +7,20 @@ import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
-import fr.sii.survival.core.service.error.ErrorService;
+import fr.sii.survival.core.service.message.MessageService;
 
 // TODO: use multi threads
 public class ParallelActionListenerManager implements ActionListenerManager {
 
 	private Map<String, ActionListener> listeners;
 	
-	private ErrorService errorManager;
+	private MessageService errorManager;
 	
-	public ParallelActionListenerManager(ErrorService errorManager) {
+	public ParallelActionListenerManager(MessageService errorManager) {
 		this(new HashMap<>(), errorManager);
 	}
 	
-	public ParallelActionListenerManager(Map<String, ActionListener> listeners, ErrorService errorManager) {
+	public ParallelActionListenerManager(Map<String, ActionListener> listeners, MessageService errorManager) {
 		super();
 		this.listeners = listeners;
 		this.errorManager = errorManager;

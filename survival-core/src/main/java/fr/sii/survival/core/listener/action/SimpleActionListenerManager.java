@@ -8,23 +8,23 @@ import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionListenerException;
-import fr.sii.survival.core.service.error.ErrorService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.message.MessageService;
 
 // TODO: manage locks to avoid concurrentmodifexception
 public class SimpleActionListenerManager implements ActionListenerManager {
 
 	private Map<String, ActionListener> listeners;
 	
-	private ErrorService errorService;
+	private MessageService errorService;
 	
 	private ExtensionService extensionService;
 	
-	public SimpleActionListenerManager(ErrorService errorService, ExtensionService extensionService) {
+	public SimpleActionListenerManager(MessageService errorService, ExtensionService extensionService) {
 		this(new HashMap<>(), errorService, extensionService);
 	}
 	
-	public SimpleActionListenerManager(Map<String, ActionListener> listeners, ErrorService errorService, ExtensionService extensionService) {
+	public SimpleActionListenerManager(Map<String, ActionListener> listeners, MessageService errorService, ExtensionService extensionService) {
 		super();
 		this.listeners = listeners;
 		this.errorService = errorService;

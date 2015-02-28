@@ -3,26 +3,26 @@ package fr.sii.survival.core.listener.board;
 import java.util.HashMap;
 import java.util.Map;
 
-import fr.sii.survival.core.domain.Cell;
+import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.BoardListenerException;
-import fr.sii.survival.core.service.error.ErrorService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.message.MessageService;
 
 // TODO: manage locks to avoid concurrentmodifexception
 public class SimpleBoardListenerManager implements BoardListenerManager {
 
 	private Map<String, BoardListener> listeners;
 	
-	private ErrorService errorService;
+	private MessageService errorService;
 	
 	private ExtensionService extensionService;
 	
-	public SimpleBoardListenerManager(ErrorService errorService, ExtensionService extensionService) {
+	public SimpleBoardListenerManager(MessageService errorService, ExtensionService extensionService) {
 		this(new HashMap<>(), errorService, extensionService);
 	}
 	
-	public SimpleBoardListenerManager(Map<String, BoardListener> listeners, ErrorService errorService, ExtensionService extensionService) {
+	public SimpleBoardListenerManager(Map<String, BoardListener> listeners, MessageService errorService, ExtensionService extensionService) {
 		super();
 		this.listeners = listeners;
 		this.errorService = errorService;

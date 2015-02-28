@@ -1,45 +1,33 @@
 package fr.sii.survival.controller;
 
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
+import static fr.sii.survival.config.BoardConfiguration.BOARD_PUBLISH_PREFIX;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import fr.sii.survival.core.domain.Cell;
+import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.board.BoardListener;
 import fr.sii.survival.dto.PlayerMoved;
 
 @Controller
-@MessageMapping("board")
 public class GameBoardController implements BoardListener {
-	@SendTo("board/moved")
-	public PlayerMoved notifyMoved(Player player, Cell oldCell, Cell newCell) {
-		return new PlayerMoved(player, oldCell, newCell);
-	}
-
-	@SendTo("board/added")
-	public PlayerMoved notifyAdded(Player player, Cell cell) {
-		return new PlayerMoved(player, null, cell);
-	}
-
-	@SendTo("board/removed")
-	public PlayerMoved notifyRemoved(Player player, Cell cell) {
-		return new PlayerMoved(player, cell, null);
-	}
-	
+	@Autowired
+	SimpMessagingTemplate template;
 	
 	@Override
 	public void moved(Player player, Cell oldCell, Cell newCell) {
-		notifyMoved(player, oldCell, newCell);
+		template.convertAndSend(BOARD_PUBLISH_PREFIX+"/moved", new PlayerMoved(player, oldCell, newCell));
 	}
 
 	@Override
 	public void added(Player player, Cell cell) {
-		notifyAdded(player, cell);
+		template.convertAndSend(BOARD_PUBLISH_PREFIX+"/added", new PlayerMoved(player, null, cell));
 	}
 
 	@Override
 	public void removed(Player player, Cell cell) {
-		notifyRemoved(player, cell);
+		template.convertAndSend(BOARD_PUBLISH_PREFIX+"/removed", new PlayerMoved(player, cell, null));
 	}
 }

@@ -1,6 +1,6 @@
 package fr.sii.survival.dto;
 
-import fr.sii.survival.core.domain.Cell;
+import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 
 public class PlayerMoved {
