@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.player.PlayerListener;
 import fr.sii.survival.dto.PlayerLifeUpdate;
+import fr.sii.survival.dto.PlayerStateUpdate;
 
 @Controller
 public class PlayerController implements PlayerListener {
@@ -41,7 +41,7 @@ public class PlayerController implements PlayerListener {
 
 	@Override
 	public void statesChanged(Player player, List<StateChange> changes) {
-		template.convertAndSend(PLAYER_PUBLISH_PREFIX+"/states", new ChangeStates(player, changes));
+		template.convertAndSend(PLAYER_PUBLISH_PREFIX+"/states", new PlayerStateUpdate(player, changes));
 	}
 
 }

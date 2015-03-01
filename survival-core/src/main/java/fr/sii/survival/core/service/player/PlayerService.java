@@ -22,19 +22,20 @@ public interface PlayerService extends PlayerListenerRegistry {
 	 * @param increment
 	 *            the life increment to apply to the player (if positive, then
 	 *            player is healed, if negative, then player is hit)
-	 * @return the new life value
+	 * @return the real applied increment
 	 */
 	public int updateCurrentLife(Player player, int increment);
 
 	/**
-	 * Update the maximum life of the player. TODO: Limit max value range ???
+	 * Update the maximum life of the player. The maximum life must be between a
+	 * minimum and a maximum value.
 	 * 
 	 * @param player
 	 *            the player to update maximum life
 	 * @param increment
 	 *            the increment to apply to the maximum life (positive or
 	 *            negative)
-	 * @return the new updated maximum life
+	 * @return the real applied increment
 	 */
 	public int updateMaxLife(Player player, int increment);
 

@@ -2,10 +2,15 @@ package fr.sii.survival.core.service.action;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.StateChange;
+import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListenerTrigger;
+import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.player.PlayerService;
 
 /**
@@ -15,13 +20,17 @@ import fr.sii.survival.core.service.player.PlayerService;
  *
  */
 public class ChangeStateActionManager implements ActionManager<ChangeStates> {
+	private static Logger logger = LoggerFactory.getLogger(ChangeStateActionManager.class);
+
+	private BoardService boardService;
 
 	private PlayerService playerService;
 
 	private ActionListenerTrigger actionListenerTrigger;
 
-	public ChangeStateActionManager(PlayerService playerService, ActionListenerTrigger actionListenerTrigger) {
+	public ChangeStateActionManager(BoardService boardService, PlayerService playerService, ActionListenerTrigger actionListenerTrigger) {
 		super();
+		this.boardService = boardService;
 		this.playerService = playerService;
 		this.actionListenerTrigger = actionListenerTrigger;
 	}
@@ -33,9 +42,12 @@ public class ChangeStateActionManager implements ActionManager<ChangeStates> {
 
 	@Override
 	public void execute(ChangeStates action) {
-		List<StateChange> applied = playerService.updateStates(action.getPlayer(), action.getStateChanges());
-		action.setStateChanges(applied);
-		actionListenerTrigger.triggerStateChanged(action.getPlayer(), action);
+		logger.info("apply state changes {} on {}", action.getStateChanges(), action.getCell());
+		List<Player> players = boardService.getPlayers(action.getCell());
+		for(Player player : players) {
+			List<StateChange> applied = playerService.updateStates(player, action.getStateChanges());
+			actionListenerTrigger.triggerStateChanged(player, new ChangeStates(action.getCell(), applied));
+		}
 	}
 
 }

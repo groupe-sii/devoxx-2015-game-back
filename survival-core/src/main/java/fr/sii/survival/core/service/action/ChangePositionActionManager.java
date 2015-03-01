@@ -2,6 +2,9 @@ package fr.sii.survival.core.service.action;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.player.Player;
@@ -15,6 +18,7 @@ import fr.sii.survival.core.service.board.BoardService;
  *
  */
 public class ChangePositionActionManager implements ActionManager<ChangePosition> {
+	private static Logger logger = LoggerFactory.getLogger(ChangePositionActionManager.class);
 
 	private BoardService boardService;
 	
@@ -33,6 +37,7 @@ public class ChangePositionActionManager implements ActionManager<ChangePosition
 
 	@Override
 	public void execute(ChangePosition action) {
+		logger.info("change position of players from {} to {}", action.getStart(), action.getEnd());
 		List<Player> players = boardService.getPlayers(action.getStart());
 		for(Player player : players) {
 			boardService.move(player, action.getEnd());

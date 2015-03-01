@@ -1,13 +1,11 @@
 package fr.sii.survival.core.service.action;
 
-import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.MoveImage;
-import fr.sii.survival.core.domain.board.Cell;
-import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListenerTrigger;
-import fr.sii.survival.core.service.board.BoardService;
 
 /**
  * Action manager that is able to handle image moves.
@@ -16,14 +14,12 @@ import fr.sii.survival.core.service.board.BoardService;
  *
  */
 public class MoveImageActionManager implements ActionManager<MoveImage> {
+	private static Logger logger = LoggerFactory.getLogger(MoveImageActionManager.class);
 
-	private BoardService boardService;
-	
 	private ActionListenerTrigger actionListenerTrigger;
-	
-	public MoveImageActionManager(BoardService boardService, ActionListenerTrigger actionListenerTrigger) {
+
+	public MoveImageActionManager(ActionListenerTrigger actionListenerTrigger) {
 		super();
-		this.boardService = boardService;
 		this.actionListenerTrigger = actionListenerTrigger;
 	}
 
@@ -34,13 +30,9 @@ public class MoveImageActionManager implements ActionManager<MoveImage> {
 
 	@Override
 	public void execute(MoveImage action) {
-		List<Player> players = boardService.getPlayers(action.getStart());
-		for(Player player : players) {
-			Cell cell = boardService.move(player, action.getEnd());
-			// update the action to indicate the real cell where the image is placed
-			action.setEnd(cell);
-			actionListenerTrigger.triggerImageMoved(action);
-		}
+		logger.info("move image from {} to {}", action.getStart(), action.getEnd());
+		// nothing special to do, image move is just for client
+		actionListenerTrigger.triggerImageMoved(action);
 	}
 
 }

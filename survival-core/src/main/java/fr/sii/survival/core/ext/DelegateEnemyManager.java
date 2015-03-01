@@ -23,13 +23,13 @@ import fr.sii.survival.core.service.action.ActionService;
 public class DelegateEnemyManager implements EnemyExtension {
 
 	private ActionService actionService;
-	
+
 	private EnemyMoveManager moveManager;
-	
+
 	private EnemyActionManager actionManager;
-	
+
 	private TargetManager targetManager;
-	
+
 	public DelegateEnemyManager(EnemyMoveManager moveManager, EnemyActionManager actionManager, TargetManager targetManager, ActionService actionService) {
 		super();
 		this.moveManager = moveManager;
@@ -47,7 +47,7 @@ public class DelegateEnemyManager implements EnemyExtension {
 		// select the cells where to execute an action
 		List<Cell> targets = targetManager.getTargetPositions(context);
 		// execute the action on each targeted cell
-		for(Cell target : targets) {
+		for (Cell target : targets) {
 			actionManager.execute(target);
 		}
 	}

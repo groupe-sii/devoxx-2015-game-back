@@ -11,6 +11,7 @@ import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.controller.GameBoardController;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.listener.board.SimpleBoardListenerManager;
+import fr.sii.survival.core.log.LogBoardListener;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.board.RandomCellProvider;
 import fr.sii.survival.core.service.board.SimpleBoardService;
@@ -38,6 +39,7 @@ public class BoardConfiguration {
 	
 	@PostConstruct
 	public void init() {
+		boardService().addBoardListener(new LogBoardListener());
 		boardService().addBoardListener(boardController);
 	}
 	

@@ -2,6 +2,9 @@ package fr.sii.survival.core.service.action;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.UpdateCurrentLife;
 import fr.sii.survival.core.domain.player.Player;
@@ -16,6 +19,7 @@ import fr.sii.survival.core.service.player.PlayerService;
  *
  */
 public class UpdateCurrentLifeActionManager implements ActionManager<UpdateCurrentLife> {
+	private static Logger logger = LoggerFactory.getLogger(UpdateCurrentLifeActionManager.class);
 
 	private BoardService boardService;
 	
@@ -37,10 +41,11 @@ public class UpdateCurrentLifeActionManager implements ActionManager<UpdateCurre
 
 	@Override
 	public void execute(UpdateCurrentLife action) {
+		logger.info("update current life {} on {}", action.getIncrement(), action.getCell());
 		List<Player> players = boardService.getPlayers(action.getCell());
 		for(Player player : players) {
-			playerService.updateCurrentLife(player, action.getIncrement());
-			actionListenerTrigger.triggerLifeUpdated(player, action);
+			int inc = playerService.updateCurrentLife(player, action.getIncrement());
+			actionListenerTrigger.triggerLifeUpdated(player, new UpdateCurrentLife(inc, action.getCell()));
 		}
 	}
 

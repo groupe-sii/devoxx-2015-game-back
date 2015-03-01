@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.domain.board.Cell;
 
 public class ChangeStates implements Action {
 	/**
-	 * The player to update
+	 * The cell to target
 	 */
-	private Player player;
+	private Cell cell;
 
 	/**
 	 * A list of changes to apply. Each change provide the name of the state and
@@ -18,22 +18,26 @@ public class ChangeStates implements Action {
 	 */
 	private List<StateChange> stateChanges;
 
-	public ChangeStates(Player player, StateChange... changes) {
-		this(player, new ArrayList<>(Arrays.asList(changes)));
+	public ChangeStates(ChangeStates action) {
+		this(action.getCell(), new ArrayList<>(action.getStateChanges()));
+	}
+	
+	public ChangeStates(Cell cell, StateChange... changes) {
+		this(cell, new ArrayList<>(Arrays.asList(changes)));
 	}
 
-	public ChangeStates(Player player, List<StateChange> stateChanges) {
+	public ChangeStates(Cell cell, List<StateChange> stateChanges) {
 		super();
-		this.player = player;
+		this.cell = cell;
 		this.stateChanges = stateChanges;
 	}
 
-	public Player getPlayer() {
-		return player;
+	public Cell getCell() {
+		return cell;
 	}
 
-	public void setPlayer(Player player) {
-		this.player = player;
+	public void setCell(Cell cell) {
+		this.cell = cell;
 	}
 
 	public List<StateChange> getStateChanges() {

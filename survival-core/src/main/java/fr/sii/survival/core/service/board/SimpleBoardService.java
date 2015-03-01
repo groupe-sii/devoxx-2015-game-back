@@ -2,6 +2,9 @@ package fr.sii.survival.core.service.board;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
@@ -16,6 +19,7 @@ import fr.sii.survival.core.listener.board.BoardListenerManager;
  *
  */
 public class SimpleBoardService implements BoardService {
+	private static Logger logger = LoggerFactory.getLogger(SimpleBoardService.class);
 
 	/**
 	 * The board to update
@@ -33,15 +37,21 @@ public class SimpleBoardService implements BoardService {
 	private BoardListenerManager listenerManager;
 	
 	public SimpleBoardService(int rows, int cols, CellProvider cellProvider, BoardListenerManager listenerManager) {
+		this(new Board(rows, cols), cellProvider, listenerManager);
+	}
+	
+	public SimpleBoardService(Board board, CellProvider cellProvider, BoardListenerManager listenerManager) {
 		super();
-		board = new Board(rows, cols);
+		this.board = board;
 		this.cellProvider = cellProvider;
 		this.listenerManager = listenerManager;
 	}
 
 	@Override
 	public List<Player> getPlayers(Cell cell) {
-		return board.getPlayers(cell);
+		List<Player> players = board.getPlayers(cell);
+		logger.info("players found on {} : {}", cell, players);
+		return players;
 	}
 
 	@Override
@@ -75,7 +85,9 @@ public class SimpleBoardService implements BoardService {
 
 	@Override
 	public Cell getCell(Player player) {
-		return board.getCell(player);
+		Cell cell = board.getCell(player);
+		logger.info("player {} is on {}", player, cell);
+		return cell;
 	}
 
 	@Override

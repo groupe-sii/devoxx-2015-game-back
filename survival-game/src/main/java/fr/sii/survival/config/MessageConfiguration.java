@@ -10,6 +10,7 @@ import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.controller.MessageController;
 import fr.sii.survival.core.listener.message.MessageListenerManager;
 import fr.sii.survival.core.listener.message.SimpleMessageListenerManager;
+import fr.sii.survival.core.log.LogMessageListener;
 import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.core.service.message.SimpleMessageService;
 
@@ -22,6 +23,7 @@ public class MessageConfiguration {
 	
 	@PostConstruct
 	public void init() {
+		messageService().addMessageListener(new LogMessageListener());
 		messageService().addMessageListener(messageController);
 	}
 	
