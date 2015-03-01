@@ -8,6 +8,30 @@ import fr.sii.survival.core.util.MultiValueMatrix;
 public class Board {
 	private MultiValueMatrix<Player> matrix;
 
+	/**
+	 * Copy constructor that copies the board information
+	 * 
+	 * @param board
+	 *            the board to copy
+	 */
+	public Board(Board board) {
+		this(board.getWidth(), board.getHeight());
+		for (int i = 0; i < board.getWidth(); i++) {
+			for (int j = 0; j < board.getHeight(); j++) {
+				List<Player> players = board.getPlayers(new Cell(i, j));
+				getPlayers(new Cell(i, j)).addAll(players);
+			}
+		}
+	}
+
+	/**
+	 * Initialize a new board with provided number of rows and number of columns
+	 * 
+	 * @param rows
+	 *            the number of rows
+	 * @param cols
+	 *            the number of columns
+	 */
 	public Board(int rows, int cols) {
 		super();
 		matrix = new MultiValueMatrix<Player>(cols, rows);
@@ -74,7 +98,7 @@ public class Board {
 	public int getWidth() {
 		return matrix.getCols();
 	}
-	
+
 	@Override
 	public String toString() {
 		return matrix.toString();

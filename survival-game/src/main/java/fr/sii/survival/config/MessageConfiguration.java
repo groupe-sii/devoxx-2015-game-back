@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 
 import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.controller.MessageController;
-import fr.sii.survival.core.domain.message.Message;
-import fr.sii.survival.core.exception.GameException;
-import fr.sii.survival.core.listener.message.MessageListener;
+import fr.sii.survival.core.listener.message.MessageListenerManager;
+import fr.sii.survival.core.listener.message.SimpleMessageListenerManager;
 import fr.sii.survival.core.service.message.MessageService;
+import fr.sii.survival.core.service.message.SimpleMessageService;
 
 @Configuration
 public class MessageConfiguration {
@@ -27,32 +27,11 @@ public class MessageConfiguration {
 	
 	@Bean
 	public MessageService messageService() {
-		// TODO: use real error service
-		return new MessageService() {
-			
-			@Override
-			public void addError(GameException e) {
-				// TODO Auto-generated method stub
-				
-			}
+		return new SimpleMessageService(messageListenerManager());
+	}
 
-			@Override
-			public void addMessageListener(MessageListener listener) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void removeMessageListener(MessageListener listener) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void addMessage(Message message) {
-				// TODO Auto-generated method stub
-				
-			}
-		};
+	@Bean
+	public MessageListenerManager messageListenerManager() {
+		return new SimpleMessageListenerManager();
 	}
 }
