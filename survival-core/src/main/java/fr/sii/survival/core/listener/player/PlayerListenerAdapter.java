@@ -1,5 +1,8 @@
 package fr.sii.survival.core.listener.player;
 
+import java.util.List;
+
+import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.player.Player;
 
 public class PlayerListenerAdapter implements PlayerListener {
@@ -22,6 +25,11 @@ public class PlayerListenerAdapter implements PlayerListener {
 	@Override
 	public void healed(Player player, int amount) {
 
+	}
+
+	@Override
+	public void statesChanged(Player player, List<StateChange> changes) {
+		
 	}
 
 }

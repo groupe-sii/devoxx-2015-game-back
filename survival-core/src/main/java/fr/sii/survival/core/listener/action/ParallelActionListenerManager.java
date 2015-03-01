@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.sii.survival.core.domain.action.ChangePosition;
+import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
@@ -14,16 +15,16 @@ public class ParallelActionListenerManager implements ActionListenerManager {
 
 	private Map<String, ActionListener> listeners;
 	
-	private MessageService errorManager;
+	private MessageService messageService;
 	
 	public ParallelActionListenerManager(MessageService errorManager) {
 		this(new HashMap<>(), errorManager);
 	}
 	
-	public ParallelActionListenerManager(Map<String, ActionListener> listeners, MessageService errorManager) {
+	public ParallelActionListenerManager(Map<String, ActionListener> listeners, MessageService messageService) {
 		super();
 		this.listeners = listeners;
-		this.errorManager = errorManager;
+		this.messageService = messageService;
 	}
 
 	@Override
@@ -56,6 +57,11 @@ public class ParallelActionListenerManager implements ActionListenerManager {
 
 	@Override
 	public void triggerImageMoved(MoveImage action) {
+		// TODO
+	}
+	
+	@Override
+	public void triggerStateChanged(Player player, ChangeStates action) {
 		// TODO
 	}
 	

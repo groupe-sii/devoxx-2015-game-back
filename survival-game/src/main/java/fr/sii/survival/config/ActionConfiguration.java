@@ -17,6 +17,7 @@ import fr.sii.survival.core.listener.action.SimpleActionListenerManager;
 import fr.sii.survival.core.service.action.ActionManager;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.action.ChangePositionActionManager;
+import fr.sii.survival.core.service.action.ChangeStateActionManager;
 import fr.sii.survival.core.service.action.DelegateActionService;
 import fr.sii.survival.core.service.action.MoveImageActionManager;
 import fr.sii.survival.core.service.action.UpdateCurrentLifeActionManager;
@@ -68,6 +69,7 @@ public class ActionConfiguration {
 		managers.add((ActionManager) new MoveImageActionManager(boardService, actionListenerManager()));
 		managers.add((ActionManager) new ChangePositionActionManager(boardService, actionListenerManager()));
 		managers.add((ActionManager) new UpdateMaxLifeActionManager(boardService, playerService, actionListenerManager()));
+		managers.add((ActionManager) new ChangeStateActionManager(playerService, actionListenerManager()));
 		return managers;
 	}
 }

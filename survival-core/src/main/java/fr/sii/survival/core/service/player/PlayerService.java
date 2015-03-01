@@ -1,5 +1,8 @@
 package fr.sii.survival.core.service.player;
 
+import java.util.List;
+
+import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.player.PlayerListenerRegistry;
 
@@ -34,4 +37,15 @@ public interface PlayerService extends PlayerListenerRegistry {
 	 * @return the new updated maximum life
 	 */
 	public int updateMaxLife(Player player, int increment);
+
+	/**
+	 * Update the states of the player
+	 * 
+	 * @param player
+	 *            the player to update
+	 * @param stateChanges
+	 *            the list of state changes to apply
+	 * @return the list of changes that were really applied
+	 */
+	public List<StateChange> updateStates(Player player, List<StateChange> stateChanges);
 }

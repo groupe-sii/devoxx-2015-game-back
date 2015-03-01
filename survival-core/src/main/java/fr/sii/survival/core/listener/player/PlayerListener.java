@@ -1,5 +1,8 @@
 package fr.sii.survival.core.listener.player;
 
+import java.util.List;
+
+import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.player.Player;
 
 /**
@@ -44,4 +47,14 @@ public interface PlayerListener {
 	 *            the amount of life (positive value)
 	 */
 	public void healed(Player player, int amount);
+
+	/**
+	 * Fired when the state of the player has changed
+	 * 
+	 * @param player
+	 *            the updated player
+	 * @param changes
+	 *            the list of changes that were applied
+	 */
+	public void statesChanged(Player player, List<StateChange> changes);
 }

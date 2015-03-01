@@ -1,5 +1,10 @@
 package fr.sii.survival.core.service.player;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.sii.survival.core.domain.action.StateChange;
+import fr.sii.survival.core.domain.action.StateChange.Change;
 import fr.sii.survival.core.domain.player.Life;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.player.PlayerListener;
@@ -76,6 +81,23 @@ public class SimplePlayerService implements PlayerService {
 		return 0;
 	}
 
+	@Override
+	public List<StateChange> updateStates(Player player, List<StateChange> stateChanges) {
+		List<StateChange> appliedChanges = new ArrayList<StateChange>(stateChanges.size());
+		for(StateChange change : stateChanges) {
+			boolean applied = false;
+			if(Change.ADD.equals(change.getChange())) {
+				applied = player.getStates().addState(change.getState());
+			} else {
+				applied = player.getStates().removeState(change.getState());
+			}
+			if(applied) {
+				appliedChanges.add(change);
+			}
+		}
+		return appliedChanges;
+	}
+	
 	@Override
 	public void addPlayerListener(PlayerListener listener) {
 		listenerRegistry.addPlayerListener(listener);

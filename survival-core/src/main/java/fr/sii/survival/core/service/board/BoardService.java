@@ -51,4 +51,28 @@ public interface BoardService extends BoardListenerRegistry {
 	 *         not on the board, then returns null
 	 */
 	public Cell remove(Player player);
+	
+	/**
+	 * Search the position of the player in the game.
+	 * 
+	 * @param player
+	 *            the player to look for
+	 * @return the cell if the player is found, null otherwise
+	 */
+	public Cell getCell(Player player);
+	
+	/**
+	 * Get the height of the board
+	 * 
+	 * @return the height of the board
+	 */
+	public int getHeight();
+
+	/**
+	 * Get the width of the board
+	 * 
+	 * @return the width of the board
+	 */
+	public int getWidth();
+
 }

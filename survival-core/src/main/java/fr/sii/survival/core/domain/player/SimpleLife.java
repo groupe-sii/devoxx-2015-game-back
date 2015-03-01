@@ -2,15 +2,21 @@ package fr.sii.survival.core.domain.player;
 
 /**
  * Simple life bean that just stores values. No verification is done on values
- * (example: no verification is done if current life is over max life).
+ * (example: no check is done if current life is over max life).
  * 
  * @author aurelien
  *
  */
 public class SimpleLife implements Life {
 
+	/**
+	 * The current points of life
+	 */
 	private int current;
 
+	/**
+	 * The maximum points of life
+	 */
 	private int max;
 
 	/**
@@ -62,4 +68,10 @@ public class SimpleLife implements Life {
 		return max + delta;
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("(").append(current).append("/").append(max).append(")");
+		return builder.toString();
+	}
 }

@@ -1,8 +1,10 @@
 package fr.sii.survival.core.listener.player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionListenerException;
 import fr.sii.survival.core.exception.PlayerListenerException;
@@ -83,6 +85,17 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		for(PlayerListener listener : listeners.values()) {
 			try {
 				listener.healed(player, amount);
+			} catch(Throwable e) {
+				errorService.addError(new PlayerListenerException("failed to trigger healed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+			}
+		}
+	}
+
+	@Override
+	public void triggerStates(Player player, List<StateChange> changes) {
+		for(PlayerListener listener : listeners.values()) {
+			try {
+				listener.statesChanged(player, changes);
 			} catch(Throwable e) {
 				errorService.addError(new PlayerListenerException("failed to trigger healed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}

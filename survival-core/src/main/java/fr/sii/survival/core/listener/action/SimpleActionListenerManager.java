@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.sii.survival.core.domain.action.ChangePosition;
+import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
@@ -78,6 +79,17 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 				listener.imageMoved(action);
 			} catch(Throwable e) {
 				errorService.addError(new ActionListenerException("failed to trigger image moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+			}
+		}
+	}
+	
+	@Override
+	public void triggerStateChanged(Player player, ChangeStates action) {
+		for(ActionListener listener : listeners.values()) {
+			try {
+				listener.stateChanged(player, action);
+			} catch(Throwable e) {
+				errorService.addError(new ActionListenerException("failed to trigger state changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
 	}

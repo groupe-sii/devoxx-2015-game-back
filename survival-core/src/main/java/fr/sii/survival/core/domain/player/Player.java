@@ -2,17 +2,23 @@ package fr.sii.survival.core.domain.player;
 
 public interface Player {
 	/**
+	 * The unique id of the player
+	 * 
+	 * @return the id of the player
+	 */
+	public String getId();
+	
+	/**
 	 * Get the life of the player (current life and maximum life)
 	 * 
 	 * @return the life of the player
 	 */
 	public Life getLife();
-
+	
 	/**
-	 * Set the new life for the player
+	 * Get the current states applied to the player
 	 * 
-	 * @param life
-	 *            the new life of the player
+	 * @return the current states on the player
 	 */
-	public void setLife(Life life);
+	public States getStates();
 }

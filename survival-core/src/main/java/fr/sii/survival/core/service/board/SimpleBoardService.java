@@ -74,6 +74,11 @@ public class SimpleBoardService implements BoardService {
 	}
 
 	@Override
+	public Cell getCell(Player player) {
+		return board.getCell(player);
+	}
+
+	@Override
 	public void addBoardListener(BoardListener listener) {
 		listenerManager.addBoardListener(listener);
 	}
@@ -81,6 +86,16 @@ public class SimpleBoardService implements BoardService {
 	@Override
 	public void removeBoardListener(BoardListener listener) {
 		listenerManager.removeBoardListener(listener);
+	}
+
+	@Override
+	public int getHeight() {
+		return board.getHeight();
+	}
+
+	@Override
+	public int getWidth() {
+		return board.getWidth();
 	}
 
 }
