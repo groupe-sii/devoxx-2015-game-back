@@ -57,7 +57,7 @@ public class States {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("[").append(states).append("]");
+		builder.append(states);
 		return builder.toString();
 	}
 }

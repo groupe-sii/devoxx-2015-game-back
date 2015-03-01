@@ -32,4 +32,9 @@ public class PlayerListenerAdapter implements PlayerListener {
 		
 	}
 
+	@Override
+	public void maxLifeChanged(Player player, int amount) {
+		
+	}
+
 }

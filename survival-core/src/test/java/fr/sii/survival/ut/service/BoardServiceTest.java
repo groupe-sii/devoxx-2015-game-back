@@ -18,7 +18,7 @@ import fr.sii.survival.core.service.board.FixedCellProvider;
 import fr.sii.survival.core.service.board.SimpleBoardService;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SimpleBoardServiceTest {
+public class BoardServiceTest {
 	@Mock
 	BoardListenerManager boardListenerManager;
 	

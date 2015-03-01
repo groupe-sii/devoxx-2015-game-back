@@ -37,4 +37,9 @@ public class LogPlayerListener implements PlayerListener {
 		logger.info("player {} has new states {}", player, changes);
 	}
 
+	@Override
+	public void maxLifeChanged(Player player, int amount) {
+		logger.info("player {} maximum life updated by {} points", player, amount);
+	}
+
 }

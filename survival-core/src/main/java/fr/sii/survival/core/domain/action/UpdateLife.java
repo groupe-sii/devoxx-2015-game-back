@@ -47,4 +47,39 @@ public class UpdateLife implements Action {
 	public void setCell(Cell cell) {
 		this.cell = cell;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cell == null) ? 0 : cell.hashCode());
+		result = prime * result + increment;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UpdateLife other = (UpdateLife) obj;
+		if (cell == null) {
+			if (other.cell != null)
+				return false;
+		} else if (!cell.equals(other.cell))
+			return false;
+		if (increment != other.increment)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("UpdateLife [increment=").append(increment).append(", cell=").append(cell).append("]");
+		return builder.toString();
+	}
 }

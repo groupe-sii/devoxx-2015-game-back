@@ -15,4 +15,6 @@ public interface PlayerListenerTrigger {
 	public void triggerHealed(Player player, int amount);
 	
 	public void triggerStates(Player player, List<StateChange> changes);
+
+	public void triggerMaxLifeChanged(Player player, int amount);
 }

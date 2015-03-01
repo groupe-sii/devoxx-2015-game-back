@@ -50,7 +50,8 @@ public class SimpleLife implements Life {
 
 	@Override
 	public int updateCurrent(int delta) {
-		return current + delta;
+		current += delta;
+		return current;
 	}
 
 	@Override
@@ -65,7 +66,8 @@ public class SimpleLife implements Life {
 
 	@Override
 	public int updateMax(int delta) {
-		return max + delta;
+		max += delta;
+		return max;
 	}
 
 	@Override

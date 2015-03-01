@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.ext.behavior.action.EnemyActionManager;
 import fr.sii.survival.core.ext.behavior.move.EnemyMoveManager;
 import fr.sii.survival.core.ext.behavior.target.TargetManager;
@@ -39,7 +40,7 @@ public class DelegateEnemyManager implements EnemyExtension {
 	}
 
 	@Override
-	public void run(GameContext context) {
+	public void run(GameContext context) throws GameException {
 		// compute the position where the enemy will be moved to
 		Cell next = moveManager.getNextPosition(context);
 		// change the position

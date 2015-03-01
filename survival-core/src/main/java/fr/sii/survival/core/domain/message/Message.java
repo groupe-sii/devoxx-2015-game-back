@@ -34,4 +34,11 @@ public class Message {
 	public Level getLevel() {
 		return level;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[").append(level).append("] ").append(message);
+		return builder.toString();
+	}
 }

@@ -1,6 +1,7 @@
 package fr.sii.survival.core.service.action;
 
 import fr.sii.survival.core.domain.action.Action;
+import fr.sii.survival.core.exception.ActionException;
 
 /**
  * Manager for action that is able to handle one {@link Action}
@@ -25,6 +26,8 @@ public interface ActionManager<A extends Action> {
 	 * 
 	 * @param action
 	 *            the action to execute
+	 * @throws ActionException
+	 *             when action could not be executed
 	 */
-	public void execute(A action);
+	public void execute(A action) throws ActionException;
 }

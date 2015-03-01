@@ -32,4 +32,11 @@ public class Error {
 	public Developer getDevelopper() {
 		return developper;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("[ERROR] ").append(message).append(". Cause:").append(cause).append(". developper=").append(developper);
+		return builder.toString();
+	}
 }

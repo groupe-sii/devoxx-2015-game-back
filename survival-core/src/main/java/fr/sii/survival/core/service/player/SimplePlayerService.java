@@ -85,17 +85,17 @@ public class SimplePlayerService implements PlayerService {
 		} else if (lifeValue > life.getMax()) {
 			// new life>max => prevent life to exceed max life
 			life.setCurrent(life.getMax());
-			increment = Math.min(life.getMax() - lifeValue, increment);
+			increment = life.getMax() - oldValue;
 		}
 		if (oldValue <= 0 && lifeValue > 0) {
 			// player was dead and new life>=0 => player revived
 			playerListenerTrigger.triggerRevived(player);
 		} else if (increment > 0) {
 			// player is healed
-			playerListenerTrigger.triggerHealed(player, -increment);
+			playerListenerTrigger.triggerHealed(player, increment);
 		} else if (increment < 0) {
 			// player is hit
-			playerListenerTrigger.triggerHit(player, increment);
+			playerListenerTrigger.triggerHit(player, -increment);
 		}
 		return increment;
 	}
@@ -108,12 +108,15 @@ public class SimplePlayerService implements PlayerService {
 		logger.info("update player maximum life from {} to {}", oldValue, lifeValue);
 		if (lifeValue < maximumLifeRange.lowerEndpoint()) {
 			life.setMax(maximumLifeRange.lowerEndpoint());
-			increment = -oldValue;
+			increment = -oldValue+maximumLifeRange.lowerEndpoint();
 		} else if(lifeValue > maximumLifeRange.upperEndpoint()) {
 			life.setMax(maximumLifeRange.upperEndpoint());
-			increment = Math.min(maximumLifeRange.upperEndpoint() - lifeValue, increment);
+			increment = maximumLifeRange.upperEndpoint() - oldValue;
 		}
 		updateCurrentLife(player, 0);
+		if(increment!=0) {
+			playerListenerTrigger.triggerMaxLifeChanged(player, increment);
+		}
 		return increment;
 	}
 
@@ -132,6 +135,7 @@ public class SimplePlayerService implements PlayerService {
 				appliedChanges.add(change);
 			}
 		}
+		playerListenerTrigger.triggerStates(player, appliedChanges);
 		return appliedChanges;
 	}
 

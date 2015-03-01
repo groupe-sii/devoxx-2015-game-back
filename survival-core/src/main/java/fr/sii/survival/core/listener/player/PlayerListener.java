@@ -57,4 +57,15 @@ public interface PlayerListener {
 	 *            the list of changes that were applied
 	 */
 	public void statesChanged(Player player, List<StateChange> changes);
+
+	/**
+	 * Fired when the maximum life of the player has changed
+	 * 
+	 * @param player
+	 *            the updated player
+	 * @param increment
+	 *            the amount of life added (if positive) or removed (if
+	 *            negative)
+	 */
+	public void maxLifeChanged(Player player, int amount);
 }

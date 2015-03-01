@@ -101,6 +101,17 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 			}
 		}
 	}
+
+	@Override
+	public void triggerMaxLifeChanged(Player player, int amount) {
+		for(PlayerListener listener : listeners.values()) {
+			try {
+				listener.maxLifeChanged(player, amount);
+			} catch(Throwable e) {
+				errorService.addError(new PlayerListenerException("failed to trigger max life changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+			}
+		}
+	}
 	
 	private String getKey(PlayerListener listener) {
 		return listener.getClass().toString();

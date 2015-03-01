@@ -44,4 +44,9 @@ public class PlayerController implements PlayerListener {
 		template.convertAndSend(PLAYER_PUBLISH_PREFIX+"/states", new PlayerStateUpdate(player, changes));
 	}
 
+	@Override
+	public void maxLifeChanged(Player player, int amount) {
+		template.convertAndSend(PLAYER_PUBLISH_PREFIX+"/max", new PlayerLifeUpdate(player, amount));
+	}
+
 }
