@@ -2,6 +2,7 @@ package fr.sii.survival.core.service.board;
 
 import java.util.List;
 
+import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.board.BoardListenerRegistry;
@@ -74,5 +75,12 @@ public interface BoardService extends BoardListenerRegistry {
 	 * @return the width of the board
 	 */
 	public int getWidth();
+
+	/**
+	 * Get the actual board data
+	 * 
+	 * @return the board data
+	 */
+	public Board getBoard();
 
 }

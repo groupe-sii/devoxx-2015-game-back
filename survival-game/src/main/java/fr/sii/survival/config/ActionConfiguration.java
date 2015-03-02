@@ -31,7 +31,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 @Configuration
 public class ActionConfiguration {
 	public static final String ACTION_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/action";
-	public static final String CLIENT_SEND_PREFIX = WebSocketConfig.CLIENT_SEND_PREFIX+"/action";
+	public static final String ACTION_SEND_PREFIX = WebSocketConfig.CLIENT_SEND_PREFIX+"/action";
 
 	@Autowired
 	MessageService errorService;

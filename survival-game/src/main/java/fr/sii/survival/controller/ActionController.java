@@ -1,7 +1,7 @@
 package fr.sii.survival.controller;
 
 import static fr.sii.survival.config.ActionConfiguration.ACTION_PUBLISH_PREFIX;
-import static fr.sii.survival.config.ActionConfiguration.CLIENT_SEND_PREFIX;
+import static fr.sii.survival.config.ActionConfiguration.ACTION_SEND_PREFIX;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -22,7 +22,7 @@ public class ActionController extends ActionListenerAdapter {
 	@Autowired
 	ActionService actionService;
 
-	@MessageMapping(CLIENT_SEND_PREFIX)
+	@MessageMapping(ACTION_SEND_PREFIX)
 	public void execute(Action action) throws ActionException {
 		actionService.execute(action);
 	}

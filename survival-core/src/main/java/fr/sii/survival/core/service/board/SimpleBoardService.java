@@ -110,4 +110,9 @@ public class SimpleBoardService implements BoardService {
 		return board.getWidth();
 	}
 
+	@Override
+	public Board getBoard() {
+		return board;
+	}
+
 }
