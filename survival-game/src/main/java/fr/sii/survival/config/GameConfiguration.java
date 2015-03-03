@@ -15,6 +15,6 @@ public class GameConfiguration {
 	
 	@Bean
 	public GameService gameService() {
-		return new SimpleGameService(boardService.getBoard());
+		return new SimpleGameService(boardService);
 	}
 }
