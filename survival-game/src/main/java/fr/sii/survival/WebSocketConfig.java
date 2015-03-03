@@ -10,7 +10,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 @EnableWebSocketMessageBroker
 public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
-	public static final String TOPIC_PREFIX = "/survival/game";
+	public static final String TOPIC_PREFIX = "/topic/game";
 	public static final String CLIENT_SUBSCRIBE_PREFIX = TOPIC_PREFIX;
 	public static final String SERVER_PUBLISH_PREFIX = TOPIC_PREFIX;
 	public static final String CLIENT_SEND_PREFIX = TOPIC_PREFIX;
