@@ -21,7 +21,7 @@ import fr.sii.survival.dto.PlayerStateUpdate;
 import fr.sii.survival.session.UserContext;
 
 @Controller
-public class PlayerController implements PlayerListener {
+public class PlayerController extends ErrorController implements PlayerListener {
 	@Autowired
 	SimpMessagingTemplate template;
 

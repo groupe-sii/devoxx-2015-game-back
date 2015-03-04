@@ -12,7 +12,7 @@ import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.message.MessageListener;
 
 @Controller
-public class MessageController implements MessageListener {
+public class MessageController extends ErrorController implements MessageListener {
 	@Autowired
 	SimpMessagingTemplate template;
 

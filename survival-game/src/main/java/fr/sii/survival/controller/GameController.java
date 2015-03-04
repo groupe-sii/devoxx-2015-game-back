@@ -16,7 +16,7 @@ import fr.sii.survival.core.service.game.GameService;
 import fr.sii.survival.session.UserContext;
 
 @Controller
-public class GameController {
+public class GameController extends ErrorController {
 
 	private static Logger logger = LoggerFactory.getLogger(GameController.class);
 
@@ -51,5 +51,4 @@ public class GameController {
 			}
 		}
 	}
-
 }

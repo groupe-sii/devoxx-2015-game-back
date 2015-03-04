@@ -13,7 +13,7 @@ import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.dto.PlayerMoved;
 
 @Controller
-public class BoardController implements BoardListener {
+public class BoardController extends ErrorController implements BoardListener {
 	@Autowired
 	SimpMessagingTemplate template;
 	
