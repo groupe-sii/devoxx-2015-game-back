@@ -29,9 +29,9 @@ public class PlayerServiceTest {
 	
 	@Before
 	public void setUp() {
-		fullLifePlayer = new SimpleWizard(100);
-		midLifePlayer = new SimpleWizard(50, 100);
-		deadPlayer = new SimpleWizard(0, 100);
+		fullLifePlayer = new SimpleWizard("test", "default", 100);
+		midLifePlayer = new SimpleWizard("test1", "default", 50, 100);
+		deadPlayer = new SimpleWizard("test2", "default", 0, 100);
 		playerService = new SimplePlayerService(Ranges.closed(20, 200), listenerManager);
 	}
 	

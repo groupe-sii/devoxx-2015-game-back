@@ -2,7 +2,7 @@ package fr.sii.survival.core.exception;
 
 import fr.sii.survival.core.domain.extension.Developer;
 
-public class BoardListenerException extends GameException {
+public class BoardListenerException extends GameExtensionException {
 
 	/**
 	 * 

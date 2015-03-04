@@ -63,7 +63,7 @@ public interface PlayerListener {
 	 * 
 	 * @param player
 	 *            the updated player
-	 * @param increment
+	 * @param amount
 	 *            the amount of life added (if positive) or removed (if
 	 *            negative)
 	 */

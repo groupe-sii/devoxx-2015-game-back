@@ -3,18 +3,14 @@ package fr.sii.survival.config;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import fr.sii.survival.WebSocketConfig;
-import fr.sii.survival.controller.ActionController;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.listener.action.ActionListenerManager;
 import fr.sii.survival.core.listener.action.SimpleActionListenerManager;
-import fr.sii.survival.core.log.LogActionListener;
 import fr.sii.survival.core.service.action.ActionManager;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.action.ChangePositionActionManager;
@@ -31,7 +27,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 @Configuration
 public class ActionConfiguration {
 	public static final String ACTION_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/action";
-	public static final String ACTION_SEND_PREFIX = "/action";
+	public static final String ACTION_MAPPING_PREFIX = WebSocketConfig.SERVER_MAPPING_PREFIX+"/action";
 
 	@Autowired
 	MessageService errorService;
@@ -44,15 +40,6 @@ public class ActionConfiguration {
 	
 	@Autowired
 	PlayerService playerService;
-	
-	@Autowired
-	ActionController actionController;
-	
-	@PostConstruct
-	public void init() {
-		actionService().addActionListener(new LogActionListener());
-		actionService().addActionListener(actionController);
-	}
 	
 	@Bean
 	public ActionService actionService() {

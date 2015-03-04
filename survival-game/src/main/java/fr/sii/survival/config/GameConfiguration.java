@@ -1,6 +1,7 @@
 package fr.sii.survival.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,7 +15,7 @@ public class GameConfiguration {
 	BoardService boardService;
 	
 	@Bean
-	public GameService gameService() {
-		return new SimpleGameService(boardService);
+	public GameService gameService(@Value("${game.players.max}") int maxPlayers) {
+		return new SimpleGameService(maxPlayers, boardService);
 	}
 }

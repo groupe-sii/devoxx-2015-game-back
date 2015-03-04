@@ -2,7 +2,7 @@ package fr.sii.survival.core.exception;
 
 import fr.sii.survival.core.domain.extension.Developer;
 
-public class ActionListenerException extends GameException {
+public class ActionListenerException extends GameExtensionException {
 
 	/**
 	 * 

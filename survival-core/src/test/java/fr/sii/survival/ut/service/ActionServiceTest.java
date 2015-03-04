@@ -56,7 +56,7 @@ public class ActionServiceTest {
 	
 	@Test
 	public void move() throws ActionException {
-		Player player = new SimpleWizard();
+		Player player = new SimpleWizard("test", "default");
 		Mockito.when(boardService.getPlayers(new Cell(0, 0))).thenReturn(Arrays.asList(player));
 		Mockito.when(boardService.move(player, new Cell(9, 9))).thenReturn(new Cell(9, 9));
 		actionService.execute(new ChangePosition(new Cell(0, 0), new Cell(9, 9)));
