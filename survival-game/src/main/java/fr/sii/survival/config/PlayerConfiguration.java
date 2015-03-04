@@ -21,6 +21,7 @@ import fr.sii.survival.core.service.player.SimplePlayerService;
 @Component
 public class PlayerConfiguration {
 	public static final String PLAYER_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/player";
+	public static final String PLAYER_MAPPING_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/player";
 
 	@Autowired
 	MessageService errorService;

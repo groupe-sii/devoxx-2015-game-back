@@ -14,6 +14,7 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
+import fr.sii.survival.core.service.board.Direction;
 import fr.sii.survival.core.service.board.FixedCellProvider;
 import fr.sii.survival.core.service.board.SimpleBoardService;
 
@@ -63,6 +64,74 @@ public class BoardServiceTest {
 		boardService.add(player);
 		Cell cell = boardService.move(player, new Cell(2, 5));
 		Assert.assertEquals("player should be moved at cell {2,5}", new Cell(2, 5), cell);
+	}
+	
+	@Test
+	public void moveUp() {
+		// prepare test
+		SimpleWizard player = new SimpleWizard("test", "default");
+		boardService.add(player);
+		Cell cell = boardService.move(player, new Cell(2, 9));
+		// real test
+		for(int y=8 ; y>=0 ; y--) {
+			cell = boardService.move(player, Direction.UP);
+			Assert.assertEquals("player should be moved at cell {2,"+y+"}", new Cell(2, y), cell);
+		}
+		cell = boardService.move(player, Direction.UP);
+		Assert.assertEquals("player should be moved at cell {2,0}", new Cell(2, 0), cell);
+		cell = boardService.move(player, Direction.UP);
+		Assert.assertEquals("player should be moved at cell {2,0}", new Cell(2, 0), cell);
+	}
+	
+	@Test
+	public void moveDown() {
+		// prepare test
+		SimpleWizard player = new SimpleWizard("test", "default");
+		boardService.add(player);
+		Cell cell = boardService.move(player, new Cell(2, 0));
+		// real test
+		for(int y=1 ; y<=9 ; y++) {
+			cell = boardService.move(player, Direction.DOWN);
+			Assert.assertEquals("player should be moved at cell {2,"+y+"}", new Cell(2, y), cell);
+		}
+		cell = boardService.move(player, Direction.DOWN);
+		Assert.assertEquals("player should be moved at cell {2,9}", new Cell(2, 9), cell);
+		cell = boardService.move(player, Direction.DOWN);
+		Assert.assertEquals("player should be moved at cell {2,9}", new Cell(2, 9), cell);
+	}
+	
+	@Test
+	public void moveLeft() {
+		// prepare test
+		SimpleWizard player = new SimpleWizard("test", "default");
+		boardService.add(player);
+		Cell cell = boardService.move(player, new Cell(9, 2));
+		// real test
+		for(int x=8 ; x>=0 ; x--) {
+			cell = boardService.move(player, Direction.LEFT);
+			Assert.assertEquals("player should be moved at cell {"+x+",2}", new Cell(x, 2), cell);
+		}
+		cell = boardService.move(player, Direction.LEFT);
+		Assert.assertEquals("player should be moved at cell {0,2}", new Cell(0, 2), cell);
+		cell = boardService.move(player, Direction.LEFT);
+		Assert.assertEquals("player should be moved at cell {0,2}", new Cell(0, 2), cell);
+	}
+	
+	@Test
+	public void moveRight() {
+		// prepare test
+		SimpleWizard player = new SimpleWizard("test", "default");
+		boardService.add(player);
+		Cell cell = boardService.move(player, new Cell(0, 2));
+		// real test
+		for(int x=1 ; x<=9 ; x++) {
+			cell = boardService.move(player, Direction.RIGHT);
+			Assert.assertEquals("player should be moved at cell {"+x+",2}", new Cell(x, 2), cell);
+		}
+		cell = boardService.move(player, Direction.RIGHT);
+		Assert.assertEquals("player should be moved at cell {9,2}", new Cell(9, 2), cell);
+		cell = boardService.move(player, Direction.RIGHT);
+		Assert.assertEquals("player should be moved at cell {9,2}", new Cell(9, 2), cell);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)

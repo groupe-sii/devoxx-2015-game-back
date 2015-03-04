@@ -138,7 +138,7 @@ public class SimplePlayerService implements PlayerService {
 		playerListenerTrigger.triggerStates(player, appliedChanges);
 		return appliedChanges;
 	}
-
+	
 	@Override
 	public void addPlayerListener(PlayerListener listener) {
 		listenerRegistry.addPlayerListener(listener);

@@ -26,7 +26,7 @@ public class ActionController extends ActionListenerAdapter {
 	public void execute(Action action) throws ActionException {
 		actionService.execute(action);
 	}
-
+	
 	@Override
 	public void imageMoved(MoveImage action) {
 		template.convertAndSend(ACTION_PUBLISH_PREFIX+"/image/moved", action);

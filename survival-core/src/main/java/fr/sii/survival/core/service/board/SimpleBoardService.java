@@ -50,7 +50,7 @@ public class SimpleBoardService implements BoardService {
 	@Override
 	public List<Player> getPlayers(Cell cell) {
 		List<Player> players = board.getPlayers(cell);
-		logger.info("players found on {} : {}", cell, players);
+		logger.debug("players found on {} : {}", cell, players);
 		return players;
 	}
 
@@ -61,8 +61,21 @@ public class SimpleBoardService implements BoardService {
 			board.remove(player, old);
 		}
 		board.add(player, cell);
+		logger.debug("player {} moved from {} to {}", player, old, cell);
 		listenerManager.triggerMoved(player, old, cell);
 		return cell;
+	}
+
+	@Override
+	public Cell move(Player player, Direction direction) {
+		Cell current = getCell(player);
+		int x = current.getX()+direction.getX();
+		int y = current.getY()+direction.getY();
+		if(x>=0 && x<getWidth() && y>=0 && y<getHeight()) {
+			return move(player, new Cell(x, y));
+		} else {
+			return current;
+		}
 	}
 
 	@Override
@@ -86,7 +99,7 @@ public class SimpleBoardService implements BoardService {
 	@Override
 	public Cell getCell(Player player) {
 		Cell cell = board.getCell(player);
-		logger.info("player {} is on {}", player, cell);
+		logger.debug("player {} is on {}", player, cell);
 		return cell;
 	}
 

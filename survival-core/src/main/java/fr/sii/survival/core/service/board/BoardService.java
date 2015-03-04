@@ -34,6 +34,19 @@ public interface BoardService extends BoardListenerRegistry {
 	public Cell move(Player player, Cell cell);
 
 	/**
+	 * Move the player one cell up/down/left/right. If the player can't move
+	 * up/down/left/right, then the player position is not changed and this
+	 * method returns the previous cell
+	 * 
+	 * @param player
+	 *            the player to move
+	 * @param direction
+	 *            the direction to move the player to
+	 * @return true if the player has moved, false otherwise
+	 */
+	public Cell move(Player player, Direction direction);
+
+	/**
 	 * Adds a player on the board. Automatically selects a cell where the player
 	 * will be placed.
 	 * 
@@ -52,7 +65,7 @@ public interface BoardService extends BoardListenerRegistry {
 	 *         not on the board, then returns null
 	 */
 	public Cell remove(Player player);
-	
+
 	/**
 	 * Search the position of the player in the game.
 	 * 
@@ -61,7 +74,7 @@ public interface BoardService extends BoardListenerRegistry {
 	 * @return the cell if the player is found, null otherwise
 	 */
 	public Cell getCell(Player player);
-	
+
 	/**
 	 * Get the height of the board
 	 * 
