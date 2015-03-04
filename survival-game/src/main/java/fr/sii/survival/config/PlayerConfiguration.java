@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Ranges;
+import com.google.common.collect.Range;
 
 import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.core.listener.player.PlayerListenerManager;
@@ -34,7 +34,7 @@ public class PlayerConfiguration {
 	
 	@Bean
 	public PlayerService playerService(@Value("${game.life.max.lower}") int min, @Value("${game.life.max.upper}") int max) {
-		return new SimplePlayerService(Ranges.closed(min, max<=0 ? Integer.MAX_VALUE : max), playerListenerManager());
+		return new SimplePlayerService(Range.closed(min, max<=0 ? Integer.MAX_VALUE : max), playerListenerManager());
 	}
 
 	@Bean

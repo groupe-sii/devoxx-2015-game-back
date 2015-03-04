@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Range;
-import com.google.common.collect.Ranges;
 
 import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.action.StateChange.Change;
@@ -57,7 +56,7 @@ public class SimplePlayerService implements PlayerService {
 	private Range<Integer> maximumLifeRange;
 
 	public SimplePlayerService(PlayerListenerManager listenerManager) {
-		this(Ranges.closed(0, Integer.MAX_VALUE), listenerManager);
+		this(Range.closed(0, Integer.MAX_VALUE), listenerManager);
 	}
 
 	public SimplePlayerService(Range<Integer> maximumLifeRange, PlayerListenerManager listenerManager) {

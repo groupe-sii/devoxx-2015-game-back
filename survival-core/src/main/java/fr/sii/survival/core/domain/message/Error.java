@@ -11,6 +11,10 @@ public class Error {
 	
 	private Developer developer;
 
+	public Error(Throwable e) {
+		this(e.getMessage(), e.getCause()==null ? null : e.getCause().getMessage(), null);
+	}
+	
 	public Error(GameException e) {
 		this(e.getMessage(), e.getCause()==null ? null : e.getCause().getMessage(), e instanceof GameExtensionException ? ((GameExtensionException) e).getDeveloper() : null);
 	}

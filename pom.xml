@@ -29,6 +29,7 @@
 		<java.version>1.8</java.version>
 		<reflections.version>0.9.9-RC1</reflections.version>
 		<mockito.version>1.9.5</mockito.version>
+		<guava.version>15.0</guava.version>
 	</properties>
 
 	<dependencyManagement>
@@ -37,6 +38,11 @@
 				<groupId>org.reflections</groupId>
 				<artifactId>reflections</artifactId>
 				<version>${reflections.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
 			</dependency>
 
 			<dependency>

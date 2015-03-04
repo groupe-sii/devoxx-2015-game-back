@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.google.common.collect.Ranges;
+import com.google.common.collect.Range;
 
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.SimpleWizard;
@@ -32,7 +32,7 @@ public class PlayerServiceTest {
 		fullLifePlayer = new SimpleWizard("test", "default", 100);
 		midLifePlayer = new SimpleWizard("test1", "default", 50, 100);
 		deadPlayer = new SimpleWizard("test2", "default", 0, 100);
-		playerService = new SimplePlayerService(Ranges.closed(20, 200), listenerManager);
+		playerService = new SimplePlayerService(Range.closed(20, 200), listenerManager);
 	}
 	
 	@Test

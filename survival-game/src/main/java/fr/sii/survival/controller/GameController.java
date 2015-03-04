@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.PlayerInfo;
 import fr.sii.survival.core.domain.player.SimpleWizard;
+import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.service.game.GameService;
 import fr.sii.survival.session.UserContext;
 
@@ -32,7 +33,7 @@ public class GameController {
 	UserContext userContext;
 
 	@MessageMapping("/player/join")
-	public void join(PlayerInfo player) throws Exception {
+	public void join(PlayerInfo player) throws GameException {
 		logger.info("player {} is joining the game", player);
 		SimpleWizard p = new SimpleWizard(player, defaultLife);
 		gameService.join(p);
@@ -41,10 +42,13 @@ public class GameController {
 
 	@MessageMapping("/player/quit")
 	public void quit() throws Exception {
-		Player player = gameService.getPlayer(userContext.getPlayerId());
-		if(player!=null) {
-			logger.info("player {} is quitting the game", player);
-			gameService.quit(player);
+		String playerId = userContext.getPlayerId();
+		if(playerId!=null) {
+			Player player = gameService.getPlayer(playerId);
+			if(player!=null) {
+				logger.info("player {} is quitting the game", player);
+				gameService.quit(player);
+			}
 		}
 	}
 
