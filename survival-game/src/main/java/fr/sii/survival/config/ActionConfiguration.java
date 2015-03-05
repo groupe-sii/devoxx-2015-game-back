@@ -53,7 +53,7 @@ public class ActionConfiguration {
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private List<ActionManager<Action>> actionManagers() {
-		ArrayList<ActionManager<Action>> managers = new ArrayList<>();
+		List<ActionManager<Action>> managers = new ArrayList<>();
 		managers.add((ActionManager) new UpdateCurrentLifeActionManager(boardService, playerService, actionListenerManager()));
 		managers.add((ActionManager) new MoveImageActionManager(actionListenerManager()));
 		managers.add((ActionManager) new ChangePositionActionManager(boardService, actionListenerManager()));

@@ -41,7 +41,7 @@ public class GameController extends ErrorController {
 	}
 
 	@MessageMapping("/player/quit")
-	public void quit() throws Exception {
+	public void quit() throws GameException {
 		String playerId = userContext.getPlayerId();
 		if(playerId!=null) {
 			Player player = gameService.getPlayer(playerId);
