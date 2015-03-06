@@ -46,7 +46,7 @@ public class SimpleGameService implements GameService {
 	@Override
 	public void join(Player player) throws GameException {
 		// check if number of players has not reached the max
-		if(game.getPlayers().size()>=maxPlayers) {
+		if(maxPlayers>0 && game.getPlayers().size()>=maxPlayers) {
 			throw new FullGameException("The player can't join this game because the game is full");
 		}
 		// check if player is already in the game
