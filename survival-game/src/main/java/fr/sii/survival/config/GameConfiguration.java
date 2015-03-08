@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import fr.sii.survival.WebSocketConfig;
+import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListenerManager;
 import fr.sii.survival.core.listener.game.SimpleGameListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
@@ -31,8 +32,13 @@ public class GameConfiguration {
 	ExtensionService extensionService;
 	
 	@Bean
+	public MultiGameHelper multiGameHelper() {
+		return new MultiGameHelper();
+	}
+	
+	@Bean
 	public GameService gameService(@Value("${game.players.max}") int maxPlayers) {
-		return new SimpleGameService(maxPlayers, boardService, gameListenerManager());
+		return new SimpleGameService(maxPlayers, boardService, gameListenerManager(), multiGameHelper());
 	}
 
 	@Bean

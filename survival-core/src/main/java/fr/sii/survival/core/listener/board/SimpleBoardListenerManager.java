@@ -3,6 +3,7 @@ package fr.sii.survival.core.listener.board;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.BoardListenerException;
@@ -48,10 +49,10 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 	}
 
 	@Override
-	public void triggerMoved(Player player, Cell oldCell, Cell newCell) {
+	public void triggerMoved(Game game, Player player, Cell oldCell, Cell newCell) {
 		for(BoardListener listener : listeners.values()) {
 			try {
-				listener.moved(player, oldCell, newCell);
+				listener.moved(game, player, oldCell, newCell);
 			} catch(Throwable e) {
 				errorService.addError(new BoardListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
@@ -59,10 +60,10 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 	}
 
 	@Override
-	public void triggerAdded(Player player, Cell cell) {
+	public void triggerAdded(Game game, Player player, Cell cell) {
 		for(BoardListener listener : listeners.values()) {
 			try {
-				listener.added(player, cell);
+				listener.added(game, player, cell);
 			} catch(Throwable e) {
 				errorService.addError(new BoardListenerException("failed to trigger added event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
@@ -70,10 +71,10 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 	}
 
 	@Override
-	public void triggerRemoved(Player player, Cell cell) {
+	public void triggerRemoved(Game game, Player player, Cell cell) {
 		for(BoardListener listener : listeners.values()) {
 			try {
-				listener.removed(player, cell);
+				listener.removed(game, player, cell);
 			} catch(Throwable e) {
 				errorService.addError(new BoardListenerException("failed to trigger removed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}

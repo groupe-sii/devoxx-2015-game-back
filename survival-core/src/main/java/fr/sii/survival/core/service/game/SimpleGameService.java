@@ -5,16 +5,14 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.AlreadyInGameException;
 import fr.sii.survival.core.exception.FullGameException;
 import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.exception.GameNotFoundException;
+import fr.sii.survival.core.exception.PlayerNotFoundException;
+import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.listener.game.GameListenerRegistry;
 import fr.sii.survival.core.service.board.BoardService;
 
 public class SimpleGameService implements GameService {
-
-	/**
-	 * The game data
-	 */
-	private Game game;
 
 	/**
 	 * The board service used to add/remove players on it
@@ -33,62 +31,84 @@ public class SimpleGameService implements GameService {
 	private GameListenerRegistry listenerRegistry;
 
 	/**
+	 * Helper that stores games by id
+	 */
+	private MultiGameHelper gameHelper;
+	
+	/**
 	 * Initialize the service
 	 * 
 	 * @param maxPlayers
 	 *            the maximum number of allowed players on the game
 	 * @param boardService
 	 *            the board service used to add/remove players on it
+	 * @param listenerRegistry
+	 *            the registry for game events
 	 */
-	public SimpleGameService(int maxPlayers, BoardService boardService, GameListenerRegistry listenerRegistry) {
-		this(maxPlayers, new Game(boardService.getBoard()), boardService, listenerRegistry);
-	}
-
-	public SimpleGameService(int maxPlayers, Game game, BoardService boardService, GameListenerRegistry listenerRegistry) {
+	public SimpleGameService(int maxPlayers, BoardService boardService, GameListenerRegistry listenerRegistry, MultiGameHelper gameHelper) {
 		super();
 		this.maxPlayers = maxPlayers;
 		this.boardService = boardService;
-		this.game = game;
 		this.listenerRegistry = listenerRegistry;
+		this.gameHelper = gameHelper;
 	}
 
 	@Override
-	public void join(Player player) throws GameException {
+	public Game create() {
+		Game game = new Game(boardService.create());
+		gameHelper.set(game.getId(), game);
+		return game;
+	}
+	
+	@Override
+	public void join(Game game, Player player) throws GameException {
 		// check if number of players has not reached the max
-		if(maxPlayers>0 && game.getPlayers().size()>=maxPlayers) {
+		if (maxPlayers > 0 && game.getPlayers().size() >= maxPlayers) {
 			throw new FullGameException("The player can't join this game because the game is full");
 		}
 		// check if player is already in the game
-		if(game.contains(player)) {
+		if (game.contains(player) || game.contains(player.getPlayerInfo().getName())) {
 			throw new AlreadyInGameException("The player can't join this game because he has already joined this game");
 		}
 		game.addPlayer(player);
-		boardService.add(player);
+		boardService.add(game.getBoard(), player);
 	}
 
 	@Override
-	public void quit(Player player) {
-		if(game.contains(player)) {
+	public void quit(Game game, Player player) throws GameException {
+		if (game.contains(player)) {
 			game.removePlayer(player);
-			boardService.remove(player);
+			boardService.remove(game.getBoard(), player);
 		}
 	}
 
 	@Override
-	public void start() {
+	public void start(Game game) {
 		// TODO start running the game and execute enemy extensions
-		
+
 	}
 
 	@Override
-	public void stop() {
+	public void stop(Game game) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public Player getPlayer(String playerId) {
-		return game.getPlayer(playerId);
+	public Player getPlayer(Game game, String playerId) throws PlayerNotFoundException {
+		if(playerId==null) {
+			throw new PlayerNotFoundException("Id of the player is null");
+		}
+		Player player = game.getPlayer(playerId);
+		if(player==null) {
+			throw new PlayerNotFoundException("Player with id "+playerId+" doesn't exist");
+		}
+		return player;
+	}
+
+	@Override
+	public Game getGame(String gameId) throws GameNotFoundException {
+		return gameHelper.getGame(gameId);
 	}
 
 	@Override

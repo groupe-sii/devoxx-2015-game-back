@@ -3,6 +3,7 @@ package fr.sii.survival.core.listener.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
@@ -51,10 +52,10 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	}
 
 	@Override
-	public void triggerLifeUpdated(Player player, UpdateLife action) {
+	public void triggerLifeUpdated(Game game, Player player, UpdateLife action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
-				listener.lifeUpdated(player, action);
+				listener.lifeUpdated(game, player, action);
 			} catch(Throwable e) {
 				errorService.addError(new ActionListenerException("failed to trigger life updated event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
@@ -62,10 +63,10 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	}
 
 	@Override
-	public void triggerPositionChanged(Player player, ChangePosition action) {
+	public void triggerPositionChanged(Game game, Player player, ChangePosition action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
-				listener.positionChanged(player, action);
+				listener.positionChanged(game, player, action);
 			} catch(Throwable e) {
 				errorService.addError(new ActionListenerException("failed to trigger position changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
@@ -73,10 +74,10 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	}
 
 	@Override
-	public void triggerImageMoved(MoveImage action) {
+	public void triggerImageMoved(Game game, MoveImage action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
-				listener.imageMoved(action);
+				listener.imageMoved(game, action);
 			} catch(Throwable e) {
 				errorService.addError(new ActionListenerException("failed to trigger image moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
@@ -84,10 +85,10 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	}
 	
 	@Override
-	public void triggerStateChanged(Player player, ChangeStates action) {
+	public void triggerStateChanged(Game game, Player player, ChangeStates action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
-				listener.stateChanged(player, action);
+				listener.stateChanged(game, player, action);
 			} catch(Throwable e) {
 				errorService.addError(new ActionListenerException("failed to trigger state changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}

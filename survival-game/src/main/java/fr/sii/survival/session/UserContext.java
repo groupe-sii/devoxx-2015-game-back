@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 @Scope(value="websocket", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class UserContext {
 	private String playerId;
+	
+	private String gameId;
 
 	public String getPlayerId() {
 		return playerId;
@@ -15,5 +17,13 @@ public class UserContext {
 
 	public void setPlayerId(String playerId) {
 		this.playerId = playerId;
+	}
+
+	public String getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(String gameId) {
+		this.gameId = gameId;
 	}
 }

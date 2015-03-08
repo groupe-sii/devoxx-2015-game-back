@@ -7,6 +7,13 @@ import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.player.Player;
 
 public class Game {
+	private static int counter = 0;
+	
+	/**
+	 * The game id
+	 */
+	private String id;
+	
 	/**
 	 * The list of players currently in the game
 	 */
@@ -23,6 +30,7 @@ public class Game {
 
 	public Game(List<Player> players, Board board) {
 		super();
+		this.id = "game:"+(counter++);
 		this.players = players;
 		this.board = board;
 	}
@@ -59,7 +67,7 @@ public class Game {
 
 	/**
 	 * Check if the player exists in the list of players. The check is done
-	 * using the player name.
+	 * using the player id.
 	 * 
 	 * @param player
 	 *            the player to check existence
@@ -68,8 +76,23 @@ public class Game {
 	 */
 	public boolean contains(Player player) {
 		return players.stream()
+				.map(p -> p.getId())
+				.anyMatch(n -> n.equals(player.getId()));
+	}
+
+	/**
+	 * Check if the player exists in the list of players. The check is done
+	 * using the player name.
+	 * 
+	 * @param player
+	 *            the player to check existence
+	 * @return true if the player is present in the list of players, false
+	 *         otherwise
+	 */
+	public boolean contains(String name) {
+		return players.stream()
 				.map(p -> p.getPlayerInfo().getName())
-				.anyMatch(n -> n.equals(player.getPlayerInfo().getName()));
+				.anyMatch(n -> n.equals(name));
 	}
 
 	/**
@@ -84,5 +107,9 @@ public class Game {
 				.filter(p -> p.getId().equals(playerId))
 				.findFirst()
 				.orElseGet(null);
+	}
+
+	public String getId() {
+		return id;
 	}
 }

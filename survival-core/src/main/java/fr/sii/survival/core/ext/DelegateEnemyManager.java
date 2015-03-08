@@ -44,7 +44,7 @@ public class DelegateEnemyManager implements EnemyExtension {
 		// compute the position where the enemy will be moved to
 		Cell next = moveManager.getNextPosition(context);
 		// change the position
-		actionService.execute(new ChangePosition(context.getCell(), next));
+		actionService.execute(context.getGame(), new ChangePosition(context.getCell(), next));
 		// select the cells where to execute an action
 		List<Cell> targets = targetManager.getTargetPositions(context);
 		// execute the action on each targeted cell

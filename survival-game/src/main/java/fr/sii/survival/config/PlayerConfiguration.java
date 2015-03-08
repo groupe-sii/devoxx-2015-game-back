@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.Range;
 
 import fr.sii.survival.WebSocketConfig;
+import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.player.PlayerListenerManager;
 import fr.sii.survival.core.listener.player.SimplePlayerListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
@@ -31,10 +32,13 @@ public class PlayerConfiguration {
 	
 	@Autowired
 	BoardService boardService;
-	
+
+	@Autowired
+	MultiGameHelper multiGameHelper;
+
 	@Bean
-	public PlayerService playerService(@Value("${game.life.max.lower}") int min, @Value("${game.life.max.upper}") int max) {
-		return new SimplePlayerService(Range.closed(min, max<=0 ? Integer.MAX_VALUE : max), playerListenerManager());
+	public PlayerService playerService(@Value("${game.life.default}") int defaultLife, @Value("${game.life.max.lower}") int min, @Value("${game.life.max.upper}") int max) {
+		return new SimplePlayerService(defaultLife, Range.closed(min, max<=0 ? Integer.MAX_VALUE : max), playerListenerManager(), multiGameHelper);
 	}
 
 	@Bean

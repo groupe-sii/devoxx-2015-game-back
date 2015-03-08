@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import fr.sii.survival.WebSocketConfig;
+import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.listener.board.SimpleBoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
@@ -27,9 +28,12 @@ public class BoardConfiguration {
 	@Autowired
 	ExtensionService extensionService;
 
+	@Autowired
+	MultiGameHelper multiGameHelper;
+	
 	@Bean
 	public BoardService boardService(@Value("${game.board.width}") int width, @Value("${game.board.height}") int height) {
-		return new SimpleBoardService(width, height, cellProvider(), boardListenerManager());
+		return new SimpleBoardService(width, height, cellProvider(), boardListenerManager(), multiGameHelper);
 	}
 
 	@Bean
