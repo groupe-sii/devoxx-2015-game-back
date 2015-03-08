@@ -26,7 +26,6 @@ import fr.sii.survival.core.service.player.PlayerService;
 
 @Configuration
 public class ActionConfiguration {
-	public static final String ACTION_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/action";
 	public static final String ACTION_MAPPING_PREFIX = WebSocketConfig.SERVER_MAPPING_PREFIX+"/action";
 
 	@Autowired

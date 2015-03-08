@@ -19,7 +19,6 @@ import fr.sii.survival.core.service.message.MessageService;
 @Configuration
 @Component
 public class BoardConfiguration {
-	public static final String BOARD_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/board";
 	public static final String BOARD_MAPPING_PREFIX = WebSocketConfig.SERVER_MAPPING_PREFIX+"/board";
 
 	@Autowired

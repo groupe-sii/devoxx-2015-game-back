@@ -23,16 +23,16 @@ public class BoardController extends ErrorController implements BoardListener {
 	
 	@Override
 	public void moved(Game game, Player player, Cell oldCell, Cell newCell) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/board/moved", new PlayerMoved(player, oldCell, newCell));
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/player/moved", new PlayerMoved(player, oldCell, newCell));
 	}
 
 	@Override
 	public void added(Game game, Player player, Cell cell) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/board/added", new PlayerMoved(player, null, cell));
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/player/added", new PlayerMoved(player, null, cell));
 	}
 
 	@Override
 	public void removed(Game game, Player player, Cell cell) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/board/removed", new PlayerMoved(player, cell, null));
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/player/removed", new PlayerMoved(player, cell, null));
 	}
 }

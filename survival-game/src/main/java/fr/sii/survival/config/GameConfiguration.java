@@ -19,8 +19,7 @@ import fr.sii.survival.core.service.message.MessageService;
 @Configuration
 @Component
 public class GameConfiguration {
-	public static final String GAME_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX;
-	public static final String GAME_MAPPING_PREFIX = WebSocketConfig.SERVER_MAPPING_PREFIX+"/game";
+	public static final String GAME_MAPPING_PREFIX = WebSocketConfig.SERVER_MAPPING_PREFIX;
 
 	@Autowired
 	BoardService boardService;
