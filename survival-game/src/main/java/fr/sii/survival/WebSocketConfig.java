@@ -37,7 +37,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
 		registry.addEndpoint(ENDPOINT_PREFIX).withSockJS()
-		/* .setClientLibraryUrl("http://localhost:8000/sockjs.min.js") */;
+		 .setClientLibraryUrl("http://10.6.192.65:8000/sockjs.min.js");
 	}
 
 	/*
