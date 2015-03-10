@@ -5,6 +5,8 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.AlreadyInGameException;
 import fr.sii.survival.core.exception.FullGameException;
 import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.listener.game.GameListener;
+import fr.sii.survival.core.listener.game.GameListenerRegistry;
 import fr.sii.survival.core.service.board.BoardService;
 
 public class SimpleGameService implements GameService {
@@ -25,6 +27,12 @@ public class SimpleGameService implements GameService {
 	private int maxPlayers;
 
 	/**
+	 * The registry that stores the list of action listeners that will be
+	 * triggered when an action is done
+	 */
+	private GameListenerRegistry listenerRegistry;
+
+	/**
 	 * Initialize the service
 	 * 
 	 * @param maxPlayers
@@ -32,21 +40,22 @@ public class SimpleGameService implements GameService {
 	 * @param boardService
 	 *            the board service used to add/remove players on it
 	 */
-	public SimpleGameService(int maxPlayers, BoardService boardService) {
-		this(maxPlayers, new Game(boardService.getBoard()), boardService);
+	public SimpleGameService(int maxPlayers, BoardService boardService, GameListenerRegistry listenerRegistry) {
+		this(maxPlayers, new Game(boardService.getBoard()), boardService, listenerRegistry);
 	}
 
-	public SimpleGameService(int maxPlayers, Game game, BoardService boardService) {
+	public SimpleGameService(int maxPlayers, Game game, BoardService boardService, GameListenerRegistry listenerRegistry) {
 		super();
 		this.maxPlayers = maxPlayers;
 		this.boardService = boardService;
 		this.game = game;
+		this.listenerRegistry = listenerRegistry;
 	}
 
 	@Override
 	public void join(Player player) throws GameException {
 		// check if number of players has not reached the max
-		if(game.getPlayers().size()>=maxPlayers) {
+		if(maxPlayers>0 && game.getPlayers().size()>=maxPlayers) {
 			throw new FullGameException("The player can't join this game because the game is full");
 		}
 		// check if player is already in the game
@@ -80,5 +89,15 @@ public class SimpleGameService implements GameService {
 	@Override
 	public Player getPlayer(String playerId) {
 		return game.getPlayer(playerId);
+	}
+
+	@Override
+	public void addGameListener(GameListener listener) {
+		listenerRegistry.addGameListener(listener);
+	}
+
+	@Override
+	public void removeGameListener(GameListener listener) {
+		listenerRegistry.removeGameListener(listener);
 	}
 }

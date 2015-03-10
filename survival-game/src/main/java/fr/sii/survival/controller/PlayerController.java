@@ -1,7 +1,7 @@
 package fr.sii.survival.controller;
 
-import static fr.sii.survival.config.PlayerConfiguration.PLAYER_MAPPING_PREFIX;
 import static fr.sii.survival.config.PlayerConfiguration.PLAYER_PUBLISH_PREFIX;
+import static fr.sii.survival.config.PlayerConfiguration.PLAYER_MAPPING_PREFIX;
 
 import java.util.List;
 

@@ -4,8 +4,9 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.AlreadyInGameException;
 import fr.sii.survival.core.exception.FullGameException;
 import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.listener.game.GameListenerRegistry;
 
-public interface GameService {
+public interface GameService extends GameListenerRegistry {
 
 	/**
 	 * Start the game

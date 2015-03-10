@@ -3,6 +3,7 @@ package fr.sii.survival.core.ext;
 import fr.sii.survival.core.domain.extension.Developer;
 import fr.sii.survival.core.listener.action.ActionListener;
 import fr.sii.survival.core.listener.board.BoardListener;
+import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.listener.player.PlayerListener;
 
 public interface DeveloperProvider {
@@ -41,4 +42,13 @@ public interface DeveloperProvider {
 	 * @return the developer information if found, null otherwise
 	 */
 	public Developer getDeveloper(BoardListener listener);
+	
+	/**
+	 * Get the developer information from the game listener
+	 * 
+	 * @param listener
+	 *            the game listener used for retrieving developer information
+	 * @return the developer information if found, null otherwise
+	 */
+	public Developer getDeveloper(GameListener listener);
 }
