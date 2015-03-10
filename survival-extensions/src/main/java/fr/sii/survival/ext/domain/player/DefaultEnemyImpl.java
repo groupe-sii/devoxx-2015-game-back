@@ -5,9 +5,16 @@ import fr.sii.survival.core.domain.player.Life;
 import fr.sii.survival.core.domain.player.PlayerInfo;
 import fr.sii.survival.core.domain.player.SimpleLife;
 import fr.sii.survival.core.domain.player.States;
+import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.ext.DelegateEnemyManager;
+import fr.sii.survival.core.ext.EnemyExtension;
+import fr.sii.survival.core.ext.GameContext;
+import fr.sii.survival.core.ext.behavior.action.FleeingEnemyManager;
+import fr.sii.survival.core.ext.behavior.move.RandomAroundNearManager;
+import fr.sii.survival.core.ext.behavior.target.RandomPlayerTargetManager;
 
 
-public class DefaultEnemyImpl implements Enemy {
+public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
 
 	private Life life;
 	
@@ -16,6 +23,8 @@ public class DefaultEnemyImpl implements Enemy {
 	private String id;
 	
 	private States states;
+	
+	private DelegateEnemyManager simpleIAEnemyManager;
 
 	private static int counter = 0;
 	
@@ -66,7 +75,9 @@ public class DefaultEnemyImpl implements Enemy {
 	 *            the states to apply on
 	 */
 	public DefaultEnemyImpl(PlayerInfo info, Life life, States states) {
+//		super(new RandomAroundNearManager(), new AreaActionManager(delegate, shape), new RandomPlayerTargetManager());
 		super();
+		simpleIAEnemyManager = new DelegateEnemyManager(new RandomAroundNearManager(), new FleeingEnemyManager(actionService), new RandomPlayerTargetManager());
 		id = ""+counter++;
 		this.info = info;
 		this.life = life;
@@ -91,6 +102,11 @@ public class DefaultEnemyImpl implements Enemy {
 	@Override
 	public PlayerInfo getPlayerInfo() {
 		return info;
+	}
+
+	@Override
+	public void run(GameContext context) throws GameException {
+		simpleIAEnemyManager.run(context);
 	}
 
 }

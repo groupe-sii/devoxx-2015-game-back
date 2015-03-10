@@ -5,14 +5,9 @@ import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.annotation.Developer;
 
 @Developer(value="abaudet", name="Aurélien Baudet")
-public class BasicEnemyExtension implements EnemyExtension {
+public class BasicEnemyExtension extends EnemyExtension {
 
-	@Override
-	public void init() {
-		
-	}
 
-	@Override
 	public void run(GameContext context) {
 		// TODO Auto-generated method stub
 		

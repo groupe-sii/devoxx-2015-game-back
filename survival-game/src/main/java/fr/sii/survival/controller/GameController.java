@@ -18,7 +18,7 @@ import fr.sii.survival.session.UserContext;
 @Controller
 public class GameController extends ErrorController {
 
-	private static Logger logger = LoggerFactory.getLogger(GameController.class);
+	private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
 	@Autowired
 	SimpMessagingTemplate template;
