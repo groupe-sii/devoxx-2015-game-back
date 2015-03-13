@@ -14,13 +14,13 @@ import fr.sii.survival.core.ext.behavior.move.RandomAroundNearManager;
 import fr.sii.survival.core.ext.behavior.target.RandomPlayerTargetManager;
 
 
-public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
+public class LemmingEnemyImpl extends EnemyExtension implements Enemy {
 
 	private Life life;
 	
 	private PlayerInfo info;
 	
-	private String id;
+	private int id;
 	
 	private States states;
 	
@@ -30,13 +30,13 @@ public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
 	
 	private final static String name = "Lemming";
 	
-	private final static String avatar = "";
+	private final static String avatar = "lemming.png";
 	
 	/**
 	 * Creates a Lemming with 1000 points of life (current and maximum)
 	 * 
 	 */
-	public DefaultEnemyImpl() {
+	public LemmingEnemyImpl() {
 		this(new PlayerInfo(name, avatar), 1000);
 	}
 
@@ -48,7 +48,7 @@ public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
 	 * @param life
 	 *            the points of life of the wizard (current and maximum)
 	 */
-	public DefaultEnemyImpl(PlayerInfo info, int life) {
+	public LemmingEnemyImpl(PlayerInfo info, int life) {
 		this(info, new SimpleLife(life));
 	}
 
@@ -60,7 +60,7 @@ public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
 	 * @param life
 	 *            the life of the lemming
 	 */
-	public DefaultEnemyImpl(PlayerInfo info, Life life) {
+	public LemmingEnemyImpl(PlayerInfo info, Life life) {
 		this(info, life, new States());
 	}
 
@@ -74,11 +74,11 @@ public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
 	 * @param states
 	 *            the states to apply on
 	 */
-	public DefaultEnemyImpl(PlayerInfo info, Life life, States states) {
+	public LemmingEnemyImpl(PlayerInfo info, Life life, States states) {
 //		super(new RandomAroundNearManager(), new AreaActionManager(delegate, shape), new RandomPlayerTargetManager());
 		super();
 		simpleIAEnemyManager = new DelegateEnemyManager(new RandomAroundNearManager(), new FleeingEnemyManager(actionService), new RandomPlayerTargetManager());
-		id = ""+counter++;
+		id = counter++;
 		this.info = info;
 		this.life = life;
 		this.states = states;
@@ -91,7 +91,7 @@ public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
 
 	@Override
 	public String getId() {
-		return id;
+		return "LemmingEnemyImpl:" + id;
 	}
 
 	@Override
@@ -109,4 +109,37 @@ public class DefaultEnemyImpl extends EnemyExtension implements Enemy {
 		simpleIAEnemyManager.run(context);
 	}
 
+	@Override
+	public EnemyExtension getExtension() {
+		return simpleIAEnemyManager;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LemmingEnemyImpl other = (LemmingEnemyImpl) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{").append(getId()).append(info).append(life).append(states).append("}");
+		return builder.toString();
+	}
 }

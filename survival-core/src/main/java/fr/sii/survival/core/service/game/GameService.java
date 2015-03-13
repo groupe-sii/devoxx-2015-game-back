@@ -1,5 +1,6 @@
 package fr.sii.survival.core.service.game;
 
+import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.AlreadyInGameException;
 import fr.sii.survival.core.exception.FullGameException;
@@ -34,12 +35,30 @@ public interface GameService extends GameListenerRegistry {
 	public void join(Player player) throws GameException;
 
 	/**
+	 * Add an Enemy player to the game. 
+	 * 
+	 * @param enemy
+	 *            the enemy to add to the game
+	 * @throws GameException 
+	 * 			  when the enemy cant run
+	 */
+	public void join(Enemy enemy) throws GameException;
+	
+	/**
 	 * Remove a player from the game.
 	 * 
 	 * @param player
 	 *            the player to remove
 	 */
 	public void quit(Player player);
+	
+	/**
+	 * Remove an Enemy from the game. 
+	 * 
+	 * @param enemy
+	 *            the enemy to remove
+	 */
+	public void quit(Enemy enemy);
 
 	/**
 	 * Get the player from its id

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import fr.sii.survival.core.domain.action.Action;
+import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.domain.player.Life;
 import fr.sii.survival.core.domain.player.Player;
 

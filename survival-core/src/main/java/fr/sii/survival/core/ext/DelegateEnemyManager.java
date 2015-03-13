@@ -8,6 +8,7 @@ import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.ext.behavior.action.EnemyActionManager;
 import fr.sii.survival.core.ext.behavior.move.EnemyMoveManager;
 import fr.sii.survival.core.ext.behavior.target.TargetManager;
+import fr.sii.survival.core.service.action.ActionService;
 
 /**
  * Basic enemy extension that simply delegates computation to:

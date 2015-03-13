@@ -10,6 +10,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import fr.sii.survival.EnemyFactory;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.PlayerInfo;
@@ -42,6 +43,7 @@ public class GameController extends ErrorController implements GameListener {
 		logger.info("player {} is joining the game", player);
 		SimpleWizard p = new SimpleWizard(player, defaultLife);
 		gameService.join(p);
+		gameService.join(EnemyFactory.getNewEnemy());
 		userContext.setPlayerId(p.getId());
 	}
 

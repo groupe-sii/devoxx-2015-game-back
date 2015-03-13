@@ -4,6 +4,7 @@ import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.domain.player.Life;
 import fr.sii.survival.core.domain.player.PlayerInfo;
 import fr.sii.survival.core.domain.player.States;
+import fr.sii.survival.core.ext.EnemyExtension;
 
 public class WorldBoss implements Enemy {
 
@@ -33,6 +34,12 @@ public class WorldBoss implements Enemy {
 
 	@Override
 	public PlayerInfo getPlayerInfo() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public EnemyExtension getExtension() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,12 +1,17 @@
 package fr.sii.survival.core.service.game;
 
 import fr.sii.survival.core.domain.Game;
+import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.AlreadyInGameException;
 import fr.sii.survival.core.exception.FullGameException;
 import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.listener.game.GameListenerRegistry;
+import fr.sii.survival.core.service.action.ActionService;
+import fr.sii.survival.core.service.action.DelegateActionService;
 import fr.sii.survival.core.service.board.BoardService;
 
 public class SimpleGameService implements GameService {
@@ -20,6 +25,11 @@ public class SimpleGameService implements GameService {
 	 * The board service used to add/remove players on it
 	 */
 	private BoardService boardService;
+	
+	/**
+	 * The action service used for enemies
+	 */
+	private ActionService actionService;
 
 	/**
 	 * The maximum number of allowed players
@@ -40,14 +50,15 @@ public class SimpleGameService implements GameService {
 	 * @param boardService
 	 *            the board service used to add/remove players on it
 	 */
-	public SimpleGameService(int maxPlayers, BoardService boardService, GameListenerRegistry listenerRegistry) {
-		this(maxPlayers, new Game(boardService.getBoard()), boardService, listenerRegistry);
+	public SimpleGameService(int maxPlayers, BoardService boardService, ActionService actionService, GameListenerRegistry listenerRegistry) {
+		this(maxPlayers, new Game(boardService.getBoard()), boardService, actionService, listenerRegistry);
 	}
-
-	public SimpleGameService(int maxPlayers, Game game, BoardService boardService, GameListenerRegistry listenerRegistry) {
+	
+	public SimpleGameService(int maxPlayers, Game game, BoardService boardService, ActionService actionService, GameListenerRegistry listenerRegistry) {
 		super();
 		this.maxPlayers = maxPlayers;
 		this.boardService = boardService;
+		this.actionService = actionService;
 		this.game = game;
 		this.listenerRegistry = listenerRegistry;
 	}
@@ -67,17 +78,30 @@ public class SimpleGameService implements GameService {
 	}
 
 	@Override
+	public void join(Enemy enemy) throws GameException {
+		game.addPlayer(enemy);
+		boardService.add(enemy);
+	}
+	
+	@Override
 	public void quit(Player player) {
 		if(game.contains(player)) {
 			game.removePlayer(player);
 			boardService.remove(player);
 		}
 	}
+	
+	@Override
+	public void quit(Enemy enemy) {
+		if(game.contains(enemy)) {
+			game.removePlayer(enemy);
+			boardService.remove(enemy);
+		}
+	}
 
 	@Override
 	public void start() {
 		// TODO start running the game and execute enemy extensions
-		
 	}
 
 	@Override
