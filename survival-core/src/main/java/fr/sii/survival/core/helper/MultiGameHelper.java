@@ -1,6 +1,8 @@
 package fr.sii.survival.core.helper;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import fr.sii.survival.core.domain.Game;
@@ -61,6 +63,10 @@ public class MultiGameHelper {
 			}
 		}
 		throw new GameNotFoundException("No game found for board "+board);
+	}
+	
+	public List<Game> getGames() {
+		return new ArrayList<>(gamesById.values());
 	}
 
 }

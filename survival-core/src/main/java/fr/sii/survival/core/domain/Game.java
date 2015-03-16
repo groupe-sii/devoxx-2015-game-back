@@ -2,6 +2,7 @@ package fr.sii.survival.core.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.player.Player;
@@ -29,22 +30,53 @@ public class Game {
 	 */
 	private boolean started;
 	
+	/**
+	 * Is the game full
+	 */
+	private boolean full;
+	
 	public Game(Board board) {
 		this(new ArrayList<>(), board);
 	}
 
 	public Game(List<Player> players, Board board) {
 		super();
-		this.id = "game:"+(counter++);
+		this.id = "game-"+(counter++);
 		this.players = players;
 		this.board = board;
 		started = false;
 	}
 
+	/**
+	 * Get the whole list of players
+	 * 
+	 * @return the whole list of players
+	 */
 	public List<Player> getPlayers() {
 		return players;
 	}
 
+	/**
+	 * Get filtered list of players
+	 * 
+	 * @param predicate the filter condition
+	 * @return the 
+	 */
+	public List<Player> getPlayers(Predicate<Player> predicate) {
+		List<Player> filtered = new ArrayList<>(players.size());
+		for(Player p : players) {
+			if(predicate.test(p)) {
+				filtered.add(p);
+			}
+		}
+		return filtered;
+	}
+
+	/**
+	 * Get the board information
+	 * 
+	 * @return 
+	 */
 	public Board getBoard() {
 		return board;
 	}
@@ -125,6 +157,14 @@ public class Game {
 
 	public void setStarted(boolean started) {
 		this.started = started;
+	}
+
+	public boolean isFull() {
+		return full;
+	}
+
+	public void setFull(boolean full) {
+		this.full = full;
 	}
 
 	@Override

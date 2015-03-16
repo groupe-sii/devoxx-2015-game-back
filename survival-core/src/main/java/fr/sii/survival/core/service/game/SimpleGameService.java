@@ -69,10 +69,15 @@ public class SimpleGameService implements GameService {
 	 */
 	private MultiGameHelper gameHelper;
 	
+	/**
+	 * The game selector
+	 */
+	private GameSelector gameSelector;
+	
 	private Map<Game, ScheduledExecutorService> executors;
 	
 	private List<EnemyExtension> extensions;
-	
+
 	/**
 	 * Initialize the service
 	 * 
@@ -90,8 +95,10 @@ public class SimpleGameService implements GameService {
 	 *            provide enemies to add in the game
 	 * @param gameHelper
 	 *            helper for useful for multi-game management
+	 * @param gameSelector
+	 *            game select management
 	 */
-	public SimpleGameService(int maxPlayers, long delay, BoardService boardService, MessageService messageService, GameListenerRegistry listenerRegistry, ExtensionProvider extensionProvider, MultiGameHelper gameHelper) {
+	public SimpleGameService(int maxPlayers, long delay, BoardService boardService, MessageService messageService, GameListenerRegistry listenerRegistry, ExtensionProvider extensionProvider, MultiGameHelper gameHelper, GameSelector gameSelector) {
 		super();
 		this.maxPlayers = maxPlayers;
 		this.delay = delay;
@@ -100,6 +107,7 @@ public class SimpleGameService implements GameService {
 		this.listenerRegistry = listenerRegistry;
 		this.extensionProvider = extensionProvider;
 		this.gameHelper = gameHelper;
+		this.gameSelector = gameSelector;
 		this.extensions = new ArrayList<EnemyExtension>();
 	}
 
@@ -113,10 +121,19 @@ public class SimpleGameService implements GameService {
 	}
 	
 	@Override
+	public Game select() {
+		Game game = gameSelector.select(gameHelper.getGames());
+		if(game==null) {
+			game = create();
+		}
+		return game;
+	}
+	
+	@Override
 	public void join(Game game, Player player) throws GameException {
 		if(player instanceof Wizard) {
 			// check if number of players has not reached the max
-			if(maxPlayers>0 && game.getPlayers().size()>=maxPlayers) {
+			if(isFull(game)) {
 				throw new FullGameException("The player can't join this game because the game is full");
 			}
 			// check if player is already in the game
@@ -125,13 +142,21 @@ public class SimpleGameService implements GameService {
 			}
 		}
 		game.addPlayer(player);
+		if(isFull(game)) {
+			game.setFull(true);
+		}
 		boardService.add(game.getBoard(), player);
+	}
+
+	private boolean isFull(Game game) {
+		return maxPlayers>0 && game.getPlayers(new PlayerTypePredicate(Wizard.class)).size()>=maxPlayers;
 	}
 
 	@Override
 	public void quit(Game game, Player player) throws GameException {
 		if (game.contains(player)) {
 			game.removePlayer(player);
+			game.setFull(false);
 			boardService.remove(game.getBoard(), player);
 		}
 	}

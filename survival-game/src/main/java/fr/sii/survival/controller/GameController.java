@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
@@ -48,22 +47,16 @@ public class GameController extends ErrorController implements GameListener {
 	@Autowired
 	GameOptions gameOptions;
 	
-	private Game game;
-	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/create")
-	@SendTo(SERVER_PUBLISH_PREFIX+"/created")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/created")
 	public Game create() {
 		return gameService.create();
 	}
 
 	@MessageMapping(GAME_MAPPING_PREFIX+"/select")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/selected")
-	public Game initGame() {
-		if(this.game==null) {
-			Game game = create();
-			this.game = game;
-		}
-		return this.game;
+	@SendToUser({SERVER_PUBLISH_PREFIX+"/selected", "/selected"})
+	public Game select() {
+		return gameService.select();
 	}
 	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/info")

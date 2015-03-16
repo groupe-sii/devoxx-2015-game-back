@@ -19,6 +19,14 @@ public interface GameService extends GameListenerRegistry {
 	public Game create();
 
 	/**
+	 * Select a game. If needed, a new game can be created. According to
+	 * implementation, the selection can be load balanced.
+	 * 
+	 * @return the selected game
+	 */
+	public Game select();
+
+	/**
 	 * Start the game
 	 * 
 	 * @param game
