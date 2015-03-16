@@ -3,6 +3,8 @@ package fr.sii.survival.core.ext.behavior.action;
 import java.util.List;
 
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.ext.behavior.action.shape.Shape;
 
 /**
  * Action manager that applies the delegate action to the provided area.
@@ -30,7 +32,7 @@ public class AreaActionManager implements EnemyActionManager {
 	}
 
 	@Override
-	public void execute(Cell origin) {
+	public void execute(Cell origin) throws GameException {
 		// compute area using shape
 		List<Cell> cells = shape.getCells(origin);
 		// execute several times the delegate

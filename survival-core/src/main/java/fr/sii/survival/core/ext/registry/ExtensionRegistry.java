@@ -5,7 +5,18 @@ import java.util.List;
 import fr.sii.survival.core.ext.EnemyExtension;
 
 public interface ExtensionRegistry {
-	public void register(EnemyExtension extension);
-	
-	public List<EnemyExtension> getEnemyExtensions();
+	/**
+	 * Register an extension
+	 * 
+	 * @param extension
+	 *            the extension to register
+	 */
+	public void register(Class<? extends EnemyExtension> extension);
+
+	/**
+	 * Give the whole list of available extensions
+	 * 
+	 * @return the list of available extensions
+	 */
+	public List<Class<? extends EnemyExtension>> getEnemyExtensions();
 }

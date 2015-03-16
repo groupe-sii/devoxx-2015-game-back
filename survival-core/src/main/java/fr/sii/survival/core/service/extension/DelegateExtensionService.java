@@ -21,7 +21,7 @@ public class DelegateExtensionService implements ExtensionService {
 	 * The developer provider
 	 */
 	private DeveloperProvider developerProvider;
-
+	
 	public DelegateExtensionService(DeveloperProvider developerProvider) {
 		super();
 		this.developerProvider = developerProvider;

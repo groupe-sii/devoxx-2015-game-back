@@ -1,4 +1,4 @@
-package fr.sii.survival.core.ext.behavior.action;
+package fr.sii.survival.core.ext.behavior.action.shape;
 
 import java.util.List;
 

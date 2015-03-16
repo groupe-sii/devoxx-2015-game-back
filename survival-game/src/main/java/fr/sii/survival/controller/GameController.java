@@ -5,12 +5,12 @@ import static fr.sii.survival.config.GameConfiguration.GAME_PUBLISH_PREFIX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
-import fr.sii.survival.EnemyFactory;
+import fr.sii.survival.config.options.LifeOptions;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.PlayerInfo;
@@ -32,31 +32,47 @@ public class GameController extends ErrorController implements GameListener {
 	@Autowired
 	GameService gameService;
 
-	@Value("${game.life.default}")
-	int defaultLife;
+	@Autowired
+	LifeOptions lifeOptions;
 
 	@Autowired
 	UserContext userContext;
 
+	
+	@MessageMapping("/info")
+	@SendToUser("/info")
+	public Game info() {
+		return gameService.getGame();
+	}
+	
 	@MessageMapping("/player/join")
-	public void join(PlayerInfo player) throws GameException {
+	@SendToUser("/player/join")
+	public Player join(PlayerInfo player) throws GameException {
 		logger.info("player {} is joining the game", player);
-		SimpleWizard p = new SimpleWizard(player, defaultLife);
+		SimpleWizard p = new SimpleWizard(player, lifeOptions.getDefaultLife());
 		gameService.join(p);
-		gameService.join(EnemyFactory.getNewEnemy());
 		userContext.setPlayerId(p.getId());
+		// auto-start
+		if(!gameService.isStarted()) {
+			gameService.start();
+		}
+		return p;
 	}
 
 	@MessageMapping("/player/quit")
-	public void quit() throws GameException {
+	@SendToUser("/player/quit")
+	public Player quit() throws GameException {
 		String playerId = userContext.getPlayerId();
 		if(playerId!=null) {
 			Player player = gameService.getPlayer(playerId);
 			if(player!=null) {
 				logger.info("player {} is quitting the game", player);
 				gameService.quit(player);
+				// TODO: auto-stop when nobody in game
+				return player;
 			}
 		}
+		return null;
 	}
 	
 	@Override

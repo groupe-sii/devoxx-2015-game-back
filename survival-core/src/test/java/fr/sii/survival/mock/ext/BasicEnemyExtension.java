@@ -8,9 +8,19 @@ import fr.sii.survival.core.ext.annotation.Developer;
 public class BasicEnemyExtension extends EnemyExtension {
 
 
+	public BasicEnemyExtension() {
+		super("basic", "", 1000);
+	}
+
+	@Override
 	public void run(GameContext context) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void init() {
+		// TODO Auto-generated method stub
 	}
 
 }

@@ -1,5 +1,6 @@
 package fr.sii.survival.core.service.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -49,7 +50,7 @@ public class SimpleBoardService implements BoardService {
 
 	@Override
 	public List<Player> getPlayers(Cell cell) {
-		List<Player> players = board.getPlayers(cell);
+		List<Player> players = new ArrayList<>(board.getPlayers(cell));
 		logger.debug("players found on {} : {}", cell, players);
 		return players;
 	}

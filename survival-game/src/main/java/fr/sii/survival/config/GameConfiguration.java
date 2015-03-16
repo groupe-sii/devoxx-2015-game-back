@@ -1,12 +1,23 @@
 package fr.sii.survival.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import fr.sii.survival.WebSocketConfig;
+import fr.sii.survival.config.options.EnemyOptions;
+import fr.sii.survival.config.options.GameOptions;
+import fr.sii.survival.core.ext.SpecialEnemy;
+import fr.sii.survival.core.ext.provider.DelayProvider;
+import fr.sii.survival.core.ext.provider.EveryEnemyProvider;
+import fr.sii.survival.core.ext.provider.ExtensionProvider;
+import fr.sii.survival.core.ext.provider.MaxProvider;
+import fr.sii.survival.core.ext.provider.RandomProvider;
+import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
+import fr.sii.survival.core.ext.registry.ExtensionRegistry;
+import fr.sii.survival.core.ext.registry.PreFilteredRegistry;
+import fr.sii.survival.core.ext.registry.predicate.TypePredicate;
 import fr.sii.survival.core.listener.game.GameListenerManager;
 import fr.sii.survival.core.listener.game.SimpleGameListenerManager;
 import fr.sii.survival.core.service.action.ActionService;
@@ -26,21 +37,46 @@ public class GameConfiguration {
 	BoardService boardService;
 	
 	@Autowired
-	ActionService actionService;
-	
-	@Autowired
 	MessageService errorService;
 	
 	@Autowired
 	ExtensionService extensionService;
 	
+	@Autowired
+	ActionService actionService;
+	
+	@Autowired
+	EnemyOptions enemyOptions;
+	
+	@Autowired
+	GameOptions gameOptions;
+	
 	@Bean
-	public GameService gameService(@Value("${game.players.max}") int maxPlayers) {
-		return new SimpleGameService(maxPlayers, boardService, actionService, gameListenerManager());
+	public GameService gameService() {
+		return new SimpleGameService(gameOptions.getMaxPlayers(), gameOptions.getSchedulingDelay(), boardService, errorService, gameListenerManager(), extensionProvider());
 	}
 
 	@Bean
 	public GameListenerManager gameListenerManager() {
 		return new SimpleGameListenerManager(errorService, extensionService);
+	}
+
+	@Bean
+	public ExtensionProvider extensionProvider() {
+		// provider for basic enemies
+		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, extensionService, new PreFilteredRegistry(new TypePredicate(SpecialEnemy.class).negate(), extensionRegistry()));
+		// provider for special enemies
+		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, extensionService, new PreFilteredRegistry(new TypePredicate(SpecialEnemy.class), extensionRegistry()));
+		// invoke special enemies every n basic enemies
+		ExtensionProvider everyProvider = new EveryEnemyProvider(enemyOptions.getSpecialEvery(), basicRandomProvider, specialRandomProvider);
+		// limit the maximum number of enemies on the board
+		ExtensionProvider maxProvider = new MaxProvider(enemyOptions.getMaxEnemies(), everyProvider);
+		// invoke an enemy only after a certain delay
+		return new DelayProvider(enemyOptions.getAddDelay(), maxProvider);
+	}
+
+	@Bean
+	public ExtensionRegistry extensionRegistry() {
+		return new AutoDiscoveryExtensionRegistry(extensionService);
 	}
 }

@@ -37,7 +37,7 @@ public class ChangeStateActionManager implements ActionManager<ChangeStates> {
 
 	@Override
 	public boolean supports(Action action) {
-		return action instanceof StateChange;
+		return action instanceof ChangeStates;
 	}
 
 	@Override

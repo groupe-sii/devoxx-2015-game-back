@@ -37,13 +37,9 @@ public class FleeingEnemyManager extends SimpleActionManager {
 	}
 
 	@Override
-	public void execute(Cell cell) {
-		try {
-			actionService.execute(new ChangeStates(cell, new StateChange(Insult.getInsult(iterate).toString())));
-			iterate = (iterate++)%insults;
-		} catch (ActionException e) {
-			//DO Nothing
-		}
+	public void execute(Cell cell) throws ActionException {
+		actionService.execute(new ChangeStates(cell, new StateChange(Insult.getInsult(iterate).toString())));
+		iterate = (iterate++)%insults;
 	}
 
 }
