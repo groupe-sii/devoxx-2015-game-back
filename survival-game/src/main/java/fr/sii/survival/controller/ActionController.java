@@ -44,7 +44,7 @@ public class ActionController extends ErrorController implements ActionListener 
 	
 	@Override
 	public void imageMoved(Game game, MoveImage action) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/action/image/moved", action);
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/image/moved", action);
 	}
 
 	@Override

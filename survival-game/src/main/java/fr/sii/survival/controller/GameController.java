@@ -69,7 +69,7 @@ public class GameController extends ErrorController implements GameListener {
 	}
 	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/join")
-//	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/join")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/joined")
 	public Player join(@DestinationVariable String gameId, PlayerInfo player) throws GameException {
 		logger.info("player {} is joining the game {}", player, gameId);
 		Player p = playerService.create(player);
@@ -86,8 +86,8 @@ public class GameController extends ErrorController implements GameListener {
 	}
 
 	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/leave")
-//	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/leave")
-	public void quit(@DestinationVariable String gameId) throws GameException {
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/left")
+	public Player quit(@DestinationVariable String gameId) throws GameException {
 		Game game = gameService.getGame(gameId);
 		Player player = gameService.getPlayer(game, userContext.getPlayerId());
 		logger.info("player {} is leaving the game {}", player, game);
@@ -96,6 +96,7 @@ public class GameController extends ErrorController implements GameListener {
 		if(gameOptions.isAutoStop() && gameService.isStarted(game) && game.getPlayers().size()<=0) {
 			gameService.stop(game);
 		}
+		return player;
 	}
 	
 	@Override
