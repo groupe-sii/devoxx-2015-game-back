@@ -110,11 +110,11 @@ public class GameController extends ErrorController implements GameListener {
 
 	@Override
 	public void joined(Player player, Game game) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/joined", player);
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/player/joined", player);
 	}
 
 	@Override
 	public void left(Player player, Game game) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/left", player);
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/player/left", player);
 	}
 }
