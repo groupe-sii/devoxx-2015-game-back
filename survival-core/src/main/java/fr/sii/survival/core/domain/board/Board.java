@@ -6,7 +6,14 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.util.MultiValueMatrix;
 
 public class Board {
+	private static int counter = 0;
+	
 	private MultiValueMatrix<Player> matrix;
+	
+	/**
+	 * The id of the board
+	 */
+	private int id;
 
 	/**
 	 * Copy constructor that copies the board information
@@ -15,7 +22,7 @@ public class Board {
 	 *            the board to copy
 	 */
 	public Board(Board board) {
-		this(board.getWidth(), board.getHeight());
+		this(board.getId(), board.getWidth(), board.getHeight());
 		for (int i = 0; i < board.getWidth(); i++) {
 			for (int j = 0; j < board.getHeight(); j++) {
 				List<Player> players = board.getPlayers(new Cell(i, j));
@@ -33,7 +40,11 @@ public class Board {
 	 *            the number of columns
 	 */
 	public Board(int rows, int cols) {
-		super();
+		this(counter++, rows, cols);
+	}
+	
+	protected Board(int id, int rows, int cols) {
+		this.id = id;
 		matrix = new MultiValueMatrix<Player>(cols, rows);
 	}
 
@@ -97,6 +108,32 @@ public class Board {
 
 	public int getWidth() {
 		return matrix.getCols();
+	}
+
+	public int getId() {
+		return id;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Board other = (Board) obj;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 	@Override

@@ -6,11 +6,13 @@ import static fr.sii.survival.config.GameConfiguration.GAME_MAPPING_PREFIX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import fr.sii.survival.config.options.GameOptions;
 import fr.sii.survival.config.options.LifeOptions;
@@ -25,7 +27,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 import fr.sii.survival.session.UserContext;
 
 @Controller
-public class GameController extends ErrorController implements GameListener {
+public class GameController extends ErrorController implements GameListener, ApplicationListener<SessionDisconnectEvent> {
 
 	private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
@@ -63,13 +65,13 @@ public class GameController extends ErrorController implements GameListener {
 	}
 	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/info")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/{gameId}/info")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/info")
 	public Game info(@DestinationVariable String gameId) throws GameNotFoundException {
 		return gameService.getGame(gameId);
 	}
 	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/join")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/joined")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/joined")
 	public Player join(@DestinationVariable String gameId, PlayerInfo player) throws GameException {
 		logger.info("player {} is joining the game {}", player, gameId);
 		Player p = playerService.create(player);
@@ -86,7 +88,7 @@ public class GameController extends ErrorController implements GameListener {
 	}
 
 	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/leave")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/left")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/left")
 	public Player quit(@DestinationVariable String gameId) throws GameException {
 		Game game = gameService.getGame(gameId);
 		Player player = gameService.getPlayer(game, userContext.getPlayerId());
@@ -117,5 +119,14 @@ public class GameController extends ErrorController implements GameListener {
 	@Override
 	public void left(Player player, Game game) {
 		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/player/left", player);
+	}
+
+	@Override
+	public void onApplicationEvent(SessionDisconnectEvent event) {
+		try {
+			quit(userContext.getGameId());
+		} catch (GameException e) {
+			logger.warn("Failed to disconnect user with session id: {}. Cause: {}", event.getSessionId(), e.getMessage());
+		}
 	}
 }

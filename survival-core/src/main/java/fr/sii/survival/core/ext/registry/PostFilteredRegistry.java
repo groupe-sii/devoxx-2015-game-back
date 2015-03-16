@@ -40,7 +40,7 @@ public class PostFilteredRegistry implements ExtensionRegistry {
 				filtered.add(extension);
 			}
 		}
-		return enemyExtensions;
+		return filtered;
 	}
 
 }

@@ -2,14 +2,14 @@ package fr.sii.survival.core.ext.behavior;
 
 import java.util.List;
 
-import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.behavior.action.EnemyActionManager;
 import fr.sii.survival.core.ext.behavior.move.EnemyMoveManager;
 import fr.sii.survival.core.ext.behavior.target.TargetManager;
-import fr.sii.survival.core.service.action.ActionService;
+import fr.sii.survival.core.service.board.BoardService;
 
 /**
  * Basic enemy helper that simply delegates computation to:
@@ -24,7 +24,9 @@ import fr.sii.survival.core.service.action.ActionService;
  */
 public class DelegateEnemyManager {
 
-	private ActionService actionService;
+	private Enemy enemy;
+
+	private BoardService boardService;
 
 	private EnemyMoveManager moveManager;
 
@@ -32,9 +34,10 @@ public class DelegateEnemyManager {
 
 	private TargetManager targetManager;
 
-	public DelegateEnemyManager(ActionService actionService, EnemyMoveManager moveManager, EnemyActionManager actionManager, TargetManager targetManager) {
+	public DelegateEnemyManager(Enemy enemy, BoardService boardService, EnemyMoveManager moveManager, EnemyActionManager actionManager, TargetManager targetManager) {
 		super();
-		this.actionService = actionService;
+		this.enemy = enemy;
+		this.boardService = boardService;
 		this.moveManager = moveManager;
 		this.actionManager = actionManager;
 		this.targetManager = targetManager;
@@ -49,7 +52,7 @@ public class DelegateEnemyManager {
 		}
 		// compute the position where the enemy will move to
 		Cell next = moveManager.getNextPosition(context);
-		// change the position
-		actionService.execute(context.getGame(), new ChangePosition(context.getCell(), next));
+		// change the position of the enemy
+		boardService.move(context.getBoard(), enemy, next);
 	}
 }

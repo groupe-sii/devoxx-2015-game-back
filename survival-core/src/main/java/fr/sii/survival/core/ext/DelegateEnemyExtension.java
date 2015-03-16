@@ -57,7 +57,7 @@ public abstract class DelegateEnemyExtension extends EnemyExtension {
 
 	@Override
 	public void run(GameContext context) throws GameException {
-		DelegateEnemyManager simpleIAEnemyManager = new DelegateEnemyManager(actionService, getMoveManager(context), getActionManager(context), getTargetManager(context));
+		DelegateEnemyManager simpleIAEnemyManager = new DelegateEnemyManager(getEnemy(), boardService, getMoveManager(context), getActionManager(context), getTargetManager(context));
 		simpleIAEnemyManager.run(context);
 	}
 

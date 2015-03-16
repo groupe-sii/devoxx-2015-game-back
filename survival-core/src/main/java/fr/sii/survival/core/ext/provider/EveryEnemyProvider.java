@@ -44,6 +44,7 @@ public class EveryEnemyProvider implements ExtensionProvider {
 
 	@Override
 	public List<EnemyExtension> getEnemies(Game game) throws ExtensionInitializationException {
+		count++;
 		if (count < every) {
 			return principal.getEnemies(game);
 		} else {

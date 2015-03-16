@@ -9,6 +9,7 @@ import fr.sii.survival.core.exception.ExtensionInitializationException;
 import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.ext.registry.ExtensionRegistry;
 import fr.sii.survival.core.service.action.ActionService;
+import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
 
 /**
@@ -21,8 +22,8 @@ public class RandomProvider extends AbstractProvider {
 
 	private ExtensionRegistry registry;
 
-	public RandomProvider(ActionService actionService, ExtensionService extensionService, ExtensionRegistry registry) {
-		super(actionService, extensionService);
+	public RandomProvider(ActionService actionService, BoardService boardService, ExtensionService extensionService, ExtensionRegistry registry) {
+		super(actionService, boardService, extensionService);
 		this.registry = registry;
 	}
 

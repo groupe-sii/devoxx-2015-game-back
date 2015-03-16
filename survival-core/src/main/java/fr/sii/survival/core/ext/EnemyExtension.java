@@ -4,6 +4,7 @@ import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.domain.player.SimpleEnemy;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.service.action.ActionService;
+import fr.sii.survival.core.service.board.BoardService;
 
 /**
  * Base class for enemy extensions
@@ -16,6 +17,11 @@ public abstract class EnemyExtension {
 	 * The service used to execute actions
 	 */
 	protected ActionService actionService;
+
+	/**
+	 * The service used to manage board
+	 */
+	protected BoardService boardService;
 
 	/**
 	 * The enemy the extension is managing
@@ -56,5 +62,13 @@ public abstract class EnemyExtension {
 
 	public void setActionService(ActionService actionService) {
 		this.actionService = actionService;
+	}
+
+	protected BoardService getBoardService() {
+		return boardService;
+	}
+
+	public void setBoardService(BoardService boardService) {
+		this.boardService = boardService;
 	}
 }
