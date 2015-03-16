@@ -56,8 +56,8 @@ public class GameController extends ErrorController implements GameListener {
 		return gameService.create();
 	}
 
-	@MessageMapping(GAME_MAPPING_PREFIX+"/initialize")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/initialized")
+	@MessageMapping(GAME_MAPPING_PREFIX+"/select")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/selected")
 	public Game initGame() {
 		if(this.game==null) {
 			Game game = create();
