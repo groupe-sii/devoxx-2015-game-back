@@ -56,16 +56,19 @@ public class GameController extends ErrorController implements GameListener {
 	@MessageMapping(GAME_MAPPING_PREFIX+"/select")
 	@SendToUser({SERVER_PUBLISH_PREFIX+"/selected", "/selected"})
 	public Game select() {
-		return gameService.select();
+		logger.debug("selecting game");
+		Game game = gameService.select();
+		logger.info("game selected {}", game);
+		return game;
 	}
 	
-	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/info")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/info")
+	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/info")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/{gameId}/info")
 	public Game info(@DestinationVariable String gameId) throws GameNotFoundException {
 		return gameService.getGame(gameId);
 	}
 	
-	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/join")
+	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/join")
 //	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/join")
 	public Player join(@DestinationVariable String gameId, PlayerInfo player) throws GameException {
 		logger.info("player {} is joining the game {}", player, gameId);
@@ -82,12 +85,12 @@ public class GameController extends ErrorController implements GameListener {
 		return p;
 	}
 
-	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/leave")
+	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/leave")
 //	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/leave")
 	public void quit(@DestinationVariable String gameId) throws GameException {
 		Game game = gameService.getGame(gameId);
 		Player player = gameService.getPlayer(game, userContext.getPlayerId());
-		logger.info("player {} is quitting the game {}", player, game);
+		logger.info("player {} is leaving the game {}", player, game);
 		gameService.quit(game, player);
 		userContext.setGameId(null);
 		if(gameOptions.isAutoStop() && gameService.isStarted(game) && game.getPlayers().size()<=0) {
@@ -111,7 +114,7 @@ public class GameController extends ErrorController implements GameListener {
 	}
 
 	@Override
-	public void leaved(Player player, Game game) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/leaved", player);
+	public void left(Player player, Game game) {
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/left", player);
 	}
 }

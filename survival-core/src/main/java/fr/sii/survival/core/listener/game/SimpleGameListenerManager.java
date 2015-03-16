@@ -85,7 +85,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 	public void triggerLeaved(Player player, Game game) {
 		for(GameListener listener : listeners.values()) {
 			try {
-				listener.leaved(player, game);
+				listener.left(player, game);
 			} catch(Throwable e) {
 				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}

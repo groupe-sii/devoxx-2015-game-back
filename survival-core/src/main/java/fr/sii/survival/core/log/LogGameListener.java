@@ -26,8 +26,8 @@ public class LogGameListener implements GameListener {
 	}
 
 	@Override
-	public void leaved(Player player, Game game) {
-		logger.info("player {} has leaved the game {}", player, game);
+	public void left(Player player, Game game) {
+		logger.info("player {} has left the game {}", player, game);
 	}
 
 }

@@ -34,9 +34,9 @@ public abstract class AbstractSingleGameListener implements GameListener {
 	}
 
 	@Override
-	public void leaved(Player player, Game game) {
+	public void left(Player player, Game game) {
 		if(this.game.equals(game)) {
-			leaved(player);
+			left(player);
 		}
 	}
 
@@ -46,5 +46,5 @@ public abstract class AbstractSingleGameListener implements GameListener {
 	
 	protected abstract void joined(Player player);
 	
-	protected abstract void leaved(Player player);
+	protected abstract void left(Player player);
 }

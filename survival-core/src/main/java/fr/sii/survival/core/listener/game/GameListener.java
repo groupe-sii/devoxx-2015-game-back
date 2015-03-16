@@ -31,12 +31,12 @@ public interface GameListener {
 	public void joined(Player player, Game game);
 
 	/**
-	 * Fired when a player has leaved the game
+	 * Fired when a player has left the game
 	 * 
 	 * @param player
 	 *            the player who joined
 	 * @param game
 	 *            the game information
 	 */
-	public void leaved(Player player, Game game);
+	public void left(Player player, Game game);
 }

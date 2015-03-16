@@ -191,4 +191,13 @@ public class Game {
 			return false;
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("(id=").append(id).append(",players=").append(players.size()).append(",started=").append(started).append(",full=").append(full).append(")");
+		return builder.toString();
+	}
+	
+	
 }
