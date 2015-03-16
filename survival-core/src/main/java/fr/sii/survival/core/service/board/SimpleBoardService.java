@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.board.BoardListener;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 
@@ -23,82 +25,95 @@ public class SimpleBoardService implements BoardService {
 	private static Logger logger = LoggerFactory.getLogger(SimpleBoardService.class);
 
 	/**
-	 * The board to update
-	 */
-	private Board board;
-	
-	/**
 	 * A cell provider use to place new players on the board
 	 */
 	private CellProvider cellProvider;
-	
+
 	/**
 	 * The registry for board listeners
 	 */
 	private BoardListenerManager listenerManager;
-	
-	public SimpleBoardService(int rows, int cols, CellProvider cellProvider, BoardListenerManager listenerManager) {
-		this(new Board(rows, cols), cellProvider, listenerManager);
-	}
-	
-	public SimpleBoardService(Board board, CellProvider cellProvider, BoardListenerManager listenerManager) {
+
+	/**
+	 * The number of rows on every board
+	 */
+	private int rows;
+
+	/**
+	 * The number of columns on every board
+	 */
+	private int cols;
+
+	/**
+	 * Utility for storing game
+	 */
+	private MultiGameHelper gameHelper;
+
+	public SimpleBoardService(int rows, int cols, CellProvider cellProvider, BoardListenerManager listenerManager, MultiGameHelper gameHelper) {
 		super();
-		this.board = board;
+		this.rows = rows;
+		this.cols = cols;
 		this.cellProvider = cellProvider;
 		this.listenerManager = listenerManager;
+		this.gameHelper = gameHelper;
 	}
 
 	@Override
-	public List<Player> getPlayers(Cell cell) {
+	public Board create() {
+		return new Board(rows, cols);
+	}
+
+	@Override
+	public List<Player> getPlayers(Board board, Cell cell) {
 		List<Player> players = new ArrayList<>(board.getPlayers(cell));
 		logger.debug("players found on {} : {}", cell, players);
 		return players;
 	}
 
 	@Override
-	public Cell move(Player player, Cell cell) {
+	public Cell move(Board board, Player player, Cell cell) throws GameException {
 		Cell old = board.getCell(player);
-		if(old!=null) {
+		if (old != null) {
 			board.remove(player, old);
 		}
 		board.add(player, cell);
 		logger.debug("player {} moved from {} to {}", player, old, cell);
-		listenerManager.triggerMoved(player, old, cell);
+		listenerManager.triggerMoved(gameHelper.getGame(board), player, old, cell);
 		return cell;
 	}
 
 	@Override
-	public Cell move(Player player, Direction direction) {
-		Cell current = getCell(player);
-		int x = current.getX()+direction.getX();
-		int y = current.getY()+direction.getY();
-		if(x>=0 && x<getWidth() && y>=0 && y<getHeight()) {
-			return move(player, new Cell(x, y));
+	public Cell move(Board board, Player player, Direction direction) throws GameException {
+		Cell current = getCell(board, player);
+		int x = current.getX() + direction.getX();
+		int y = current.getY() + direction.getY();
+		if (x >= 0 && x < board.getWidth() && y >= 0 && y < board.getHeight()) {
+			return move(board, player, new Cell(x, y));
 		} else {
 			return current;
 		}
 	}
 
 	@Override
-	public Cell add(Player player) {
+	public Cell add(Board board, Player player) throws GameException {
 		Cell cell = cellProvider.getCell(board);
 		board.add(player, cell);
-		listenerManager.triggerAdded(player, cell);
+		listenerManager.triggerAdded(gameHelper.getGame(board), player, cell);
 		return cell;
 	}
 
 	@Override
-	public Cell remove(Player player) {
+	public Cell remove(Board board, Player player) throws GameException {
 		Cell cell = board.getCell(player);
-		if(cell!=null) {
+		if (cell != null) {
 			board.remove(player, cell);
 		}
-		listenerManager.triggerRemoved(player, cell);
+		listenerManager.triggerRemoved(gameHelper.getGame(board), player, cell);
 		return cell;
 	}
 
 	@Override
-	public Cell getCell(Player player) {
+	public Cell getCell(Board board, Player player) {
 		Cell cell = board.getCell(player);
 		logger.debug("player {} is on {}", player, cell);
 		return cell;
@@ -112,21 +127,6 @@ public class SimpleBoardService implements BoardService {
 	@Override
 	public void removeBoardListener(BoardListener listener) {
 		listenerManager.removeBoardListener(listener);
-	}
-
-	@Override
-	public int getHeight() {
-		return board.getHeight();
-	}
-
-	@Override
-	public int getWidth() {
-		return board.getWidth();
-	}
-
-	@Override
-	public Board getBoard() {
-		return board;
 	}
 
 }

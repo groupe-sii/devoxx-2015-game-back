@@ -3,6 +3,7 @@ package fr.sii.survival.core.listener.action;
 import java.util.HashMap;
 import java.util.Map;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
@@ -46,22 +47,22 @@ public class ParallelActionListenerManager implements ActionListenerManager {
 	}
 
 	@Override
-	public void triggerLifeUpdated(Player player, UpdateLife action) {
+	public void triggerLifeUpdated(Game game, Player player, UpdateLife action) {
 		// TODO
 	}
 
 	@Override
-	public void triggerPositionChanged(Player player, ChangePosition action) {
+	public void triggerPositionChanged(Game game, Player player, ChangePosition action) {
 		// TODO
 	}
 
 	@Override
-	public void triggerImageMoved(MoveImage action) {
+	public void triggerImageMoved(Game game, MoveImage action) {
 		// TODO
 	}
 	
 	@Override
-	public void triggerStateChanged(Player player, ChangeStates action) {
+	public void triggerStateChanged(Game game, Player player, ChangeStates action) {
 		// TODO
 	}
 	

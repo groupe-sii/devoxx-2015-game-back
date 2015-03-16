@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.exception.GameException;
@@ -55,11 +56,11 @@ public class DelayedActionManager implements EnemyActionManager {
 
 
 	@Override
-	public void execute(Cell cell) throws GameException {
+	public void execute(Game game, Cell cell) throws GameException {
 		ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
 		service.scheduleWithFixedDelay(() -> {
 			try {
-				delegate.execute(cell);
+				delegate.execute(game, cell);
 			} catch (GameException e) {
 				// TODO: execute method should throw an exception to propagate it like other
 				logger.error("Failed to execute delayed action", e);

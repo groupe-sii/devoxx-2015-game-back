@@ -2,6 +2,7 @@ package fr.sii.survival.core.ext.behavior.action;
 
 import java.util.List;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.ext.behavior.action.shape.Shape;
@@ -32,12 +33,12 @@ public class AreaActionManager implements EnemyActionManager {
 	}
 
 	@Override
-	public void execute(Cell origin) throws GameException {
+	public void execute(Game game, Cell origin) throws GameException {
 		// compute area using shape
 		List<Cell> cells = shape.getCells(origin);
 		// execute several times the delegate
 		for(Cell cell : cells) {
-			delegate.execute(cell);
+			delegate.execute(game, cell);
 		}
 	}
 

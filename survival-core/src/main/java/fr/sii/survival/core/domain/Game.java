@@ -7,6 +7,13 @@ import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.player.Player;
 
 public class Game {
+	private static int counter = 0;
+	
+	/**
+	 * The game id
+	 */
+	private String id;
+	
 	/**
 	 * The list of players currently in the game
 	 */
@@ -17,14 +24,21 @@ public class Game {
 	 */
 	private Board board;
 
+	/**
+	 * Is the game started
+	 */
+	private boolean started;
+	
 	public Game(Board board) {
 		this(new ArrayList<>(), board);
 	}
 
 	public Game(List<Player> players, Board board) {
 		super();
+		this.id = "game:"+(counter++);
 		this.players = players;
 		this.board = board;
+		started = false;
 	}
 
 	public List<Player> getPlayers() {
@@ -59,7 +73,7 @@ public class Game {
 
 	/**
 	 * Check if the player exists in the list of players. The check is done
-	 * using the player name.
+	 * using the player id.
 	 * 
 	 * @param player
 	 *            the player to check existence
@@ -68,8 +82,23 @@ public class Game {
 	 */
 	public boolean contains(Player player) {
 		return players.stream()
+				.map(p -> p.getId())
+				.anyMatch(n -> n.equals(player.getId()));
+	}
+
+	/**
+	 * Check if the player exists in the list of players. The check is done
+	 * using the player name.
+	 * 
+	 * @param name
+	 *            the name to check existence
+	 * @return true if the player is present in the list of players, false
+	 *         otherwise
+	 */
+	public boolean contains(String name) {
+		return players.stream()
 				.map(p -> p.getPlayerInfo().getName())
-				.anyMatch(n -> n.equals(player.getPlayerInfo().getName()));
+				.anyMatch(n -> n.equals(name));
 	}
 
 	/**
@@ -84,5 +113,42 @@ public class Game {
 				.filter(p -> p.getId().equals(playerId))
 				.findFirst()
 				.orElseGet(null);
+	}
+
+	public String getId() {
+		return id;
+	}
+	
+	public boolean isStarted() {
+		return started;
+	}
+
+	public void setStarted(boolean started) {
+		this.started = started;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Game other = (Game) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 }

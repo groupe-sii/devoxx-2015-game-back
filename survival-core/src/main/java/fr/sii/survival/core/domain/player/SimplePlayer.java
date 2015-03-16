@@ -165,7 +165,7 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public String getId() {
-		return getClass().getSimpleName() + ":" + id;
+		return getClass().getSimpleName() + "-" + id;
 	}
 
 	@Override

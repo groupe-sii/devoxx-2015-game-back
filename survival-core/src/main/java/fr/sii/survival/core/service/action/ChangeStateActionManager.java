@@ -5,10 +5,12 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.action.ActionListenerTrigger;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.player.PlayerService;
@@ -41,12 +43,12 @@ public class ChangeStateActionManager implements ActionManager<ChangeStates> {
 	}
 
 	@Override
-	public void execute(ChangeStates action) {
+	public void execute(Game game, ChangeStates action) throws GameException {
 		logger.info("apply state changes {} on {}", action.getStateChanges(), action.getCell());
-		List<Player> players = boardService.getPlayers(action.getCell());
+		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {
 			List<StateChange> applied = playerService.updateStates(player, action.getStateChanges());
-			actionListenerTrigger.triggerStateChanged(player, new ChangeStates(action.getCell(), applied));
+			actionListenerTrigger.triggerStateChanged(game, player, new ChangeStates(action.getCell(), applied));
 		}
 	}
 

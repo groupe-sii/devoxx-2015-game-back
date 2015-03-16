@@ -1,7 +1,9 @@
 package fr.sii.survival.core.service.action;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.exception.ActionException;
+import fr.sii.survival.core.exception.GameException;
 
 /**
  * Manager for action that is able to handle one {@link Action}
@@ -24,10 +26,14 @@ public interface ActionManager<A extends Action> {
 	/**
 	 * Method that really executes the action
 	 * 
+	 * @param game
+	 *            the game to execute action on
 	 * @param action
 	 *            the action to execute
 	 * @throws ActionException
 	 *             when action could not be executed
+	 * @throws GameException
+	 *             when action couldn't be executed
 	 */
-	public void execute(A action) throws ActionException;
+	public void execute(Game game, A action) throws ActionException, GameException;
 }

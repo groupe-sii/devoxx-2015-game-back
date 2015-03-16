@@ -26,11 +26,10 @@ import fr.sii.survival.core.service.player.PlayerService;
 
 @Configuration
 public class ActionConfiguration {
-	public static final String ACTION_PUBLISH_PREFIX = WebSocketConfig.SERVER_PUBLISH_PREFIX+"/action";
 	public static final String ACTION_MAPPING_PREFIX = WebSocketConfig.SERVER_MAPPING_PREFIX+"/action";
 
 	@Autowired
-	MessageService errorService;
+	MessageService messageService;
 	
 	@Autowired
 	ExtensionService extensionService;
@@ -48,7 +47,7 @@ public class ActionConfiguration {
 
 	@Bean
 	public ActionListenerManager actionListenerManager() {
-		return new SimpleActionListenerManager(errorService, extensionService);
+		return new SimpleActionListenerManager(messageService, extensionService);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })

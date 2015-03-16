@@ -1,23 +1,28 @@
 package fr.sii.survival.controller;
 
-import static fr.sii.survival.config.GameConfiguration.GAME_PUBLISH_PREFIX;
+import static fr.sii.survival.WebSocketConfig.SERVER_PUBLISH_PREFIX;
+import static fr.sii.survival.config.GameConfiguration.GAME_MAPPING_PREFIX;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
 
+import fr.sii.survival.config.options.GameOptions;
 import fr.sii.survival.config.options.LifeOptions;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.PlayerInfo;
-import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.exception.GameNotFoundException;
 import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.service.game.GameService;
+import fr.sii.survival.core.service.player.PlayerService;
 import fr.sii.survival.dto.PlayerAndGame;
 import fr.sii.survival.session.UserContext;
 
@@ -33,65 +38,77 @@ public class GameController extends ErrorController implements GameListener {
 	GameService gameService;
 
 	@Autowired
+	PlayerService playerService;
+
+	@Autowired
 	LifeOptions lifeOptions;
 
 	@Autowired
 	UserContext userContext;
+	
+	@Autowired
+	GameOptions gameOptions;
+	
+	@MessageMapping(GAME_MAPPING_PREFIX+"/create")
+	@SendTo(SERVER_PUBLISH_PREFIX+"/created")
+	public Game create() {
+		return gameService.create();
+	}
 
 	
-	@MessageMapping("/info")
-	@SendToUser("/info")
-	public Game info() {
-		return gameService.getGame();
+	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/info")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/info")
+	public Game info(@DestinationVariable String gameId) throws GameNotFoundException {
+		return gameService.getGame(gameId);
 	}
 	
-	@MessageMapping("/player/join")
-	@SendToUser("/player/join")
-	public Player join(PlayerInfo player) throws GameException {
-		logger.info("player {} is joining the game", player);
-		SimpleWizard p = new SimpleWizard(player, lifeOptions.getDefaultLife());
-		gameService.join(p);
+	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/join")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/join")
+	public Player join(@DestinationVariable String gameId, PlayerInfo player) throws GameException {
+		logger.info("player {} is joining the game {}", player, gameId);
+		Player p = playerService.create(player);
+		Game game = gameService.getGame(gameId);
+		gameService.join(game, p);
+		// update the context of the connected user
 		userContext.setPlayerId(p.getId());
+		userContext.setGameId(gameId);
 		// auto-start
-		if(!gameService.isStarted()) {
-			gameService.start();
+		if(gameOptions.isAutoStart() && !gameService.isStarted(game)) {
+			gameService.start(game);
 		}
 		return p;
 	}
 
-	@MessageMapping("/player/quit")
-	@SendToUser("/player/quit")
-	public Player quit() throws GameException {
-		String playerId = userContext.getPlayerId();
-		if(playerId!=null) {
-			Player player = gameService.getPlayer(playerId);
-			if(player!=null) {
-				logger.info("player {} is quitting the game", player);
-				gameService.quit(player);
-				// TODO: auto-stop when nobody in game
-				return player;
-			}
+	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/leave")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/leave")
+	public void quit(@DestinationVariable String gameId) throws GameException {
+		Game game = gameService.getGame(gameId);
+		Player player = gameService.getPlayer(game, userContext.getPlayerId());
+		logger.info("player {} is quitting the game {}", player, game);
+		gameService.quit(game, player);
+		userContext.setGameId(null);
+		if(gameOptions.isAutoStop() && gameService.isStarted(game) && game.getPlayers().size()<=0) {
+			gameService.stop(game);
 		}
-		return null;
 	}
 	
 	@Override
 	public void started(Game game) {
-		template.convertAndSend(GAME_PUBLISH_PREFIX+"/started", game);
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/started", game);
 	}
 
 	@Override
 	public void stopped(Game game) {
-		template.convertAndSend(GAME_PUBLISH_PREFIX+"/stopped", game);
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/stopped", game);
 	}
 
 	@Override
 	public void joined(Player player, Game game) {
-		template.convertAndSend(GAME_PUBLISH_PREFIX+"/joined", new PlayerAndGame(player, game));
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/joined", new PlayerAndGame(player, game));
 	}
 
 	@Override
 	public void leaved(Player player, Game game) {
-		template.convertAndSend(GAME_PUBLISH_PREFIX+"/leaved", new PlayerAndGame(player, game));
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/leaved", new PlayerAndGame(player, game));
 	}
 }

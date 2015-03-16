@@ -3,6 +3,7 @@ package fr.sii.survival.core.service.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,9 +18,12 @@ import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.exception.AlreadyInGameException;
 import fr.sii.survival.core.exception.FullGameException;
 import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.exception.GameNotFoundException;
+import fr.sii.survival.core.exception.PlayerNotFoundException;
 import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.provider.ExtensionProvider;
+import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.listener.game.GameListenerRegistry;
 import fr.sii.survival.core.service.board.BoardService;
@@ -28,11 +32,6 @@ import fr.sii.survival.core.service.message.MessageService;
 
 public class SimpleGameService implements GameService {
 	private static final Logger logger = LoggerFactory.getLogger(SimpleGameService.class);
-
-	/**
-	 * The game data
-	 */
-	private Game game;
 
 	/**
 	 * The board service used to add/remove players on it
@@ -65,9 +64,12 @@ public class SimpleGameService implements GameService {
 	 */
 	private ExtensionProvider extensionProvider;
 
-	private boolean started;
+	/**
+	 * Helper that stores games by id
+	 */
+	private MultiGameHelper gameHelper;
 	
-	private ScheduledExecutorService executor;
+	private Map<Game, ScheduledExecutorService> executors;
 	
 	private List<EnemyExtension> extensions;
 	
@@ -76,56 +78,70 @@ public class SimpleGameService implements GameService {
 	 * 
 	 * @param maxPlayers
 	 *            the maximum number of allowed players on the game
+	 * @param delay
+	 *            the scheduling delay
 	 * @param boardService
 	 *            the board service used to add/remove players on it
+	 * @param messageService
+	 *            the service for messages
+	 * @param listenerRegistry
+	 *            the registry for game events
+	 * @param extensionProvider
+	 *            provide enemies to add in the game
+	 * @param gameHelper
+	 *            helper for useful for multi-game management
 	 */
-	public SimpleGameService(int maxPlayers, long delay, BoardService boardService, MessageService messageService, GameListenerRegistry listenerRegistry, ExtensionProvider extensionProvider) {
-		this(maxPlayers, delay, new Game(boardService.getBoard()), boardService, messageService, listenerRegistry, extensionProvider);
-	}
-	
-	public SimpleGameService(int maxPlayers, long delay, Game game, BoardService boardService, MessageService messageService, GameListenerRegistry listenerRegistry, ExtensionProvider extensionProvider) {
+	public SimpleGameService(int maxPlayers, long delay, BoardService boardService, MessageService messageService, GameListenerRegistry listenerRegistry, ExtensionProvider extensionProvider, MultiGameHelper gameHelper) {
 		super();
 		this.maxPlayers = maxPlayers;
 		this.delay = delay;
 		this.boardService = boardService;
 		this.messageService = messageService;
-		this.game = game;
 		this.listenerRegistry = listenerRegistry;
 		this.extensionProvider = extensionProvider;
-		this.started = false;
+		this.gameHelper = gameHelper;
 		this.extensions = new ArrayList<EnemyExtension>();
 	}
 
 	@Override
-	public void join(Player player) throws GameException {
+	public Game create() {
+		Game game = new Game(boardService.create());
+		gameHelper.set(game.getId(), game);
+		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+		executors.put(game, executor);
+		return game;
+	}
+	
+	@Override
+	public void join(Game game, Player player) throws GameException {
 		if(player instanceof Wizard) {
 			// check if number of players has not reached the max
 			if(maxPlayers>0 && game.getPlayers().size()>=maxPlayers) {
 				throw new FullGameException("The player can't join this game because the game is full");
 			}
 			// check if player is already in the game
-			if(game.contains(player)) {
+			if(game.contains(player) || game.contains(player.getPlayerInfo().getName())) {
 				throw new AlreadyInGameException("The player can't join this game because he has already joined this game");
 			}
 		}
 		game.addPlayer(player);
-		boardService.add(player);
+		boardService.add(game.getBoard(), player);
 	}
 
 	@Override
-	public void quit(Player player) {
-		if(game.contains(player)) {
+	public void quit(Game game, Player player) throws GameException {
+		if (game.contains(player)) {
 			game.removePlayer(player);
-			boardService.remove(player);
+			boardService.remove(game.getBoard(), player);
 		}
 	}
 
 	@Override
-	public void start() throws GameException {
+	public void start(Game game) throws GameException {
 		// start running the game and execute enemy extensions
-		if(!this.started) {
-			logger.info("Start the game");
-			executor = Executors.newSingleThreadScheduledExecutor();
+		if(!game.isStarted()) {
+			logger.info("Start the game {}", game);
+			ScheduledExecutorService executor = executors.get(game);
 			executor.scheduleWithFixedDelay(() -> {
 				try {
 					// TODO: externalize ?
@@ -134,14 +150,14 @@ public class SimpleGameService implements GameService {
 						List<EnemyExtension> enemies = extensionProvider.getEnemies(game);
 						for(EnemyExtension enemy : enemies) {
 							enemy.init();
-							join(enemy.getEnemy());
+							join(game, enemy.getEnemy());
 						}
 						extensions.addAll(enemies);
 						// remove dead enemies
 						for(Iterator<EnemyExtension> it = extensions.iterator() ; it.hasNext() ; ) {
 							EnemyExtension ext = it.next();
 							if(ext.getEnemy().getLife().getCurrent()<=0) {
-								quit(ext.getEnemy());
+								quit(game, ext.getEnemy());
 								it.remove();
 							}
 						}
@@ -149,7 +165,7 @@ public class SimpleGameService implements GameService {
 						System.out.println("============debut============");
 						extensions.parallelStream().forEach(extension -> {
 							try {
-								extension.run(new GameContext(game, new Board(game.getBoard()), boardService.getCell(extension.getEnemy())));
+								extension.run(new GameContext(game, new Board(game.getBoard()), boardService.getCell(game.getBoard(), extension.getEnemy())));
 							} catch (Exception e) {
 								messageService.addError(new GameException("Failed to run extensions", e));
 							}
@@ -170,28 +186,35 @@ public class SimpleGameService implements GameService {
 	}
 
 	@Override
-	public void stop() throws GameException {
-		if(this.started) {
+	public void stop(Game game) throws GameException {
+		if(game.isStarted()) {
 			// TODO: remove all players
-			executor.shutdown();
+			executors.get(game).shutdown();
 		} else {
 			throw new GameException("Game already stopped");
 		}
 	}
 
 	@Override
-	public boolean isStarted() {
-		return started;
+	public boolean isStarted(Game game) {
+		return game.isStarted();
 	}
 
 	@Override
-	public Player getPlayer(String playerId) {
-		return game.getPlayer(playerId);
+	public Player getPlayer(Game game, String playerId) throws PlayerNotFoundException {
+		if(playerId==null) {
+			throw new PlayerNotFoundException("Id of the player is null");
+		}
+		Player player = game.getPlayer(playerId);
+		if(player==null) {
+			throw new PlayerNotFoundException("Player with id "+playerId+" doesn't exist");
+		}
+		return player;
 	}
 
 	@Override
-	public Game getGame() {
-		return game;
+	public Game getGame(String gameId) throws GameNotFoundException {
+		return gameHelper.getGame(gameId);
 	}
 	
 	@Override

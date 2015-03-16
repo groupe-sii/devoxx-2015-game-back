@@ -45,11 +45,11 @@ public class DelegateEnemyManager {
 		List<Cell> targets = targetManager.getTargetPositions(context);
 		// execute the action on each targeted cell
 		for (Cell target : targets) {
-			actionManager.execute(target);
+			actionManager.execute(context.getGame(), target);
 		}
 		// compute the position where the enemy will move to
 		Cell next = moveManager.getNextPosition(context);
 		// change the position
-		actionService.execute(new ChangePosition(context.getCell(), next));
+		actionService.execute(context.getGame(), new ChangePosition(context.getCell(), next));
 	}
 }

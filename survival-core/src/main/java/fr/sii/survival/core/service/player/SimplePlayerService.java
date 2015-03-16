@@ -8,10 +8,15 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Range;
 
+import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.action.StateChange.Change;
 import fr.sii.survival.core.domain.player.Life;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.domain.player.PlayerInfo;
+import fr.sii.survival.core.domain.player.SimpleWizard;
+import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.player.PlayerListener;
 import fr.sii.survival.core.listener.player.PlayerListenerManager;
 import fr.sii.survival.core.listener.player.PlayerListenerRegistry;
@@ -55,32 +60,50 @@ public class SimplePlayerService implements PlayerService {
 	 */
 	private Range<Integer> maximumLifeRange;
 
-	public SimplePlayerService(PlayerListenerManager listenerManager) {
-		this(Range.closed(0, Integer.MAX_VALUE), listenerManager);
+	/**
+	 * The default points of life for a newly created player
+	 */
+	private int defaultLife;
+
+	/**
+	 * Utility used to find game that is associated the the player
+	 */
+	private MultiGameHelper gameHelper;
+
+	public SimplePlayerService(int defaultLife, PlayerListenerManager listenerManager, MultiGameHelper gameHelper) {
+		this(defaultLife, Range.closed(0, Integer.MAX_VALUE), listenerManager, gameHelper);
 	}
 
-	public SimplePlayerService(Range<Integer> maximumLifeRange, PlayerListenerManager listenerManager) {
-		this(maximumLifeRange, listenerManager, listenerManager);
+	public SimplePlayerService(int defaultLife, Range<Integer> maximumLifeRange, PlayerListenerManager listenerManager, MultiGameHelper gameHelper) {
+		this(defaultLife, maximumLifeRange, listenerManager, listenerManager, gameHelper);
 	}
 
-	public SimplePlayerService(Range<Integer> maximumLifeRange, PlayerListenerRegistry listenerRegistry, PlayerListenerTrigger playerListenerTrigger) {
+	public SimplePlayerService(int defaultLife, Range<Integer> maximumLifeRange, PlayerListenerRegistry listenerRegistry, PlayerListenerTrigger playerListenerTrigger, MultiGameHelper gameHelper) {
 		super();
+		this.defaultLife = defaultLife;
 		this.maximumLifeRange = maximumLifeRange;
 		this.listenerRegistry = listenerRegistry;
 		this.playerListenerTrigger = playerListenerTrigger;
+		this.gameHelper = gameHelper;
+	}
+	
+	@Override
+	public Player create(PlayerInfo info) {
+		return new SimpleWizard(info, defaultLife);
 	}
 
 	@Override
-	public int updateCurrentLife(Player player, int increment) {
+	public int updateCurrentLife(Player player, int increment) throws GameException {
 		Life life = player.getLife();
 		int oldValue = life.getCurrent();
 		int lifeValue = life.updateCurrent(increment);
 		logger.info("update player life from {} to {}", oldValue, lifeValue);
+		Game game = gameHelper.getGame(player);
 		if (lifeValue <= 0) {
 			// new life<=0 => player is now dead
 			life.setCurrent(0);
 			increment = -oldValue;
-			playerListenerTrigger.triggerDead(player);
+			playerListenerTrigger.triggerDead(game, player);
 		} else if (lifeValue > life.getMax()) {
 			// new life>max => prevent life to exceed max life
 			life.setCurrent(life.getMax());
@@ -88,19 +111,19 @@ public class SimplePlayerService implements PlayerService {
 		}
 		if (oldValue <= 0 && lifeValue > 0) {
 			// player was dead and new life>=0 => player revived
-			playerListenerTrigger.triggerRevived(player);
+			playerListenerTrigger.triggerRevived(game, player);
 		} else if (increment > 0) {
 			// player is healed
-			playerListenerTrigger.triggerHealed(player, increment);
+			playerListenerTrigger.triggerHealed(game, player, increment);
 		} else if (increment < 0) {
 			// player is hit
-			playerListenerTrigger.triggerHit(player, -increment);
+			playerListenerTrigger.triggerHit(game, player, -increment);
 		}
 		return increment;
 	}
 
 	@Override
-	public int updateMaxLife(Player player, int increment) {
+	public int updateMaxLife(Player player, int increment) throws GameException {
 		Life life = player.getLife();
 		int oldValue = life.getMax();
 		int lifeValue = life.updateMax(increment);
@@ -114,13 +137,13 @@ public class SimplePlayerService implements PlayerService {
 		}
 		updateCurrentLife(player, 0);
 		if(increment!=0) {
-			playerListenerTrigger.triggerMaxLifeChanged(player, increment);
+			playerListenerTrigger.triggerMaxLifeChanged(gameHelper.getGame(player), player, increment);
 		}
 		return increment;
 	}
 
 	@Override
-	public List<StateChange> updateStates(Player player, List<StateChange> stateChanges) {
+	public List<StateChange> updateStates(Player player, List<StateChange> stateChanges) throws GameException {
 		logger.info("update states {} on {}", stateChanges, player);
 		List<StateChange> appliedChanges = new ArrayList<StateChange>(stateChanges.size());
 		for (StateChange change : stateChanges) {
@@ -134,7 +157,7 @@ public class SimplePlayerService implements PlayerService {
 				appliedChanges.add(change);
 			}
 		}
-		playerListenerTrigger.triggerStates(player, appliedChanges);
+		playerListenerTrigger.triggerStates(gameHelper.getGame(player), player, appliedChanges);
 		return appliedChanges;
 	}
 	
