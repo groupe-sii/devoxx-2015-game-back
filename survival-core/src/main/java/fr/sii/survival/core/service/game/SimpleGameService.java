@@ -1,6 +1,7 @@
 package fr.sii.survival.core.service.game;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +109,8 @@ public class SimpleGameService implements GameService {
 		this.extensionProvider = extensionProvider;
 		this.gameHelper = gameHelper;
 		this.gameSelector = gameSelector;
-		this.extensions = new ArrayList<EnemyExtension>();
+		extensions = new ArrayList<EnemyExtension>();
+		executors = new HashMap<>();
 	}
 
 	@Override
