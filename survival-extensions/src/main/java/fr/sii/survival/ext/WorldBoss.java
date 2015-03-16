@@ -19,7 +19,7 @@ import fr.sii.survival.core.ext.behavior.target.TargetManager;
 public class WorldBoss extends DelegateEnemyExtension implements SpecialEnemy {
 
 	public WorldBoss() {
-		super("WorldBoss", "worldboss.png", Integer.MAX_VALUE);
+		super("WorldBoss", "worldboss", Integer.MAX_VALUE);
 	}
 
 	@Override

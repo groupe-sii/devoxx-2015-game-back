@@ -23,7 +23,6 @@ import fr.sii.survival.core.exception.GameNotFoundException;
 import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.service.game.GameService;
 import fr.sii.survival.core.service.player.PlayerService;
-import fr.sii.survival.dto.PlayerAndGame;
 import fr.sii.survival.session.UserContext;
 
 @Controller
@@ -49,12 +48,23 @@ public class GameController extends ErrorController implements GameListener {
 	@Autowired
 	GameOptions gameOptions;
 	
+	private Game game;
+	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/create")
 	@SendTo(SERVER_PUBLISH_PREFIX+"/created")
 	public Game create() {
 		return gameService.create();
 	}
 
+	@MessageMapping(GAME_MAPPING_PREFIX+"/initialize")
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/initialized")
+	public Game initGame() {
+		if(this.game==null) {
+			Game game = create();
+			this.game = game;
+		}
+		return this.game;
+	}
 	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/info")
 	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/info")
@@ -63,7 +73,7 @@ public class GameController extends ErrorController implements GameListener {
 	}
 	
 	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/join")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/join")
+//	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/join")
 	public Player join(@DestinationVariable String gameId, PlayerInfo player) throws GameException {
 		logger.info("player {} is joining the game {}", player, gameId);
 		Player p = playerService.create(player);
@@ -80,7 +90,7 @@ public class GameController extends ErrorController implements GameListener {
 	}
 
 	@MessageMapping(GAME_MAPPING_PREFIX+"/${gameId}/leave")
-	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/leave")
+//	@SendToUser(SERVER_PUBLISH_PREFIX+"/${gameId}/leave")
 	public void quit(@DestinationVariable String gameId) throws GameException {
 		Game game = gameService.getGame(gameId);
 		Player player = gameService.getPlayer(game, userContext.getPlayerId());
@@ -104,11 +114,11 @@ public class GameController extends ErrorController implements GameListener {
 
 	@Override
 	public void joined(Player player, Game game) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/joined", new PlayerAndGame(player, game));
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/joined", player);
 	}
 
 	@Override
 	public void leaved(Player player, Game game) {
-		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/leaved", new PlayerAndGame(player, game));
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/leaved", player);
 	}
 }

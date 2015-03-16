@@ -13,7 +13,7 @@ import fr.sii.survival.core.ext.behavior.target.TargetManager;
 public class Lemming extends DelegateEnemyExtension {
 
 	public Lemming() {
-		super("Lemming", "lemming.png", 10);
+		super("Lemming", "lemming", 10);
 	}
 
 	@Override
