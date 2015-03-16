@@ -54,7 +54,7 @@ public class GameController extends ErrorController implements GameListener {
 	}
 
 	@MessageMapping(GAME_MAPPING_PREFIX+"/select")
-	@SendToUser({SERVER_PUBLISH_PREFIX+"/selected", "/selected"})
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/selected")
 	public Game select() {
 		logger.debug("selecting game");
 		Game game = gameService.select();

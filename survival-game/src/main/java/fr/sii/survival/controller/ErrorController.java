@@ -8,7 +8,7 @@ import fr.sii.survival.core.domain.message.Error;
 // TODO: This controller won't work standalone... It must be used by inheritance due to error handler search limited to current class only
 public class ErrorController {
 	@MessageExceptionHandler
-	@SendToUser(value = "/queue/errors", broadcast = false)
+	@SendToUser("/queue/errors")
 	public Error handleException(Throwable exception) {
 		return new Error(exception);
 	}
