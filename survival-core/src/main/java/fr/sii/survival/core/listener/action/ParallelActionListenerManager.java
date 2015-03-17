@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.sii.survival.core.domain.Game;
+import fr.sii.survival.core.domain.action.AddImage;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
+import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.service.message.MessageService;
@@ -57,7 +59,17 @@ public class ParallelActionListenerManager implements ActionListenerManager {
 	}
 
 	@Override
+	public void triggerImageAdded(Game game, AddImage action) {
+		// TODO
+	}
+
+	@Override
 	public void triggerImageMoved(Game game, MoveImage action) {
+		// TODO
+	}
+
+	@Override
+	public void triggerImageRemoved(Game game, RemoveImage action) {
 		// TODO
 	}
 	

@@ -4,9 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
+import fr.sii.survival.core.domain.action.AddImage;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
+import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListener;
@@ -25,8 +27,18 @@ public class LogActionListener implements ActionListener {
 	}
 
 	@Override
+	public void imageAdded(Game game, AddImage action) {
+		logger.info("image {} add on {}", action.getName(), action.getCell());
+	}
+
+	@Override
 	public void imageMoved(Game game, MoveImage action) {
-		logger.info("image moved from {} to {}", action.getStart(), action.getEnd());
+		logger.info("image {} moved from {} to {}", action.getName(), action.getStart(), action.getEnd());
+	}
+
+	@Override
+	public void imageRemoved(Game game, RemoveImage action) {
+		logger.info("image {} removed from {}", action.getName(), action.getCell());
 	}
 
 	@Override

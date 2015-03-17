@@ -4,9 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 import fr.sii.survival.core.domain.Game;
+import fr.sii.survival.core.domain.action.AddImage;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
+import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionListenerException;
@@ -74,12 +76,34 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	}
 
 	@Override
+	public void triggerImageAdded(Game game, AddImage action) {
+		for(ActionListener listener : listeners.values()) {
+			try {
+				listener.imageAdded(game, action);
+			} catch(Throwable e) {
+				errorService.addError(new ActionListenerException("failed to trigger image added event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+			}
+		}
+	}
+	
+	@Override
 	public void triggerImageMoved(Game game, MoveImage action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.imageMoved(game, action);
 			} catch(Throwable e) {
 				errorService.addError(new ActionListenerException("failed to trigger image moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+			}
+		}
+	}
+	
+	@Override
+	public void triggerImageRemoved(Game game, RemoveImage action) {
+		for(ActionListener listener : listeners.values()) {
+			try {
+				listener.imageRemoved(game, action);
+			} catch(Throwable e) {
+				errorService.addError(new ActionListenerException("failed to trigger image removed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
 	}

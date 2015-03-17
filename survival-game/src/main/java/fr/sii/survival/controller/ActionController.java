@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
+import fr.sii.survival.core.domain.action.AddImage;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
+import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionException;
@@ -43,8 +45,18 @@ public class ActionController extends ErrorController implements ActionListener 
 	}
 	
 	@Override
+	public void imageAdded(Game game, AddImage action) {
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/image/added", action);
+	}
+
+	@Override
 	public void imageMoved(Game game, MoveImage action) {
 		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/image/moved", action);
+	}
+
+	@Override
+	public void imageRemoved(Game game, RemoveImage action) {
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/image/removed", action);
 	}
 
 	@Override
