@@ -9,7 +9,7 @@ public class BasicEnemyExtension extends EnemyExtension {
 
 
 	public BasicEnemyExtension() {
-		super("basic", "", 1000);
+		super("basic", null, 1000);
 	}
 
 	@Override

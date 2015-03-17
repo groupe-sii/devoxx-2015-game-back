@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.GameException;
@@ -41,13 +42,13 @@ public class BoardServiceTest {
 	
 	@Test
 	public void add() throws GameException {
-		Cell cell = boardService.add(board, new SimpleWizard("test", "default"));
+		Cell cell = boardService.add(board, new SimpleWizard("test", new ClientImage("default")));
 		Assert.assertEquals("player should be added at cell {0,0}", new Cell(0, 0), cell);
 	}
 	
 	@Test
 	public void players() throws GameException {
-		boardService.add(board, new SimpleWizard("test", "default"));
+		boardService.add(board, new SimpleWizard("test", new ClientImage("default")));
 		List<Player> players = boardService.getPlayers(board, new Cell(0, 0));
 		Assert.assertEquals("cell {0,0} should contain 1 player", 1, players.size());
 		// check that other cells are empty
@@ -56,7 +57,7 @@ public class BoardServiceTest {
 				Assert.assertEquals("cell {"+i+","+j+"} should contain 0 player", 0, boardService.getPlayers(board, new Cell(i, j)).size());
 			}
 		}
-		boardService.add(board, new SimpleWizard("test", "default"));
+		boardService.add(board, new SimpleWizard("test", new ClientImage("default")));
 		players = boardService.getPlayers(board, new Cell(0, 0));
 		Assert.assertEquals("cell {0,0} should contain 2 players", 2, players.size());
 		// check that other cells are empty
@@ -69,7 +70,7 @@ public class BoardServiceTest {
 	
 	@Test
 	public void move() throws GameException {
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		boardService.add(board, player);
 		Cell cell = boardService.move(board, player, new Cell(2, 5));
 		Assert.assertEquals("player should be moved at cell {2,5}", new Cell(2, 5), cell);
@@ -78,7 +79,7 @@ public class BoardServiceTest {
 	@Test
 	public void moveUp() throws GameException {
 		// prepare test
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		boardService.add(board, player);
 		Cell cell = boardService.move(board, player, new Cell(2, 9));
 		// real test
@@ -95,7 +96,7 @@ public class BoardServiceTest {
 	@Test
 	public void moveDown() throws GameException {
 		// prepare test
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		boardService.add(board, player);
 		Cell cell = boardService.move(board, player, new Cell(2, 0));
 		// real test
@@ -112,7 +113,7 @@ public class BoardServiceTest {
 	@Test
 	public void moveLeft() throws GameException {
 		// prepare test
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		boardService.add(board, player);
 		Cell cell = boardService.move(board, player, new Cell(9, 2));
 		// real test
@@ -129,7 +130,7 @@ public class BoardServiceTest {
 	@Test
 	public void moveRight() throws GameException {
 		// prepare test
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		boardService.add(board, player);
 		Cell cell = boardService.move(board, player, new Cell(0, 2));
 		// real test
@@ -145,14 +146,14 @@ public class BoardServiceTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void moveOut() throws GameException {
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		boardService.add(board, player);
 		boardService.move(board, player, new Cell(10, 5));
 	}
 	
 	@Test
 	public void remove() throws GameException {
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		boardService.add(board, player);
 		boardService.move(board, player, new Cell(2, 5));
 		Cell cell = boardService.remove(board, player);
@@ -162,7 +163,7 @@ public class BoardServiceTest {
 	
 	@Test
 	public void removeNobody() throws GameException {
-		SimpleWizard player = new SimpleWizard("test", "default");
+		SimpleWizard player = new SimpleWizard("test", new ClientImage("default"));
 		Cell cell = boardService.remove(board, player);
 		Assert.assertNull("cell should be null", cell);
 	}

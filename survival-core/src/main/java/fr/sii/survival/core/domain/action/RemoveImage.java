@@ -1,12 +1,13 @@
 package fr.sii.survival.core.domain.action;
 
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.domain.image.Image;
 
 public class RemoveImage implements Action {
 	/**
-	 * The name of the image to remove
+	 * The image to remove
 	 */
-	private String name;
+	private Image image;
 
 	/**
 	 * The position of the image on the game board
@@ -22,18 +23,18 @@ public class RemoveImage implements Action {
 		super();
 	}
 
-	public RemoveImage(String name, Cell cell) {
+	public RemoveImage(Image image, Cell cell) {
 		super();
-		this.name = name;
+		this.image = image;
 		this.cell = cell;
 	}
 
-	public String getName() {
-		return name;
+	public Image getImage() {
+		return image;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	public Cell getCell() {
@@ -49,7 +50,6 @@ public class RemoveImage implements Action {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cell == null) ? 0 : cell.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -67,18 +67,14 @@ public class RemoveImage implements Action {
 				return false;
 		} else if (!cell.equals(other.cell))
 			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("RemoveImage [name=").append(name).append(", cell=").append(cell).append("]");
+		builder.append("RemoveImage [cell=").append(cell).append("]");
 		return builder.toString();
 	}
+
 }

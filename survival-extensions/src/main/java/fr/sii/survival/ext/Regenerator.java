@@ -1,5 +1,6 @@
 package fr.sii.survival.ext;
 
+import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.ext.DelegateEnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.behavior.action.EnemyActionManager;
@@ -12,7 +13,7 @@ import fr.sii.survival.core.ext.behavior.target.TargetManager;
 public class Regenerator extends DelegateEnemyExtension {
 
 	public Regenerator() {
-		super("Regenerator", "regenerator", 5000);
+		super("Regenerator", new ClientImage("regenerator"), 5000);
 	}
 
 	@Override

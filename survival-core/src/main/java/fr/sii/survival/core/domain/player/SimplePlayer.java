@@ -1,5 +1,7 @@
 package fr.sii.survival.core.domain.player;
 
+import fr.sii.survival.core.domain.image.Image;
+
 public class SimplePlayer implements Player {
 	/**
 	 * Counter used to generate a unique id
@@ -45,7 +47,7 @@ public class SimplePlayer implements Player {
 	 * @param avatar
 	 *            the avatar for the player
 	 */
-	public SimplePlayer(String name, String avatar) {
+	public SimplePlayer(String name, Image avatar) {
 		this(new PlayerInfo(name, avatar));
 	}
 
@@ -71,7 +73,7 @@ public class SimplePlayer implements Player {
 	 * @param life
 	 *            the points of life of the wizard (current and maximum)
 	 */
-	public SimplePlayer(String name, String avatar, int life) {
+	public SimplePlayer(String name, Image avatar, int life) {
 		this(new PlayerInfo(name, avatar), life);
 	}
 
@@ -88,7 +90,7 @@ public class SimplePlayer implements Player {
 	 * @param max
 	 *            the maximum points of life
 	 */
-	public SimplePlayer(String name, String avatar, int life, int max) {
+	public SimplePlayer(String name, Image avatar, int life, int max) {
 		this(new PlayerInfo(name, avatar), life, max);
 	}
 
@@ -131,7 +133,7 @@ public class SimplePlayer implements Player {
 	 * @param states
 	 *            the states to apply on
 	 */
-	public SimplePlayer(String name, String avatar, Life life, States states) {
+	public SimplePlayer(String name, Image avatar, Life life, States states) {
 		this(new PlayerInfo(name, avatar), life, states);
 	}
 

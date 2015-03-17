@@ -1,6 +1,7 @@
 package fr.sii.survival.ut.service;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +17,7 @@ import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.ActionException;
@@ -63,7 +65,7 @@ public class ActionServiceTest {
 	
 	@Test
 	public void move() throws GameException {
-		Player player = new SimpleWizard("test", "default");
+		Player player = new SimpleWizard("test", new ClientImage("default"));
 		Mockito.when(boardService.getPlayers(any(), eq(new Cell(0, 0)))).thenReturn(Arrays.asList(player));
 		Mockito.when(boardService.move(any(), eq(player), eq(new Cell(9, 9)))).thenReturn(new Cell(9, 9));
 		actionService.execute(game, new ChangePosition(new Cell(0, 0), new Cell(9, 9)));

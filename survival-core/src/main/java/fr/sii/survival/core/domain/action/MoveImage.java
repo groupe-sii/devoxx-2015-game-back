@@ -1,12 +1,13 @@
 package fr.sii.survival.core.domain.action;
 
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.domain.image.Image;
 
 public class MoveImage implements Action {
 	/**
-	 * The name of the image to move
+	 * The image to move
 	 */
-	private String name;
+	private Image image;
 
 	/**
 	 * The start position of the image on the game board
@@ -27,19 +28,19 @@ public class MoveImage implements Action {
 		super();
 	}
 
-	public MoveImage(String name, Cell start, Cell end) {
+	public MoveImage(Image image, Cell start, Cell end) {
 		super();
-		this.name = name;
+		this.image = image;
 		this.start = start;
 		this.end = end;
 	}
 
-	public String getName() {
-		return name;
+	public Image getImage() {
+		return image;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	public Cell getStart() {
@@ -63,7 +64,7 @@ public class MoveImage implements Action {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((end == null) ? 0 : end.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((image == null) ? 0 : image.hashCode());
 		result = prime * result + ((start == null) ? 0 : start.hashCode());
 		return result;
 	}
@@ -82,10 +83,10 @@ public class MoveImage implements Action {
 				return false;
 		} else if (!end.equals(other.end))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (image == null) {
+			if (other.image != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!image.equals(other.image))
 			return false;
 		if (start == null) {
 			if (other.start != null)
@@ -98,7 +99,7 @@ public class MoveImage implements Action {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("MoveImage [name=").append(name).append(", start=").append(start).append(", end=").append(end).append("]");
+		builder.append("MoveImage [image=").append(image).append(", start=").append(start).append(", end=").append(end).append("]");
 		return builder.toString();
 	}
 }

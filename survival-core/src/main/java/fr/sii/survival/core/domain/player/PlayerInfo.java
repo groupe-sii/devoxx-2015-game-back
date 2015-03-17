@@ -1,8 +1,8 @@
 package fr.sii.survival.core.domain.player;
 
-public class PlayerInfo {
-	private static final String DEFAULT_AVATAR = "default";
+import fr.sii.survival.core.domain.image.Image;
 
+public class PlayerInfo {
 	/**
 	 * The name of the player
 	 */
@@ -11,7 +11,7 @@ public class PlayerInfo {
 	/**
 	 * The image of the player
 	 */
-	private String avatar;
+	private Image avatar;
 	
 	/**
 	 * Default constructor for internal use
@@ -23,10 +23,10 @@ public class PlayerInfo {
 	}
 
 	public PlayerInfo(String name) {
-		this(name, DEFAULT_AVATAR);
+		this(name, null);
 	}
 
-	public PlayerInfo(String name, String avatar) {
+	public PlayerInfo(String name, Image avatar) {
 		super();
 		this.name = name;
 		this.avatar = avatar;
@@ -40,11 +40,11 @@ public class PlayerInfo {
 		this.name = name;
 	}
 
-	public String getAvatar() {
+	public Image getAvatar() {
 		return avatar;
 	}
 
-	public void setAvatar(String avatar) {
+	public void setAvatar(Image avatar) {
 		this.avatar = avatar;
 	}
 

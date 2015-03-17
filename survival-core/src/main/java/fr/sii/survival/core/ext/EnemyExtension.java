@@ -1,5 +1,6 @@
 package fr.sii.survival.core.ext;
 
+import fr.sii.survival.core.domain.image.Image;
 import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.domain.player.SimpleEnemy;
 import fr.sii.survival.core.exception.GameException;
@@ -33,7 +34,7 @@ public abstract class EnemyExtension {
 		this.enemy = enemy;
 	}
 
-	protected EnemyExtension(String name, String avatar, int life) {
+	protected EnemyExtension(String name, Image avatar, int life) {
 		this(new SimpleEnemy(name, avatar, life));
 	}
 

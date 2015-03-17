@@ -1,5 +1,7 @@
 package fr.sii.survival.core.domain.player;
 
+import fr.sii.survival.core.domain.image.Image;
+
 public class SimpleWizard extends SimplePlayer implements Wizard {
 
 	public SimpleWizard(PlayerInfo info, int life, int max) {
@@ -22,19 +24,19 @@ public class SimpleWizard extends SimplePlayer implements Wizard {
 		super(info);
 	}
 
-	public SimpleWizard(String name, String avatar, int life, int max) {
+	public SimpleWizard(String name, Image avatar, int life, int max) {
 		super(name, avatar, life, max);
 	}
 
-	public SimpleWizard(String name, String avatar, int life) {
+	public SimpleWizard(String name, Image avatar, int life) {
 		super(name, avatar, life);
 	}
 
-	public SimpleWizard(String name, String avatar, Life life, States states) {
+	public SimpleWizard(String name, Image avatar, Life life, States states) {
 		super(name, avatar, life, states);
 	}
 
-	public SimpleWizard(String name, String avatar) {
+	public SimpleWizard(String name, Image avatar) {
 		super(name, avatar);
 	}
 }

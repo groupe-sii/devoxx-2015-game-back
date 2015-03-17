@@ -1,5 +1,6 @@
 package fr.sii.survival.ext;
 
+import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.ext.DelegateEnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
@@ -13,7 +14,7 @@ import fr.sii.survival.core.ext.behavior.target.TargetManager;
 public class Lemming extends DelegateEnemyExtension {
 
 	public Lemming() {
-		super("Lemming", "lemming", 10);
+		super("Lemming", new ClientImage("lemming"), 10);
 	}
 
 	@Override

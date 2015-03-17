@@ -28,17 +28,17 @@ public class LogActionListener implements ActionListener {
 
 	@Override
 	public void imageAdded(Game game, AddImage action) {
-		logger.info("image {} add on {}", action.getName(), action.getCell());
+		logger.info("image {} add on {}", action.getImage(), action.getCell());
 	}
 
 	@Override
 	public void imageMoved(Game game, MoveImage action) {
-		logger.info("image {} moved from {} to {}", action.getName(), action.getStart(), action.getEnd());
+		logger.info("image {} moved from {} to {}", action.getImage(), action.getStart(), action.getEnd());
 	}
 
 	@Override
 	public void imageRemoved(Game game, RemoveImage action) {
-		logger.info("image {} removed from {}", action.getName(), action.getCell());
+		logger.info("image {} removed from {}", action.getImage(), action.getCell());
 	}
 
 	@Override

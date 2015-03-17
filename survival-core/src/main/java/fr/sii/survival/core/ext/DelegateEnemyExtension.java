@@ -1,5 +1,6 @@
 package fr.sii.survival.core.ext;
 
+import fr.sii.survival.core.domain.image.Image;
 import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.ext.behavior.DelegateEnemyManager;
@@ -19,7 +20,7 @@ public abstract class DelegateEnemyExtension extends EnemyExtension {
 		super(enemy);
 	}
 
-	protected DelegateEnemyExtension(String name, String avatar, int life) {
+	protected DelegateEnemyExtension(String name, Image avatar, int life) {
 		super(name, avatar, life);
 	}
 

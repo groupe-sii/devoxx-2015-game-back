@@ -1,6 +1,7 @@
 package fr.sii.survival.ut.service;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -12,6 +13,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import com.google.common.collect.Range;
 
+import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.GameException;
@@ -37,9 +39,9 @@ public class PlayerServiceTest {
 	
 	@Before
 	public void setUp() throws GameNotFoundException {
-		fullLifePlayer = new SimpleWizard("test", "default", 100);
-		midLifePlayer = new SimpleWizard("test1", "default", 50, 100);
-		deadPlayer = new SimpleWizard("test2", "default", 0, 100);
+		fullLifePlayer = new SimpleWizard("test", new ClientImage("default"), 100);
+		midLifePlayer = new SimpleWizard("test1", new ClientImage("default"), 50, 100);
+		deadPlayer = new SimpleWizard("test2", new ClientImage("default"), 0, 100);
 		playerService = new SimplePlayerService(100, Range.closed(20, 200), listenerManager, gameHelper);
 	}
 	

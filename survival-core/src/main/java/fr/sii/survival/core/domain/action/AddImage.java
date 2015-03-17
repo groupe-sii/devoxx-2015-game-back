@@ -1,12 +1,13 @@
 package fr.sii.survival.core.domain.action;
 
 import fr.sii.survival.core.domain.board.Cell;
+import fr.sii.survival.core.domain.image.Image;
 
 public class AddImage implements Action {
 	/**
-	 * The name of the image to add
+	 * The image to add
 	 */
-	private String name;
+	private Image image;
 
 	/**
 	 * The position where to place the image on the game board
@@ -22,18 +23,18 @@ public class AddImage implements Action {
 		super();
 	}
 
-	public AddImage(String name, Cell cell) {
+	public AddImage(Image image, Cell cell) {
 		super();
-		this.name = name;
+		this.image = image;
 		this.cell = cell;
 	}
 
-	public String getName() {
-		return name;
+	public Image getImage() {
+		return image;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setImage(Image image) {
+		this.image = image;
 	}
 
 	public Cell getCell() {
@@ -49,7 +50,7 @@ public class AddImage implements Action {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cell == null) ? 0 : cell.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((image == null) ? 0 : image.hashCode());
 		return result;
 	}
 
@@ -67,10 +68,10 @@ public class AddImage implements Action {
 				return false;
 		} else if (!cell.equals(other.cell))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (image == null) {
+			if (other.image != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!image.equals(other.image))
 			return false;
 		return true;
 	}
@@ -78,7 +79,8 @@ public class AddImage implements Action {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AddImage [name=").append(name).append(", cell=").append(cell).append("]");
+		builder.append("AddImage [image=").append(image).append(", cell=").append(cell).append("]");
 		return builder.toString();
 	}
+
 }

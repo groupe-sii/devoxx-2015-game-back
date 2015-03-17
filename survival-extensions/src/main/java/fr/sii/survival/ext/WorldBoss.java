@@ -1,7 +1,9 @@
 package fr.sii.survival.ext;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import fr.sii.survival.core.domain.image.ServerImage;
 import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.ext.DelegateEnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
@@ -18,8 +20,8 @@ import fr.sii.survival.core.ext.behavior.target.TargetManager;
 
 public class WorldBoss extends DelegateEnemyExtension implements SpecialEnemy {
 
-	public WorldBoss() {
-		super("WorldBoss", "worldboss", Integer.MAX_VALUE);
+	public WorldBoss() throws IOException {
+		super("WorldBoss", new ServerImage("images/worldboss.png"), Integer.MAX_VALUE);
 	}
 
 	@Override
