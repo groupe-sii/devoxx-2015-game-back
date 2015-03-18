@@ -12,6 +12,8 @@ import fr.sii.survival.core.listener.board.SimpleBoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.board.RandomCellProvider;
 import fr.sii.survival.core.service.board.SimpleBoardService;
+import fr.sii.survival.core.service.board.rules.AutoDiscoveryBoardRuleRegistry;
+import fr.sii.survival.core.service.board.rules.DelegateRulesBoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 
@@ -33,7 +35,8 @@ public class BoardConfiguration {
 	
 	@Bean
 	public BoardService boardService() {
-		return new SimpleBoardService(boardOptions.getWidth(), boardOptions.getHeight(), cellProvider(), boardListenerManager(), multiGameHelper);
+		BoardService simpleService = new SimpleBoardService(boardOptions.getWidth(), boardOptions.getHeight(), cellProvider(), boardListenerManager(), multiGameHelper);
+		return new DelegateRulesBoardService(simpleService, new AutoDiscoveryBoardRuleRegistry(extensionService));
 	}
 
 	@Bean

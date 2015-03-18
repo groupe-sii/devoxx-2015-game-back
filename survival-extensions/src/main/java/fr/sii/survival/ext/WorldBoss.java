@@ -28,7 +28,7 @@ public class WorldBoss extends DelegateEnemyExtension implements SpecialEnemy {
 	protected EnemyActionManager getActionManager(GameContext context) {
 		return new DelayedActionManager(
 				new AreaActionManager(
-						new AttackActionManager(actionService, 500),
+						new AttackActionManager(actionService, getEnemy(), 500),
 						new Circle(context.getBoard(), 3)),
 				1, TimeUnit.SECONDS);
 	}

@@ -26,7 +26,7 @@ public class AutoDiscoveryExtensionRegistryTest {
 	@Before
 	public void setUp() {
 		extensionService = new DelegateExtensionService(new AnnotationDeveloperProvider());
-		registry = new AutoDiscoveryExtensionRegistry("fr.sii.survival.mock.ext", extensionService);
+		registry = new AutoDiscoveryExtensionRegistry(extensionService, "fr.sii.survival.mock.ext");
 	}
 
 	@Test

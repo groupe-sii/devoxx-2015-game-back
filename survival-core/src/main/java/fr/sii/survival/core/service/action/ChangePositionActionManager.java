@@ -38,7 +38,7 @@ public class ChangePositionActionManager implements ActionManager<ChangePosition
 	}
 
 	@Override
-	public void execute(Game game, ChangePosition action) throws GameException {
+	public void execute(Game game, Player p, ChangePosition action) throws GameException {
 		logger.info("change position of players from {} to {}", action.getStart(), action.getEnd());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getStart());
 		for(Player player : players) {

@@ -18,7 +18,7 @@ public class Regenerator extends DelegateEnemyExtension {
 
 	@Override
 	protected EnemyActionManager getActionManager(GameContext context) {
-		return new HealActionManager(actionService, 50);
+		return new HealActionManager(actionService, getEnemy(), 50);
 	}
 
 	@Override

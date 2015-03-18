@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.MoveImage;
+import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListenerTrigger;
 
 /**
@@ -30,7 +31,7 @@ public class MoveImageActionManager implements ActionManager<MoveImage> {
 	}
 
 	@Override
-	public void execute(Game game, MoveImage action) {
+	public void execute(Game game, Player p, MoveImage action) {
 		logger.info("move image from {} to {}", action.getStart(), action.getEnd());
 		// nothing special to do, image move is just for client
 		actionListenerTrigger.triggerImageMoved(game, action);

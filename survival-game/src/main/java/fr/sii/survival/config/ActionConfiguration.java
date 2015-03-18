@@ -21,6 +21,8 @@ import fr.sii.survival.core.service.action.MoveImageActionManager;
 import fr.sii.survival.core.service.action.RemoveImageActionManager;
 import fr.sii.survival.core.service.action.UpdateCurrentLifeActionManager;
 import fr.sii.survival.core.service.action.UpdateMaxLifeActionManager;
+import fr.sii.survival.core.service.action.rules.AutoDiscoveryActionRuleRegistry;
+import fr.sii.survival.core.service.action.rules.DelegateRulesActionService;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
@@ -44,7 +46,8 @@ public class ActionConfiguration {
 	
 	@Bean
 	public ActionService actionService() {
-		return new DelegateActionService(actionListenerManager(), actionManagers());
+		ActionService simpleActionService = new DelegateActionService(actionListenerManager(), actionManagers());
+		return new DelegateRulesActionService(simpleActionService, new AutoDiscoveryActionRuleRegistry(extensionService));
 	}
 
 	@Bean

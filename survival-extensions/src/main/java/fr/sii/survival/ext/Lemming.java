@@ -19,7 +19,7 @@ public class Lemming extends DelegateEnemyExtension {
 
 	@Override
 	protected EnemyActionManager getActionManager(GameContext context) {
-		return new FleeingEnemyManager(actionService);
+		return new FleeingEnemyManager(actionService, getEnemy());
 	}
 
 	@Override

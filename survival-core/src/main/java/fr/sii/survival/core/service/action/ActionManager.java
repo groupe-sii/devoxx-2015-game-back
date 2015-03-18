@@ -2,6 +2,7 @@ package fr.sii.survival.core.service.action;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
+import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.exception.GameException;
 
@@ -28,6 +29,8 @@ public interface ActionManager<A extends Action> {
 	 * 
 	 * @param game
 	 *            the game to execute action on
+	 * @param player
+	 *            the player that initiated the action
 	 * @param action
 	 *            the action to execute
 	 * @throws ActionException
@@ -35,5 +38,5 @@ public interface ActionManager<A extends Action> {
 	 * @throws GameException
 	 *             when action couldn't be executed
 	 */
-	public void execute(Game game, A action) throws ActionException, GameException;
+	public void execute(Game game, Player player, A action) throws ActionException, GameException;
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
+import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.exception.ActionExecutionException;
 import fr.sii.survival.core.exception.ActionManagerNotFoundException;
@@ -38,11 +39,11 @@ public class DelegateActionService implements ActionService {
 	}
 
 	@Override
-	public void execute(Game game, Action action) throws ActionException {
+	public void execute(Game game, Player player, Action action) throws ActionException {
 		for (ActionManager<Action> actionManager : actionManagers) {
 			if (actionManager.supports(action)) {
 				try {
-					actionManager.execute(game, action);
+					actionManager.execute(game, player, action);
 				} catch (GameException e) {
 					throw new ActionExecutionException("Failed to execute action "+action, action, e);
 				}

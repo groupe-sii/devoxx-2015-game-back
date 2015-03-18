@@ -68,7 +68,7 @@ public class ActionServiceTest {
 		Player player = new SimpleWizard("test", new ClientImage("default"));
 		Mockito.when(boardService.getPlayers(any(), eq(new Cell(0, 0)))).thenReturn(Arrays.asList(player));
 		Mockito.when(boardService.move(any(), eq(player), eq(new Cell(9, 9)))).thenReturn(new Cell(9, 9));
-		actionService.execute(game, new ChangePosition(new Cell(0, 0), new Cell(9, 9)));
+		actionService.execute(game, player, new ChangePosition(new Cell(0, 0), new Cell(9, 9)));
 		Mockito.verify(listenerManager).triggerPositionChanged(any(), eq(player), eq(new ChangePosition(new Cell(0, 0), new Cell(9, 9))));
 	}
 	
@@ -84,6 +84,6 @@ public class ActionServiceTest {
 
 	@Test(expected=ActionManagerNotFoundException.class)
 	public void invalidAction() throws ActionException {
-		actionService.execute(game, new Action() {});
+		actionService.execute(game, null, new Action() {});
 	}
 }

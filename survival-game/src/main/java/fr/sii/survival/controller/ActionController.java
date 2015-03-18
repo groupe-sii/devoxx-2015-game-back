@@ -19,6 +19,7 @@ import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.exception.GameNotFoundException;
+import fr.sii.survival.core.exception.PlayerNotFoundException;
 import fr.sii.survival.core.listener.action.ActionListener;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.game.GameService;
@@ -39,9 +40,10 @@ public class ActionController extends ErrorController implements ActionListener 
 	GameService gameService;
 
 	@MessageMapping(ACTION_MAPPING_PREFIX)
-	public void execute(Action action) throws ActionException, GameNotFoundException {
+	public void execute(Action action) throws ActionException, GameNotFoundException, PlayerNotFoundException {
 		Game game = gameService.getGame(userContext.getGameId());
-		actionService.execute(game, action);
+		Player player = gameService.getPlayer(game, userContext.getPlayerId());
+		actionService.execute(game, player, action);
 	}
 	
 	@Override

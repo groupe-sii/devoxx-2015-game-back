@@ -32,7 +32,7 @@ public interface DeveloperProvider {
 	 *            the class of the extension
 	 * @return the associated developer if found, null otherwise
 	 */
-	public Developer getDeveloper(Class<? extends EnemyExtension> type);
+	public Developer getDeveloper(Class<?> type);
 
 	/**
 	 * Get the developer information from the board listener

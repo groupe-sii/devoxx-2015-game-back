@@ -42,7 +42,7 @@ public class UpdateMaxLifeActionManager implements ActionManager<UpdateMaxLife> 
 	}
 
 	@Override
-	public void execute(Game game, UpdateMaxLife action) throws GameException {
+	public void execute(Game game, Player p, UpdateMaxLife action) throws GameException {
 		logger.info("update maximum life {} on {}", action.getIncrement(), action.getCell());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {

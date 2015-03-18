@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.AddImage;
+import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListenerTrigger;
 
 /**
@@ -30,7 +31,7 @@ public class AddImageActionManager implements ActionManager<AddImage> {
 	}
 
 	@Override
-	public void execute(Game game, AddImage action) {
+	public void execute(Game game, Player p, AddImage action) {
 		logger.info("add image to {}", action.getCell());
 		// nothing special to do, image add is just for client
 		actionListenerTrigger.triggerImageAdded(game, action);
