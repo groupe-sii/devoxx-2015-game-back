@@ -8,15 +8,15 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.ext.GameContext;
 
 // TODO: manage locks to avoid concurrent modification exception
-public class MultiPlayerTargetManager implements TargetManager {
+public class MultiPlayerTargetBehavior implements TargetBehavior {
 
 	private List<Player> players;
 	
-	public MultiPlayerTargetManager() {
+	public MultiPlayerTargetBehavior() {
 		this(new ArrayList<>());
 	}
 
-	public MultiPlayerTargetManager(List<Player> players) {
+	public MultiPlayerTargetBehavior(List<Player> players) {
 		super();
 		this.players = players;
 	}

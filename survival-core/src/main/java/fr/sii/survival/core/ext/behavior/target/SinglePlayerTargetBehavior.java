@@ -15,11 +15,11 @@ import fr.sii.survival.core.ext.GameContext;
  * @author aurelien
  *
  */
-public class SinglePlayerTargetManager implements TargetManager {
+public class SinglePlayerTargetBehavior implements TargetBehavior {
 
 	private Player player;
 
-	public SinglePlayerTargetManager(Player player) {
+	public SinglePlayerTargetBehavior(Player player) {
 		super();
 		this.player = player;
 	}

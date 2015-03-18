@@ -20,13 +20,13 @@ import fr.sii.survival.core.exception.GameException;
  * @author aurelien
  *
  */
-public class RepeteadActionManager implements EnemyActionManager {
-	private static Logger logger = LoggerFactory.getLogger(RepeteadActionManager.class);
+public class RepeteadActionBehavior implements EnemyActionBehavior {
+	private static Logger logger = LoggerFactory.getLogger(RepeteadActionBehavior.class);
 
 	/**
 	 * The action manager to execute
 	 */
-	private EnemyActionManager delegate;
+	private EnemyActionBehavior delegate;
 
 	/**
 	 * The rate in milliseconds
@@ -40,7 +40,7 @@ public class RepeteadActionManager implements EnemyActionManager {
 	
 	private GameException error;
 
-	public RepeteadActionManager(EnemyActionManager delegate, long rate, int numExecutions) {
+	public RepeteadActionBehavior(EnemyActionBehavior delegate, long rate, int numExecutions) {
 		super();
 		this.delegate = delegate;
 		this.rate = rate;

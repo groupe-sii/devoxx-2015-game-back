@@ -19,24 +19,24 @@ import fr.sii.survival.core.exception.GameException;
  * @author aurelien
  *
  */
-public class DelayedActionManager implements EnemyActionManager {
-	private static Logger logger = LoggerFactory.getLogger(DelayedActionManager.class);
+public class DelayedActionBehavior implements EnemyActionBehavior {
+	private static Logger logger = LoggerFactory.getLogger(DelayedActionBehavior.class);
 
 	/**
 	 * The action manager to execute
 	 */
-	private EnemyActionManager delegate;
+	private EnemyActionBehavior delegate;
 
 	/**
 	 * The delay in milliseconds
 	 */
 	private long delay;
 
-	public DelayedActionManager(EnemyActionManager delegate, int delay, TimeUnit unit) {
+	public DelayedActionBehavior(EnemyActionBehavior delegate, int delay, TimeUnit unit) {
 		this(delegate, TimeUnit.MILLISECONDS.convert(delay, unit));
 	}
 	
-	public DelayedActionManager(EnemyActionManager delegate, long delay) {
+	public DelayedActionBehavior(EnemyActionBehavior delegate, long delay) {
 		super();
 		this.delegate = delegate;
 		this.delay = delay;

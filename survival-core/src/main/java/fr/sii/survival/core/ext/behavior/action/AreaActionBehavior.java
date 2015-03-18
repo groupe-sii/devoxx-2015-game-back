@@ -14,19 +14,19 @@ import fr.sii.survival.core.ext.behavior.action.shape.Shape;
  * @author aurelien
  *
  */
-public class AreaActionManager implements EnemyActionManager {
+public class AreaActionBehavior implements EnemyActionBehavior {
 
 	/**
 	 * The action to execute on cells contained by the shape
 	 */
-	private EnemyActionManager delegate;
+	private EnemyActionBehavior delegate;
 	
 	/**
 	 * The area shape
 	 */
 	private Shape shape;
 	
-	public AreaActionManager(EnemyActionManager delegate, Shape shape) {
+	public AreaActionBehavior(EnemyActionBehavior delegate, Shape shape) {
 		super();
 		this.delegate = delegate;
 		this.shape = shape;

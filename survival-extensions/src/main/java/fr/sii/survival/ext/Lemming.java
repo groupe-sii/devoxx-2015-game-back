@@ -4,12 +4,12 @@ import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.ext.DelegateEnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
-import fr.sii.survival.core.ext.behavior.action.EnemyActionManager;
-import fr.sii.survival.core.ext.behavior.action.FleeingEnemyManager;
-import fr.sii.survival.core.ext.behavior.move.EnemyMoveManager;
-import fr.sii.survival.core.ext.behavior.move.RandomAroundNearManager;
-import fr.sii.survival.core.ext.behavior.target.RandomPlayerTargetManager;
-import fr.sii.survival.core.ext.behavior.target.TargetManager;
+import fr.sii.survival.core.ext.behavior.action.EnemyActionBehavior;
+import fr.sii.survival.core.ext.behavior.action.FleeingEnemyBehavior;
+import fr.sii.survival.core.ext.behavior.move.EnemyMoveBehavior;
+import fr.sii.survival.core.ext.behavior.move.RandomAroundNearBehavior;
+import fr.sii.survival.core.ext.behavior.target.RandomPlayerTargetBehavior;
+import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 
 public class Lemming extends DelegateEnemyExtension {
 
@@ -18,18 +18,18 @@ public class Lemming extends DelegateEnemyExtension {
 	}
 
 	@Override
-	protected EnemyActionManager getActionManager(GameContext context) {
-		return new FleeingEnemyManager(actionService, getEnemy());
+	protected EnemyActionBehavior getActionBehavior(GameContext context) {
+		return new FleeingEnemyBehavior(actionService, getEnemy());
 	}
 
 	@Override
-	protected EnemyMoveManager getMoveManager(GameContext context) {
-		return new RandomAroundNearManager();
+	protected EnemyMoveBehavior getMoveBehavior(GameContext context) {
+		return new RandomAroundNearBehavior();
 	}
 
 	@Override
-	protected TargetManager getTargetManager(GameContext context) {
-		return new RandomPlayerTargetManager(Wizard.class);
+	protected TargetBehavior getTargetBehavior(GameContext context) {
+		return new RandomPlayerTargetBehavior(Wizard.class);
 	}
 
 }

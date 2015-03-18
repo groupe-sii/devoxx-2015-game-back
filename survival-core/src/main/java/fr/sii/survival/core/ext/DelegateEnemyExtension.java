@@ -3,10 +3,10 @@ package fr.sii.survival.core.ext;
 import fr.sii.survival.core.domain.image.Image;
 import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.exception.GameException;
-import fr.sii.survival.core.ext.behavior.DelegateEnemyManager;
-import fr.sii.survival.core.ext.behavior.action.EnemyActionManager;
-import fr.sii.survival.core.ext.behavior.move.EnemyMoveManager;
-import fr.sii.survival.core.ext.behavior.target.TargetManager;
+import fr.sii.survival.core.ext.behavior.DelegateEnemyBehavior;
+import fr.sii.survival.core.ext.behavior.action.EnemyActionBehavior;
+import fr.sii.survival.core.ext.behavior.move.EnemyMoveBehavior;
+import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 
 /**
  * Template implementation that delegates IA to provided managers
@@ -36,7 +36,7 @@ public abstract class DelegateEnemyExtension extends EnemyExtension {
 	 *            the current context of the game (game, players, board)
 	 * @return the action manager instance
 	 */
-	protected abstract EnemyActionManager getActionManager(GameContext context);
+	protected abstract EnemyActionBehavior getActionBehavior(GameContext context);
 
 	/**
 	 * Provide the move manager (how this enemy should move)
@@ -45,7 +45,7 @@ public abstract class DelegateEnemyExtension extends EnemyExtension {
 	 *            the current context of the game (game, players, board)
 	 * @return the move manager instance
 	 */
-	protected abstract EnemyMoveManager getMoveManager(GameContext context);
+	protected abstract EnemyMoveBehavior getMoveBehavior(GameContext context);
 
 	/**
 	 * Provide the target manager (how to target players)
@@ -54,11 +54,11 @@ public abstract class DelegateEnemyExtension extends EnemyExtension {
 	 *            the current context of the game (game, players, board)
 	 * @return the target manager instance
 	 */
-	protected abstract TargetManager getTargetManager(GameContext context);
+	protected abstract TargetBehavior getTargetBehavior(GameContext context);
 
 	@Override
 	public void run(GameContext context) throws GameException {
-		DelegateEnemyManager simpleIAEnemyManager = new DelegateEnemyManager(getEnemy(), boardService, getMoveManager(context), getActionManager(context), getTargetManager(context));
+		DelegateEnemyBehavior simpleIAEnemyManager = new DelegateEnemyBehavior(getEnemy(), boardService, getMoveBehavior(context), getActionBehavior(context), getTargetBehavior(context));
 		simpleIAEnemyManager.run(context);
 	}
 

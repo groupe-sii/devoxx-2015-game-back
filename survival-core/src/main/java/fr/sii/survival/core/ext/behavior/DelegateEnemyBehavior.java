@@ -6,9 +6,9 @@ import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.ext.GameContext;
-import fr.sii.survival.core.ext.behavior.action.EnemyActionManager;
-import fr.sii.survival.core.ext.behavior.move.EnemyMoveManager;
-import fr.sii.survival.core.ext.behavior.target.TargetManager;
+import fr.sii.survival.core.ext.behavior.action.EnemyActionBehavior;
+import fr.sii.survival.core.ext.behavior.move.EnemyMoveBehavior;
+import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 import fr.sii.survival.core.service.board.BoardService;
 
 /**
@@ -22,19 +22,19 @@ import fr.sii.survival.core.service.board.BoardService;
  * @author aurelien
  *
  */
-public class DelegateEnemyManager {
+public class DelegateEnemyBehavior {
 
 	private Enemy enemy;
 
 	private BoardService boardService;
 
-	private EnemyMoveManager moveManager;
+	private EnemyMoveBehavior moveManager;
 
-	private EnemyActionManager actionManager;
+	private EnemyActionBehavior actionManager;
 
-	private TargetManager targetManager;
+	private TargetBehavior targetManager;
 
-	public DelegateEnemyManager(Enemy enemy, BoardService boardService, EnemyMoveManager moveManager, EnemyActionManager actionManager, TargetManager targetManager) {
+	public DelegateEnemyBehavior(Enemy enemy, BoardService boardService, EnemyMoveBehavior moveManager, EnemyActionBehavior actionManager, TargetBehavior targetManager) {
 		super();
 		this.enemy = enemy;
 		this.boardService = boardService;

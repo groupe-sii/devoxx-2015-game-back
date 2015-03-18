@@ -13,7 +13,7 @@ import fr.sii.survival.core.service.board.Direction;
  *
  */
 @Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")
-public class NoMoveIfDied implements AllowMoveRule {
+public class NoMoveIfDeadRule implements AllowMoveRule {
 
 	@Override
 	public boolean isMoveAllowed(Board board, Player player, Cell cell) {

@@ -6,13 +6,13 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.ext.annotation.Developer;
 
 /**
- * Prevent the player to execute actions if he is died
+ * Prevent the player to execute actions if he is dead
  * 
  * @author aurelien
  *
  */
 @Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")
-public class NoActionIfDied implements AllowActionRule {
+public class NoActionIfDeadRule implements AllowActionRule {
 
 	@Override
 	public boolean isAllowed(Game game, Player player, Action action) {

@@ -8,7 +8,7 @@ import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.service.action.ActionService;
 
-public class FleeingEnemyManager extends SimpleActionManager {
+public class FleeingEnemyBehavior extends SimpleActionBehavior {
 
 	private enum Insult {
 		PABO ("Pas Beau !"),
@@ -34,7 +34,7 @@ public class FleeingEnemyManager extends SimpleActionManager {
 	private int iterate = 0;
 	private int insults = Insult.values().length;
 	
-	public FleeingEnemyManager(ActionService actionService, Enemy enemy) {
+	public FleeingEnemyBehavior(ActionService actionService, Enemy enemy) {
 		super(actionService, enemy);
 	}
 

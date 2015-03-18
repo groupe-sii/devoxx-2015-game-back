@@ -13,7 +13,7 @@ import fr.sii.survival.core.ext.GameContext;
  * @author aurelien
  *
  */
-public class RandomCellTargetManager implements TargetManager {
+public class RandomCellTargetBehavior implements TargetBehavior {
 
 	@Override
 	public List<Cell> getTargetPositions(GameContext context) {

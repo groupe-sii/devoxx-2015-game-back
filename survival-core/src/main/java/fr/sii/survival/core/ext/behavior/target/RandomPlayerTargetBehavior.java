@@ -15,14 +15,14 @@ import fr.sii.survival.core.ext.GameContext;
  * @author aurelien
  *
  */
-public class RandomPlayerTargetManager implements TargetManager {
+public class RandomPlayerTargetBehavior implements TargetBehavior {
 
 	private Class<? extends Player> type;
 
 	/**
 	 * Target any kind of player (wizard or enemy)
 	 */
-	public RandomPlayerTargetManager() {
+	public RandomPlayerTargetBehavior() {
 		this(Player.class);
 	}
 
@@ -32,7 +32,7 @@ public class RandomPlayerTargetManager implements TargetManager {
 	 * @param type
 	 *            the type of the player to target
 	 */
-	public RandomPlayerTargetManager(Class<? extends Player> type) {
+	public RandomPlayerTargetBehavior(Class<? extends Player> type) {
 		super();
 		this.type = type;
 	}

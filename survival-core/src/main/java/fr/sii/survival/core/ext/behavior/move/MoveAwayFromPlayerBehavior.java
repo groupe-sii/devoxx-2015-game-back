@@ -3,7 +3,7 @@ package fr.sii.survival.core.ext.behavior.move;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.ext.GameContext;
 
-public class MoveAwayFromPlayerManager implements EnemyMoveManager {
+public class MoveAwayFromPlayerBehavior implements EnemyMoveBehavior {
 
 	@Override
 	public Cell getNextPosition(GameContext context) {

@@ -14,7 +14,7 @@ import fr.sii.survival.core.ext.GameContext;
  * @author aurelien
  *
  */
-public class RandomMoveNearManager implements EnemyMoveManager {
+public class RandomMoveNearBehavior implements EnemyMoveBehavior {
 
 	@Override
 	public Cell getNextPosition(GameContext context) {
