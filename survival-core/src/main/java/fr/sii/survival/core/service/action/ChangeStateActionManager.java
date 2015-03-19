@@ -44,7 +44,7 @@ public class ChangeStateActionManager implements ActionManager<ChangeStates> {
 
 	@Override
 	public void execute(Game game, Player p, ChangeStates action) throws GameException {
-		logger.info("apply state changes {} on {}", action.getStateChanges(), action.getCell());
+		logger.debug("apply state changes {} on {}", action.getStateChanges(), action.getCell());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {
 			List<StateChange> applied = playerService.updateStates(player, action.getStateChanges());

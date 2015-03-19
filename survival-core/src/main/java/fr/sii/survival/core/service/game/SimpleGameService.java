@@ -13,7 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
-import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.exception.AlreadyInGameException;
@@ -189,18 +188,18 @@ public class SimpleGameService implements GameService {
 							}
 						}
 						// execute extensions
-						System.out.println("============debut============");
+						logger.debug("============debut============");
 						extensions.parallelStream().forEach(extension -> {
 							try {
-								extension.run(new GameContext(game, new Board(game.getBoard()), boardService.getCell(game.getBoard(), extension.getEnemy())));
+								extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
 							} catch (Exception e) {
 								messageService.addError(new GameException("Failed to run extensions", e));
 							}
 						});
-						System.out.println("============fin============");
 //						for(EnemyExtension extension : extensions) {
 //							extension.run(new GameContext(game, new Board(game.getBoard()), boardService.getCell(extension.getEnemy())));
 //						}
+						logger.debug("============fin============");
 					}
 				} catch (Exception e) {
 					logger.error("Failed to run extensions", e);

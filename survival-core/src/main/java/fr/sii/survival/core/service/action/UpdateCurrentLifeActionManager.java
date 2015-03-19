@@ -43,7 +43,7 @@ public class UpdateCurrentLifeActionManager implements ActionManager<UpdateCurre
 
 	@Override
 	public void execute(Game game, Player p, UpdateCurrentLife action) throws GameException {
-		logger.info("update current life {} on {}", action.getIncrement(), action.getCell());
+		logger.debug("update current life {} on {}", action.getIncrement(), action.getCell());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {
 			int inc = playerService.updateCurrentLife(player, action.getIncrement());

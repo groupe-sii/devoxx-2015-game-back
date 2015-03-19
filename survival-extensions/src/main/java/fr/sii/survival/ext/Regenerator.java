@@ -6,7 +6,7 @@ import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.behavior.action.EnemyActionBehavior;
 import fr.sii.survival.core.ext.behavior.action.HealActionBehavior;
 import fr.sii.survival.core.ext.behavior.move.EnemyMoveBehavior;
-import fr.sii.survival.core.ext.behavior.move.RandomAroundNearBehavior;
+import fr.sii.survival.core.ext.behavior.move.RandomMoveNearBehavior;
 import fr.sii.survival.core.ext.behavior.target.SinglePlayerTargetBehavior;
 import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 
@@ -23,7 +23,7 @@ public class Regenerator extends DelegateEnemyExtension {
 
 	@Override
 	protected EnemyMoveBehavior getMoveBehavior(GameContext context) {
-		return new RandomAroundNearBehavior();
+		return new RandomMoveNearBehavior();
 	}
 
 	@Override

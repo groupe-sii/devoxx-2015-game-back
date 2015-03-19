@@ -11,7 +11,6 @@ import fr.sii.survival.core.ext.GameContext;
  *
  */
 public class RandomAroundNearBehavior implements EnemyMoveBehavior {
-
 	@Override
 	public Cell getNextPosition(GameContext context) {
 		int directionX = (int) Math.round(2*Math.random())-1;

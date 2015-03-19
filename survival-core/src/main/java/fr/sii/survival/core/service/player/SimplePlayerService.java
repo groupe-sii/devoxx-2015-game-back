@@ -97,7 +97,7 @@ public class SimplePlayerService implements PlayerService {
 		Life life = player.getLife();
 		int oldValue = life.getCurrent();
 		int lifeValue = life.updateCurrent(increment);
-		logger.info("update player life from {} to {}", oldValue, lifeValue);
+		logger.debug("update player life from {} to {}", oldValue, lifeValue);
 		Game game = gameHelper.getGame(player);
 		if (lifeValue <= 0 && oldValue>0) {
 			// new life<=0 => player is now dead
@@ -127,7 +127,7 @@ public class SimplePlayerService implements PlayerService {
 		Life life = player.getLife();
 		int oldValue = life.getMax();
 		int lifeValue = life.updateMax(increment);
-		logger.info("update player maximum life from {} to {}", oldValue, lifeValue);
+		logger.debug("update player maximum life from {} to {}", oldValue, lifeValue);
 		if (lifeValue < maximumLifeRange.lowerEndpoint()) {
 			life.setMax(maximumLifeRange.lowerEndpoint());
 			increment = -oldValue+maximumLifeRange.lowerEndpoint();

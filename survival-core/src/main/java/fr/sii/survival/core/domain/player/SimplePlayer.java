@@ -162,7 +162,7 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public States getStates() {
-		return new States();
+		return states;
 	}
 
 	@Override
