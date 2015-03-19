@@ -99,7 +99,7 @@ public class SimplePlayerService implements PlayerService {
 		int lifeValue = life.updateCurrent(increment);
 		logger.info("update player life from {} to {}", oldValue, lifeValue);
 		Game game = gameHelper.getGame(player);
-		if (lifeValue <= 0) {
+		if (lifeValue <= 0 && oldValue>0) {
 			// new life<=0 => player is now dead
 			life.setCurrent(0);
 			increment = -oldValue;

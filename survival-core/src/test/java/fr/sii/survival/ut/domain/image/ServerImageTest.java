@@ -7,17 +7,31 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import fr.sii.survival.core.domain.image.ServerImage;
+import fr.sii.survival.core.exception.MimetypeDetectionException;
 
 public class ServerImageTest {
 	@Test
-	public void relative() throws IOException {
+	public void relative() throws IOException, MimetypeDetectionException {
 		ServerImage image = new ServerImage("images/Green-Monster-icon.png");
-		byte[] expected = IOUtils.toByteArray(getClass().getResourceAsStream("/base64/Green-Monster-icon.txt"));
-		Assert.assertArrayEquals("base64 encoding should give same result", expected, image.getContent());
+		String expected = IOUtils.toString(getClass().getResourceAsStream("/base64/Green-Monster-icon.txt"));
+		Assert.assertEquals("base64 encoding should give same result", expected, image.getContent());
+		Assert.assertEquals("mimetype should be image/png", "image/png", image.getMimetype());
+	}
+	
+	@Test
+	public void gif() throws IOException, MimetypeDetectionException {
+		ServerImage image = new ServerImage("images/worldboss.gif");
+		Assert.assertEquals("mimetype should be image/png", "image/gif", image.getMimetype());
+	}
+	
+	@Test
+	public void png() throws IOException, MimetypeDetectionException {
+		ServerImage image = new ServerImage("images/worldboss.png");
+		Assert.assertEquals("mimetype should be image/png", "image/png", image.getMimetype());
 	}
 	
 	@Test(expected=IOException.class)
-	public void relativeNotFound() throws IOException {
+	public void relativeNotFound() throws IOException, MimetypeDetectionException {
 		new ServerImage("images/doesntexist.png");
 	}
 }

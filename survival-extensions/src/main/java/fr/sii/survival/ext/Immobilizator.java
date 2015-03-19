@@ -1,13 +1,16 @@
 package fr.sii.survival.ext;
 
+import java.util.concurrent.TimeUnit;
+
 import fr.sii.survival.core.domain.image.ClientImage;
+import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.ext.DelegateEnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
-import fr.sii.survival.core.ext.behavior.action.ChangeStateActionBehavior;
 import fr.sii.survival.core.ext.behavior.action.EnemyActionBehavior;
+import fr.sii.survival.core.ext.behavior.action.TemporaryChangeState;
 import fr.sii.survival.core.ext.behavior.move.EnemyMoveBehavior;
 import fr.sii.survival.core.ext.behavior.move.RandomAroundNearBehavior;
-import fr.sii.survival.core.ext.behavior.target.SinglePlayerTargetBehavior;
+import fr.sii.survival.core.ext.behavior.target.RandomPlayerTargetBehavior;
 import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 import fr.sii.survival.ext.constants.States;
 
@@ -19,7 +22,7 @@ public class Immobilizator extends DelegateEnemyExtension {
 
 	@Override
 	protected EnemyActionBehavior getActionBehavior(GameContext context) {
-		return new ChangeStateActionBehavior(actionService, enemy, States.IMMOBILIZED.toString(), true);
+		return new TemporaryChangeState(actionService, enemy, States.IMMOBILIZED.toString(), 5, TimeUnit.SECONDS);
 	}
 
 	@Override
@@ -29,7 +32,7 @@ public class Immobilizator extends DelegateEnemyExtension {
 
 	@Override
 	protected TargetBehavior getTargetBehavior(GameContext context) {
-		return new SinglePlayerTargetBehavior(getEnemy());
+		return new RandomPlayerTargetBehavior(Wizard.class);
 	}
 
 }

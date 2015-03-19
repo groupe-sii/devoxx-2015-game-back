@@ -1,5 +1,7 @@
 package fr.sii.survival.config;
 
+import java.util.function.Predicate;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,7 @@ import fr.sii.survival.core.ext.provider.RandomProvider;
 import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
 import fr.sii.survival.core.ext.registry.ExtensionRegistry;
 import fr.sii.survival.core.ext.registry.PostFilteredRegistry;
+import fr.sii.survival.core.ext.registry.predicate.RegexPredicate;
 import fr.sii.survival.core.ext.registry.predicate.TypePredicate;
 import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListenerManager;
@@ -71,10 +74,19 @@ public class GameConfiguration {
 
 	@Bean
 	public ExtensionProvider extensionProvider() {
+		// transform list of exclusion patterns into a list of RegexPredicate. Then the list of predicates is combined using a Or operator
+		Predicate<Class<?>> excludeFilter = enemyOptions.getExcludes().stream()
+									.<Predicate<Class<?>>>map(exclude -> new RegexPredicate(exclude))
+									.reduce(Predicate::or)
+									.orElse(p -> false);
+		// basic enemy filter -> if predicate returns true, then enemy is added to the registry
+		Predicate<Class<?>> basicEnemyFilter = new TypePredicate(SpecialEnemy.class).negate().and(excludeFilter.negate());
+		// special enemy filter -> if predicate returns true, then enemy is added to the registry
+		Predicate<Class<?>> specialEnemyFilter = new TypePredicate(SpecialEnemy.class).and(excludeFilter.negate());
 		// provider for basic enemies
-		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, extensionService, new PostFilteredRegistry(new TypePredicate(SpecialEnemy.class).negate(), extensionRegistry()));
+		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, extensionService, new PostFilteredRegistry(basicEnemyFilter, extensionRegistry()));
 		// provider for special enemies
-		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, extensionService, new PostFilteredRegistry(new TypePredicate(SpecialEnemy.class), extensionRegistry()));
+		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, extensionService, new PostFilteredRegistry(specialEnemyFilter, extensionRegistry()));
 		// invoke special enemies every n basic enemies
 		ExtensionProvider everyProvider = new EveryEnemyProvider(enemyOptions.getSpecialEvery(), basicRandomProvider, specialRandomProvider);
 		// limit the maximum number of enemies on the board

@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import fr.sii.survival.core.domain.image.ServerImage;
 import fr.sii.survival.core.domain.player.Wizard;
+import fr.sii.survival.core.exception.MimetypeDetectionException;
 import fr.sii.survival.core.ext.DelegateEnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.SpecialEnemy;
@@ -20,7 +21,7 @@ import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 
 public class WorldBoss extends DelegateEnemyExtension implements SpecialEnemy {
 
-	public WorldBoss() throws IOException {
+	public WorldBoss() throws IOException, MimetypeDetectionException {
 		super("WorldBoss", new ServerImage("images/worldboss.png"), Integer.MAX_VALUE);
 	}
 

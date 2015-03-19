@@ -47,7 +47,7 @@ public class ActionConfiguration {
 	@Bean
 	public ActionService actionService() {
 		ActionService simpleActionService = new DelegateActionService(actionListenerManager(), actionManagers());
-		return new DelegateRulesActionService(simpleActionService, new AutoDiscoveryActionRuleRegistry(extensionService));
+		return new DelegateRulesActionService(simpleActionService, new AutoDiscoveryActionRuleRegistry(extensionService, "fr.sii.survival.ext.rules"));
 	}
 
 	@Bean

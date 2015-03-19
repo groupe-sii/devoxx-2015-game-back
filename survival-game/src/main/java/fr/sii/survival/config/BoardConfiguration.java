@@ -36,7 +36,7 @@ public class BoardConfiguration {
 	@Bean
 	public BoardService boardService() {
 		BoardService simpleService = new SimpleBoardService(boardOptions.getWidth(), boardOptions.getHeight(), cellProvider(), boardListenerManager(), multiGameHelper);
-		return new DelegateRulesBoardService(simpleService, new AutoDiscoveryBoardRuleRegistry(extensionService));
+		return new DelegateRulesBoardService(simpleService, new AutoDiscoveryBoardRuleRegistry(extensionService, "fr.sii.survival.ext.rules"));
 	}
 
 	@Bean
