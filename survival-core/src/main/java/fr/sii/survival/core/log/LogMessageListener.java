@@ -8,7 +8,7 @@ import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.message.MessageListener;
 
 public class LogMessageListener implements MessageListener {
-	private static Logger logger = LoggerFactory.getLogger(LogMessageListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogMessageListener.class);
 
 	@Override
 	public void error(GameException e) {

@@ -8,6 +8,15 @@
 		</encoder>
 	</appender>
 
+	<logger name="fr.sii.survival.core.log.LogBoardListener" level="DEBUG" />
+	<logger name="fr.sii.survival.core.log.LogActionListener" level="WARN" />
+	<logger name="fr.sii.survival.core.log.LogPlayerListener" level="WARN" />
+	<logger name="net.sf.jmimemagic.MagicParser" level="WARN" />
+	<logger name="org.reflections" level="WARN" />
+	<!-- logger name="fr.sii.survival.core.service.action.ChangeStateActionManager" level="DEBUG" />
+	<logger name="fr.sii.survival.core.ext.behavior.action.CooldownActionBehavior" level="DEBUG" />
+	<logger name="fr.sii.survival.core.ext.behavior.action.RepeatedActionBehavior" level="DEBUG" /-->
+
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 	</root>

@@ -6,6 +6,7 @@ import fr.sii.survival.core.domain.player.SimpleEnemy;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.board.BoardService;
+import fr.sii.survival.core.service.player.PlayerService;
 
 /**
  * Base class for enemy extensions
@@ -23,6 +24,11 @@ public abstract class EnemyExtension {
 	 * The service used to manage board
 	 */
 	protected BoardService boardService;
+
+	/**
+	 * The service used to manage board
+	 */
+	protected PlayerService playerService;
 
 	/**
 	 * The enemy the extension is managing

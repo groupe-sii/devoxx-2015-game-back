@@ -2,6 +2,9 @@ package fr.sii.survival.core.domain.board;
 
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.util.MultiValueMatrix;
 
@@ -116,24 +119,18 @@ public class Board {
 	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
+		return new HashCodeBuilder().append(id).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof Board)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Board other = (Board) obj;
-		if (id != other.id)
-			return false;
-		return true;
+		return new EqualsBuilder().append(id, other.id).isEquals();
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package fr.sii.survival.core.ext.behavior.action;
 
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Cell;
-import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.exception.GameException;
 
 /**
@@ -20,7 +19,7 @@ import fr.sii.survival.core.exception.GameException;
  *
  */
 public class DelayedActionBehavior implements EnemyActionBehavior {
-	private static Logger logger = LoggerFactory.getLogger(DelayedActionBehavior.class);
+	private static final Logger logger = LoggerFactory.getLogger(DelayedActionBehavior.class);
 
 	/**
 	 * The action manager to execute
@@ -57,16 +56,17 @@ public class DelayedActionBehavior implements EnemyActionBehavior {
 
 	@Override
 	public void execute(Game game, Cell cell) throws GameException {
-		ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
-		service.scheduleWithFixedDelay(() -> {
-			try {
-				delegate.execute(game, cell);
-			} catch (GameException e) {
-				// TODO: execute method should throw an exception to propagate it like other
-				logger.error("Failed to execute delayed action", e);
-			} finally {
-				service.shutdown();
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				try {
+					delegate.execute(game, cell);
+				} catch (GameException e) {
+					// TODO: execute method should throw an exception to propagate it like other
+					logger.error("Failed to execute delayed action", e);
+				}
 			}
-		}, delay, delay, TimeUnit.MILLISECONDS);
+		}, delay);
 	}
 }

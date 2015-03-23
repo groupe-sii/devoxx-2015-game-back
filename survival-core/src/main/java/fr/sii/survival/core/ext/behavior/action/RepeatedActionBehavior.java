@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Cell;
-import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.exception.GameException;
 
 /**
@@ -20,8 +19,8 @@ import fr.sii.survival.core.exception.GameException;
  * @author aurelien
  *
  */
-public class RepeteadActionBehavior implements EnemyActionBehavior {
-	private static Logger logger = LoggerFactory.getLogger(RepeteadActionBehavior.class);
+public class RepeatedActionBehavior implements EnemyActionBehavior {
+	private static final Logger logger = LoggerFactory.getLogger(RepeatedActionBehavior.class);
 
 	/**
 	 * The action manager to execute
@@ -38,9 +37,9 @@ public class RepeteadActionBehavior implements EnemyActionBehavior {
 	 */
 	private int numExecutions;
 	
-	private GameException error;
-
-	public RepeteadActionBehavior(EnemyActionBehavior delegate, long rate, int numExecutions) {
+	private int count;
+	
+	public RepeatedActionBehavior(EnemyActionBehavior delegate, long rate, int numExecutions) {
 		super();
 		this.delegate = delegate;
 		this.rate = rate;
@@ -49,28 +48,23 @@ public class RepeteadActionBehavior implements EnemyActionBehavior {
 
 	@Override
 	public void execute(Game game, Cell cell) throws GameException {
-		error = null;
-		ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
+		logger.debug("start repeated action {} (game: {}, cell: {})", delegate, game, cell);
+		count = 0;
+		ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 		service.scheduleAtFixedRate(() -> {
 			try {
-				delegate.execute(game, cell);
-				if (numExecutions-- <= 0) {
+				if(count < numExecutions) {
+					logger.debug("execute repeated action {} (game: {}, cell: {})", delegate, game, cell);
+					delegate.execute(game, cell);
+				}
+				if (count++ > numExecutions) {
 					service.shutdown();
 				}
 			} catch (GameException e) {
 				logger.error("Failed to execute repeated action", e);
-				error = e;
 				service.shutdown();
 			}
 		}, 0, rate, TimeUnit.MILLISECONDS);
-		try {
-			service.awaitTermination(numExecutions*rate+rate, TimeUnit.MILLISECONDS);
-			if(error!=null) {
-				throw error;
-			}
-		} catch (InterruptedException e) {
-			throw new ActionException("Failed to wait for repeated action termination", e);
-		}
 	}
 
 }

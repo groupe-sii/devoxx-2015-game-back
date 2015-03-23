@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.board;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class Cell {
 	/**
 	 * The x position
@@ -45,27 +48,18 @@ public class Cell {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + x;
-		result = prime * result + y;
-		return result;
+		return new HashCodeBuilder().append(x).append(y).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof Cell)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Cell other = (Cell) obj;
-		if (x != other.x)
-			return false;
-		if (y != other.y)
-			return false;
-		return true;
+		return new EqualsBuilder().append(x, other.x).append(y, other.y).isEquals();
 	}
 
 	@Override

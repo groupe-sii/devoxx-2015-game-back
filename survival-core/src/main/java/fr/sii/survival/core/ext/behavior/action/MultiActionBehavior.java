@@ -3,6 +3,9 @@ package fr.sii.survival.core.ext.behavior.action;
 import java.util.Arrays;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.exception.GameException;
@@ -14,6 +17,7 @@ import fr.sii.survival.core.exception.GameException;
  *
  */
 public class MultiActionBehavior implements EnemyActionBehavior {
+	private static final Logger logger = LoggerFactory.getLogger(MultiActionBehavior.class);
 
 	private List<EnemyActionBehavior> actions;
 
@@ -28,6 +32,7 @@ public class MultiActionBehavior implements EnemyActionBehavior {
 
 	@Override
 	public void execute(Game game, Cell cell) throws GameException {
+		logger.debug("executing several actions {} for game {} on cell {}", actions, game, cell);
 		for (EnemyActionBehavior action : actions) {
 			action.execute(game, cell);
 		}

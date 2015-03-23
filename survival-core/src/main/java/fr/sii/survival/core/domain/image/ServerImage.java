@@ -12,6 +12,9 @@ import net.sf.jmimemagic.MagicException;
 import net.sf.jmimemagic.MagicMatchNotFoundException;
 import net.sf.jmimemagic.MagicParseException;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 
@@ -25,6 +28,13 @@ import fr.sii.survival.core.exception.MimetypeDetectionException;
  *
  */
 public class ServerImage implements Image {
+	private static long counter = 0;
+	
+	/**
+	 * The unique id of the image
+	 */
+	private String id;
+	
 	/**
 	 * The content of the image base64 encoded
 	 */
@@ -54,6 +64,7 @@ public class ServerImage implements Image {
 	 */
 	public ServerImage(byte[] content, String mimetype) {
 		super();
+		this.id = "ServerImage-"+(counter++);
 		this.content = new String(Base64.getEncoder().encode(content));
 		this.mimetype = mimetype;
 	}
@@ -185,6 +196,10 @@ public class ServerImage implements Image {
 		this(ServerImage.class.getResourceAsStream("/" + relativePath));
 	}
 
+	public String getId() {
+		return id;
+	}
+
 	public String getContent() {
 		return content;
 	}
@@ -193,6 +208,22 @@ public class ServerImage implements Image {
 		return mimetype;
 	}
 
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(id).hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		} else if (obj == null || !(obj instanceof ServerImage)) {
+			return false;
+		}
+		ServerImage other = (ServerImage) obj;
+		return new EqualsBuilder().append(id, other.id).isEquals();
+	}
+	
 	private static String getMimetype(byte[] content) throws MimetypeDetectionException {
 		try {
 			return Magic.getMagicMatch(content, true).getMimeType();

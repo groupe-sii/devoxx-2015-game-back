@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.action;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 public class StateChange {
 	public enum Change {
 		ADD, REMOVE
@@ -59,30 +62,18 @@ public class StateChange {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((change == null) ? 0 : change.hashCode());
-		result = prime * result + ((state == null) ? 0 : state.hashCode());
-		return result;
+		return new HashCodeBuilder().append(state).append(change).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof StateChange)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		StateChange other = (StateChange) obj;
-		if (change != other.change)
-			return false;
-		if (state == null) {
-			if (other.state != null)
-				return false;
-		} else if (!state.equals(other.state))
-			return false;
-		return true;
+		return new EqualsBuilder().append(state, other.state).append(change, other.change).isEquals();
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.player.PlayerListener;
 
 public class LogPlayerListener implements PlayerListener {
-	private static Logger logger = LoggerFactory.getLogger(LogPlayerListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogPlayerListener.class);
 
 	@Override
 	public void dead(Game game, Player player) {

@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.player;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import fr.sii.survival.core.domain.image.Image;
 
 public class SimplePlayer implements Player {
@@ -177,27 +180,18 @@ public class SimplePlayer implements Player {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+		return new HashCodeBuilder().append(id).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof SimplePlayer)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		SimplePlayer other = (SimplePlayer) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+		return new EqualsBuilder().append(id, other.id).isEquals();
 	}
 
 	@Override

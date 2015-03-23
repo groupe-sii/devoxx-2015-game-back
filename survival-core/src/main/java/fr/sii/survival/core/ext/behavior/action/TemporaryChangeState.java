@@ -15,15 +15,17 @@ import fr.sii.survival.core.service.action.ActionService;
  * @author aurelien
  *
  */
-public class TemporaryChangeState extends MultiActionBehavior {
+public class TemporaryChangeState extends TemporaryActionBehavior {
 
-	
-	public TemporaryChangeState(ActionService actionService, Enemy enemy, String state, int delay, TimeUnit unit) {
-		this(new ChangeStateActionBehavior(actionService, enemy, new StateChange(state, Change.ADD)), new DelayedActionBehavior(new ChangeStateActionBehavior(actionService, enemy, new StateChange(state, Change.REMOVE)), delay, unit));
+	public TemporaryChangeState(ActionService actionService, Enemy enemy, String state, long delay) {
+		super(
+				new ChangeStateActionBehavior(actionService, enemy, new StateChange(state, Change.ADD)),
+				new ChangeStateActionBehavior(actionService, enemy, new StateChange(state, Change.REMOVE)),
+				delay);
 	}
 	
-	protected TemporaryChangeState(EnemyActionBehavior addState, EnemyActionBehavior removeState) {
-		super(addState, removeState);
+	public TemporaryChangeState(ActionService actionService, Enemy enemy, String state, int delay, TimeUnit unit) {
+		this(actionService, enemy, state, TimeUnit.MILLISECONDS.convert(delay, unit));
 	}
 
 }

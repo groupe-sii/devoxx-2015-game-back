@@ -29,7 +29,7 @@ public class ImmobilizeRule implements AllowMoveRule {
 	}
 
 	private boolean isImmobilized(Player player) {
-		return player.getStates().getStates().contains(States.IMMOBILIZED);
+		return player.getStates().getStates().contains(States.IMMOBILIZED.toString());
 	}
 
 }

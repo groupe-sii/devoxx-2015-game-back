@@ -9,7 +9,7 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.board.BoardListener;
 
 public class LogBoardListener implements BoardListener {
-	private static Logger logger = LoggerFactory.getLogger(LogBoardListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogBoardListener.class);
 
 	@Override
 	public void moved(Game game, Player player, Cell oldCell, Cell newCell) {

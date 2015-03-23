@@ -26,8 +26,10 @@ import fr.sii.survival.core.listener.game.SimpleGameListenerManager;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.game.GameRunner;
 import fr.sii.survival.core.service.game.GameSelector;
 import fr.sii.survival.core.service.game.GameService;
+import fr.sii.survival.core.service.game.SimpleGameRunner;
 import fr.sii.survival.core.service.game.SimpleGameSelector;
 import fr.sii.survival.core.service.game.SimpleGameService;
 import fr.sii.survival.core.service.message.MessageService;
@@ -59,7 +61,12 @@ public class GameConfiguration {
 	
 	@Bean
 	public GameService gameService() {
-		return new SimpleGameService(gameOptions.getMaxPlayers(), gameOptions.getSchedulingDelay(), boardService, messageService, gameListenerManager(), extensionProvider(), gameHelper, gameSelector());
+		return new SimpleGameService(gameOptions.getMaxPlayers(), gameOptions.getSchedulingDelay(), boardService, gameListenerManager(), gameHelper, gameSelector(), gameRunner());
+	}
+
+	@Bean
+	public GameRunner gameRunner() {
+		return new SimpleGameRunner(boardService, messageService, extensionProvider());
 	}
 
 	@Bean

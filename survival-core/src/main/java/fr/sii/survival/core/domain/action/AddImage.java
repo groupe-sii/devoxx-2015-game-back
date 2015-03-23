@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.action;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.image.Image;
 
@@ -47,33 +50,18 @@ public class AddImage implements Action {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cell == null) ? 0 : cell.hashCode());
-		result = prime * result + ((image == null) ? 0 : image.hashCode());
-		return result;
+		return new HashCodeBuilder().append(cell).append(image).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof AddImage)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		AddImage other = (AddImage) obj;
-		if (cell == null) {
-			if (other.cell != null)
-				return false;
-		} else if (!cell.equals(other.cell))
-			return false;
-		if (image == null) {
-			if (other.image != null)
-				return false;
-		} else if (!image.equals(other.image))
-			return false;
-		return true;
+		return new EqualsBuilder().append(cell, other.cell).append(image, other.image).isEquals();
 	}
 
 	@Override

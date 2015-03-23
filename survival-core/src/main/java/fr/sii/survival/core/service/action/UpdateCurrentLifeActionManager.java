@@ -21,7 +21,7 @@ import fr.sii.survival.core.service.player.PlayerService;
  *
  */
 public class UpdateCurrentLifeActionManager implements ActionManager<UpdateCurrentLife> {
-	private static Logger logger = LoggerFactory.getLogger(UpdateCurrentLifeActionManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(UpdateCurrentLifeActionManager.class);
 
 	private BoardService boardService;
 	

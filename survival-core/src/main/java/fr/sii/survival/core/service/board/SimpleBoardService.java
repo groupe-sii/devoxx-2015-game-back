@@ -22,7 +22,7 @@ import fr.sii.survival.core.listener.board.BoardListenerManager;
  *
  */
 public class SimpleBoardService implements BoardService {
-	private static Logger logger = LoggerFactory.getLogger(SimpleBoardService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimpleBoardService.class);
 
 	/**
 	 * A cell provider use to place new players on the board

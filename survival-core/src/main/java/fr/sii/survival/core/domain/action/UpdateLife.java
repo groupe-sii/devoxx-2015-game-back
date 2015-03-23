@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.action;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import fr.sii.survival.core.domain.board.Cell;
 
 public class UpdateLife implements Action {
@@ -50,30 +53,18 @@ public class UpdateLife implements Action {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cell == null) ? 0 : cell.hashCode());
-		result = prime * result + increment;
-		return result;
+		return new HashCodeBuilder().append(increment).append(cell).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof UpdateLife)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		UpdateLife other = (UpdateLife) obj;
-		if (cell == null) {
-			if (other.cell != null)
-				return false;
-		} else if (!cell.equals(other.cell))
-			return false;
-		if (increment != other.increment)
-			return false;
-		return true;
+		return new EqualsBuilder().append(increment, other.increment).append(cell, other.cell).isEquals();
 	}
 
 	@Override

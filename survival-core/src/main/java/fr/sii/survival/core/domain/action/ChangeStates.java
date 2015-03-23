@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import fr.sii.survival.core.domain.board.Cell;
 
 public class ChangeStates implements Action {
@@ -54,33 +57,18 @@ public class ChangeStates implements Action {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cell == null) ? 0 : cell.hashCode());
-		result = prime * result + ((stateChanges == null) ? 0 : stateChanges.hashCode());
-		return result;
+		return new HashCodeBuilder().append(cell).append(stateChanges).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof ChangeStates)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		ChangeStates other = (ChangeStates) obj;
-		if (cell == null) {
-			if (other.cell != null)
-				return false;
-		} else if (!cell.equals(other.cell))
-			return false;
-		if (stateChanges == null) {
-			if (other.stateChanges != null)
-				return false;
-		} else if (!stateChanges.equals(other.stateChanges))
-			return false;
-		return true;
+		return new EqualsBuilder().append(cell, other.cell).append(stateChanges, other.stateChanges).isEquals();
 	}
 
 	@Override

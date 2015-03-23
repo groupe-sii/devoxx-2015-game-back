@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.action;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.image.Image;
 
@@ -61,39 +64,18 @@ public class MoveImage implements Action {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((end == null) ? 0 : end.hashCode());
-		result = prime * result + ((image == null) ? 0 : image.hashCode());
-		result = prime * result + ((start == null) ? 0 : start.hashCode());
-		return result;
+		return new HashCodeBuilder().append(start).append(end).append(image).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof MoveImage)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		MoveImage other = (MoveImage) obj;
-		if (end == null) {
-			if (other.end != null)
-				return false;
-		} else if (!end.equals(other.end))
-			return false;
-		if (image == null) {
-			if (other.image != null)
-				return false;
-		} else if (!image.equals(other.image))
-			return false;
-		if (start == null) {
-			if (other.start != null)
-				return false;
-		} else if (!start.equals(other.start))
-			return false;
-		return true;
+		return new EqualsBuilder().append(start, other.start).append(end, other.end).append(image, other.image).isEquals();
 	}
 
 	@Override

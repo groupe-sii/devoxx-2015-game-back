@@ -21,7 +21,7 @@ import fr.sii.survival.core.service.player.PlayerService;
  *
  */
 public class UpdateMaxLifeActionManager implements ActionManager<UpdateMaxLife> {
-	private static Logger logger = LoggerFactory.getLogger(UpdateMaxLifeActionManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(UpdateMaxLifeActionManager.class);
 
 	private BoardService boardService;
 	

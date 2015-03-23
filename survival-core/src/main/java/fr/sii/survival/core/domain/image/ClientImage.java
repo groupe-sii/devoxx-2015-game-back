@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.image;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Image that is located on the client side. The image is identified by a name
  * and a folder. The client implementation will resolve the image using the
@@ -9,6 +12,13 @@ package fr.sii.survival.core.domain.image;
  *
  */
 public class ClientImage implements Image {
+	private static long counter = 0;
+	
+	/**
+	 * The unique id of the image
+	 */
+	private String id;
+	
 	/**
 	 * The name of the image (without extension)
 	 */
@@ -38,6 +48,7 @@ public class ClientImage implements Image {
 	 */
 	public ClientImage(String name, String folder) {
 		super();
+		this.id = "ClientImage-"+(counter++);
 		this.name = name;
 		this.folder = folder;
 	}
@@ -51,6 +62,14 @@ public class ClientImage implements Image {
 	 */
 	public ClientImage(String name) {
 		this(name, null);
+	}
+	
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -71,33 +90,19 @@ public class ClientImage implements Image {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((folder == null) ? 0 : folder.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+		return new HashCodeBuilder().append(folder).append(name).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if(obj instanceof ClientImage) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ClientImage other = (ClientImage) obj;
-		if (folder == null) {
-			if (other.folder != null)
-				return false;
-		} else if (!folder.equals(other.folder))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+		} else {
+			ClientImage other = (ClientImage) obj;
+			return new EqualsBuilder().append(folder, other.folder).append(name, other.name).isEquals();
+		}
 	}
 
 	@Override

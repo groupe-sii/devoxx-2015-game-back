@@ -1,9 +1,6 @@
 package fr.sii.survival.core.service.game;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -20,14 +17,10 @@ import fr.sii.survival.core.exception.FullGameException;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.exception.GameNotFoundException;
 import fr.sii.survival.core.exception.PlayerNotFoundException;
-import fr.sii.survival.core.ext.EnemyExtension;
-import fr.sii.survival.core.ext.GameContext;
-import fr.sii.survival.core.ext.provider.ExtensionProvider;
 import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.listener.game.GameListenerRegistry;
 import fr.sii.survival.core.service.board.BoardService;
-import fr.sii.survival.core.service.message.MessageService;
 
 
 public class SimpleGameService implements GameService {
@@ -37,11 +30,6 @@ public class SimpleGameService implements GameService {
 	 * The board service used to add/remove players on it
 	 */
 	private BoardService boardService;
-
-	/**
-	 * The message service
-	 */
-	private MessageService messageService;
 
 	/**
 	 * The maximum number of allowed players
@@ -60,11 +48,6 @@ public class SimpleGameService implements GameService {
 	private GameListenerRegistry listenerRegistry;
 	
 	/**
-	 * Provides the extensions
-	 */
-	private ExtensionProvider extensionProvider;
-
-	/**
 	 * Helper that stores games by id
 	 */
 	private MultiGameHelper gameHelper;
@@ -73,11 +56,14 @@ public class SimpleGameService implements GameService {
 	 * The game selector
 	 */
 	private GameSelector gameSelector;
+
+	/**
+	 * The game runner
+	 */
+	private GameRunner gameRunner;
 	
 	private Map<Game, ScheduledExecutorService> executors;
 	
-	private List<EnemyExtension> extensions;
-
 	/**
 	 * Initialize the service
 	 * 
@@ -87,28 +73,25 @@ public class SimpleGameService implements GameService {
 	 *            the scheduling delay
 	 * @param boardService
 	 *            the board service used to add/remove players on it
-	 * @param messageService
-	 *            the service for messages
 	 * @param listenerRegistry
 	 *            the registry for game events
-	 * @param extensionProvider
-	 *            provide enemies to add in the game
 	 * @param gameHelper
 	 *            helper for useful for multi-game management
 	 * @param gameSelector
 	 *            game select management
+	 * @param gameRunner
+	 *            the associated game runner
 	 */
-	public SimpleGameService(int maxPlayers, long delay, BoardService boardService, MessageService messageService, GameListenerRegistry listenerRegistry, ExtensionProvider extensionProvider, MultiGameHelper gameHelper, GameSelector gameSelector) {
+	public SimpleGameService(int maxPlayers, long delay, BoardService boardService, GameListenerRegistry listenerRegistry, MultiGameHelper gameHelper, GameSelector gameSelector, GameRunner gameRunner) {
 		super();
 		this.maxPlayers = maxPlayers;
 		this.delay = delay;
 		this.boardService = boardService;
-		this.messageService = messageService;
 		this.listenerRegistry = listenerRegistry;
-		this.extensionProvider = extensionProvider;
 		this.gameHelper = gameHelper;
 		this.gameSelector = gameSelector;
-		extensions = new ArrayList<EnemyExtension>();
+		this.gameRunner = gameRunner;
+		gameRunner.setGameService(this);
 		executors = new HashMap<>();
 	}
 
@@ -116,8 +99,6 @@ public class SimpleGameService implements GameService {
 	public Game create() {
 		Game game = new Game(boardService.create());
 		gameHelper.set(game.getId(), game);
-		ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
-		executors.put(game, executor);
 		return game;
 	}
 	
@@ -167,45 +148,12 @@ public class SimpleGameService implements GameService {
 		// start running the game and execute enemy extensions
 		if(!game.isStarted()) {
 			logger.info("Start the game {}", game);
-			ScheduledExecutorService executor = executors.get(game);
-			executor.scheduleWithFixedDelay(() -> {
-				try {
-					// TODO: externalize ?
-					synchronized(extensions) {
-						// add new enemies
-						List<EnemyExtension> enemies = extensionProvider.getEnemies(game);
-						for(EnemyExtension enemy : enemies) {
-							enemy.init();
-							join(game, enemy.getEnemy());
-						}
-						extensions.addAll(enemies);
-						// remove dead enemies
-						for(Iterator<EnemyExtension> it = extensions.iterator() ; it.hasNext() ; ) {
-							EnemyExtension ext = it.next();
-							if(ext.getEnemy().getLife().getCurrent()<=0) {
-								quit(game, ext.getEnemy());
-								it.remove();
-							}
-						}
-						// execute extensions
-						logger.debug("============debut============");
-						extensions.parallelStream().forEach(extension -> {
-							try {
-								extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
-							} catch (Exception e) {
-								messageService.addError(new GameException("Failed to run extensions", e));
-							}
-						});
-//						for(EnemyExtension extension : extensions) {
-//							extension.run(new GameContext(game, new Board(game.getBoard()), boardService.getCell(extension.getEnemy())));
-//						}
-						logger.debug("============fin============");
-					}
-				} catch (Exception e) {
-					logger.error("Failed to run extensions", e);
-					messageService.addError(new GameException("Failed to run extensions", e));
-				}
-			}, 0L, delay, TimeUnit.MILLISECONDS);
+			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+			executors.put(game, executor);
+			gameRunner.setGame(game);
+			executor.scheduleWithFixedDelay(gameRunner, 0L, delay, TimeUnit.MILLISECONDS);
+			game.setStarted(true);
+			logger.info("Game {} started", game);
 		} else {
 			throw new GameException("Game already started");
 		}
@@ -214,8 +162,11 @@ public class SimpleGameService implements GameService {
 	@Override
 	public void stop(Game game) throws GameException {
 		if(game.isStarted()) {
-			// TODO: remove all players
+			logger.info("Stopping the game {}", game);
 			executors.get(game).shutdown();
+			gameRunner.stop();
+			game.setStarted(false);
+			logger.info("Game {} stopped", game);
 		} else {
 			throw new GameException("Game already stopped");
 		}

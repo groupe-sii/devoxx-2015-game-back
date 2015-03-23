@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.extension;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Developer information useful to inform if an extension has generated an error
  * 
@@ -43,30 +46,21 @@ public class Developer {
 	public String getEmail() {
 		return email;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
-		return result;
+		return new HashCodeBuilder().append(nickname).hashCode();
 	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof Developer)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		Developer other = (Developer) obj;
-		if (nickname == null) {
-			if (other.nickname != null)
-				return false;
-		} else if (!nickname.equals(other.nickname))
-			return false;
-		return true;
+		return new EqualsBuilder().append(nickname, other.nickname).isEquals();
 	}
 
 	@Override

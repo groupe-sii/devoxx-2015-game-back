@@ -12,7 +12,7 @@ import fr.sii.survival.core.exception.GameException;
 // TODO: manage locks to avoid concurrentmodifexception
 public class SimpleMessageListenerManager implements MessageListenerManager {
 
-	private static Logger logger = LoggerFactory.getLogger(SimpleMessageListenerManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimpleMessageListenerManager.class);
 	
 	private Map<String, MessageListener> listeners;
 	

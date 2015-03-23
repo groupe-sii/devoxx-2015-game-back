@@ -8,7 +8,7 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.game.GameListener;
 
 public class LogGameListener implements GameListener {
-	private static Logger logger = LoggerFactory.getLogger(LogGameListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogGameListener.class);
 
 	@Override
 	public void started(Game game) {

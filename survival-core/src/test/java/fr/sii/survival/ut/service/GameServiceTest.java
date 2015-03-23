@@ -1,6 +1,6 @@
 package fr.sii.survival.ut.service;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -15,6 +15,7 @@ import fr.sii.survival.core.ext.provider.ExtensionProvider;
 import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListenerRegistry;
 import fr.sii.survival.core.service.board.BoardService;
+import fr.sii.survival.core.service.game.GameRunner;
 import fr.sii.survival.core.service.game.GameSelector;
 import fr.sii.survival.core.service.game.GameService;
 import fr.sii.survival.core.service.game.SimpleGameService;
@@ -41,12 +42,15 @@ public class GameServiceTest {
 	@Mock
 	GameSelector gameSelector;
 
+	@Mock
+	GameRunner gameRunner;
+
 	GameService gameService;
 	
 	@Before
 	public void setUp() {
 		when(boardService.create()).thenReturn(new Board(10, 10));
-		gameService = new SimpleGameService(5, 100, boardService, messageService, listenerRegistry, extensionProvider, gameHelper, gameSelector);
+		gameService = new SimpleGameService(5, 100, boardService, listenerRegistry, gameHelper, gameSelector, gameRunner);
 	}
 	
 	@Test

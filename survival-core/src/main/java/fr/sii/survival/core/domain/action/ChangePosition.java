@@ -1,5 +1,8 @@
 package fr.sii.survival.core.domain.action;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import fr.sii.survival.core.domain.board.Cell;
 
 public class ChangePosition implements Action {
@@ -46,33 +49,18 @@ public class ChangePosition implements Action {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((end == null) ? 0 : end.hashCode());
-		result = prime * result + ((start == null) ? 0 : start.hashCode());
-		return result;
+		return new HashCodeBuilder().append(start).append(end).hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		} else if (obj == null || !(obj instanceof ChangePosition)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
 		ChangePosition other = (ChangePosition) obj;
-		if (end == null) {
-			if (other.end != null)
-				return false;
-		} else if (!end.equals(other.end))
-			return false;
-		if (start == null) {
-			if (other.start != null)
-				return false;
-		} else if (!start.equals(other.start))
-			return false;
-		return true;
+		return new EqualsBuilder().append(start, other.start).append(end, other.end).isEquals();
 	}
 
 	@Override

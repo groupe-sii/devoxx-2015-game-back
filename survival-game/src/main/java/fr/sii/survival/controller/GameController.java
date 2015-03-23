@@ -6,19 +6,18 @@ import static fr.sii.survival.config.GameConfiguration.GAME_MAPPING_PREFIX;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationListener;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import fr.sii.survival.config.options.GameOptions;
 import fr.sii.survival.config.options.LifeOptions;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.PlayerInfo;
+import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.exception.GameNotFoundException;
 import fr.sii.survival.core.listener.game.GameListener;
@@ -27,7 +26,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 import fr.sii.survival.session.UserContext;
 
 @Controller
-public class GameController extends ErrorController implements GameListener, ApplicationListener<SessionDisconnectEvent> {
+public class GameController extends ErrorController implements GameListener {
 
 	private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
@@ -95,7 +94,8 @@ public class GameController extends ErrorController implements GameListener, App
 		logger.info("player {} is leaving the game {}", player, game);
 		gameService.quit(game, player);
 		userContext.setGameId(null);
-		if(gameOptions.isAutoStop() && gameService.isStarted(game) && game.getPlayers().size()<=0) {
+		// automatically stops the game when there is no more player
+		if(gameOptions.isAutoStop() && gameService.isStarted(game) && game.getPlayers(p -> p instanceof Wizard).size()<=0) {
 			gameService.stop(game);
 		}
 		return player;
@@ -120,13 +120,5 @@ public class GameController extends ErrorController implements GameListener, App
 	public void left(Player player, Game game) {
 		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/player/left", player);
 	}
-
-	@Override
-	public void onApplicationEvent(SessionDisconnectEvent event) {
-		try {
-			quit(userContext.getGameId());
-		} catch (GameException e) {
-			logger.warn("Failed to disconnect user with session id: {}. Cause: {}", event.getSessionId(), e.getMessage());
-		}
-	}
+	
 }

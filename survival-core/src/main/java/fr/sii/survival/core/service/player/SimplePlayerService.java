@@ -42,7 +42,7 @@ import fr.sii.survival.core.listener.player.PlayerListenerTrigger;
  *
  */
 public class SimplePlayerService implements PlayerService {
-	private static Logger logger = LoggerFactory.getLogger(SimplePlayerService.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimplePlayerService.class);
 
 	/**
 	 * The registry that stores the list of action listeners that will be
@@ -144,7 +144,7 @@ public class SimplePlayerService implements PlayerService {
 
 	@Override
 	public List<StateChange> updateStates(Player player, List<StateChange> stateChanges) throws GameException {
-		logger.info("update states {} on {}", stateChanges, player);
+		logger.debug("update states {} on {}", stateChanges, player);
 		List<StateChange> appliedChanges = new ArrayList<StateChange>(stateChanges.size());
 		for (StateChange change : stateChanges) {
 			boolean applied = false;
@@ -157,7 +157,9 @@ public class SimplePlayerService implements PlayerService {
 				appliedChanges.add(change);
 			}
 		}
-		playerListenerTrigger.triggerStates(gameHelper.getGame(player), player, appliedChanges);
+		if(!appliedChanges.isEmpty()) {
+			playerListenerTrigger.triggerStates(gameHelper.getGame(player), player, appliedChanges);
+		}
 		return appliedChanges;
 	}
 	

@@ -14,7 +14,7 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListener;
 
 public class LogActionListener implements ActionListener {
-	private static Logger logger = LoggerFactory.getLogger(LogActionListener.class);
+	private static final Logger logger = LoggerFactory.getLogger(LogActionListener.class);
 
 	@Override
 	public void lifeUpdated(Game game, Player player, UpdateLife action) {

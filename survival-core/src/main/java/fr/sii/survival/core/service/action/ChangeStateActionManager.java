@@ -22,7 +22,7 @@ import fr.sii.survival.core.service.player.PlayerService;
  *
  */
 public class ChangeStateActionManager implements ActionManager<ChangeStates> {
-	private static Logger logger = LoggerFactory.getLogger(ChangeStateActionManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(ChangeStateActionManager.class);
 
 	private BoardService boardService;
 
@@ -48,7 +48,9 @@ public class ChangeStateActionManager implements ActionManager<ChangeStates> {
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {
 			List<StateChange> applied = playerService.updateStates(player, action.getStateChanges());
-			actionListenerTrigger.triggerStateChanged(game, player, new ChangeStates(action.getCell(), applied));
+			if(!applied.isEmpty()) {
+				actionListenerTrigger.triggerStateChanged(game, player, new ChangeStates(action.getCell(), applied));
+			}
 		}
 	}
 

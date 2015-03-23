@@ -20,7 +20,7 @@ import fr.sii.survival.core.service.board.BoardService;
  *
  */
 public class ChangePositionActionManager implements ActionManager<ChangePosition> {
-	private static Logger logger = LoggerFactory.getLogger(ChangePositionActionManager.class);
+	private static final Logger logger = LoggerFactory.getLogger(ChangePositionActionManager.class);
 
 	private BoardService boardService;
 	
