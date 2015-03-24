@@ -9,7 +9,7 @@ import org.junit.Test;
 import fr.sii.survival.core.domain.image.Base64ServerImage;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 
-public class ServerImageTest {
+public class Base64ServerImageTest {
 	@Test
 	public void relative() throws IOException, MimetypeDetectionException {
 		Base64ServerImage image = new Base64ServerImage("images/Green-Monster-icon.png");

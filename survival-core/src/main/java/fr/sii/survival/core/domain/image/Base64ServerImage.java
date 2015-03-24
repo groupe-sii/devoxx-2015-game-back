@@ -64,7 +64,7 @@ public class Base64ServerImage implements ServerImage {
 	 */
 	public Base64ServerImage(byte[] content, String mimetype) {
 		super();
-		this.id = "ServerImage-"+(counter++);
+		this.id = "Base64ServerImage-"+(counter++);
 		this.content = new String(Base64.getEncoder().encode(content));
 		this.mimetype = mimetype;
 	}

@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -11,6 +12,8 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import fr.sii.survival.core.domain.image.Base64ServerImage;
+import fr.sii.survival.core.domain.image.ServerImage;
+import fr.sii.survival.core.domain.image.UriImage;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 import fr.sii.survival.core.util.sprite.ServerSprite;
 import fr.sii.survival.core.util.sprite.SpriteImage;
@@ -18,7 +21,10 @@ import fr.sii.survival.core.util.sprite.SpriteImage;
 public class SpriteUtil {
 	/**
 	 * Shortcut for
-	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.read(images)))</code>
+	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.read(images)), true)</code>
+	 * 
+	 * The sprite image will be generated in a temporary directory and the
+	 * {@link UriImage} will points to it.
 	 * 
 	 * @param images
 	 *            the list of image streams
@@ -26,13 +32,16 @@ public class SpriteUtil {
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromServerImages(List<Base64ServerImage> images) throws IOException, MimetypeDetectionException {
-		return fromServerImages(images, 0);
+	public static ServerSprite fromUriImages(List<UriImage> images) throws IOException, MimetypeDetectionException {
+		return fromUriImages(images, 0);
 	}
 
 	/**
 	 * Shortcut for
-	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.read(images), margin))</code>
+	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.readUriImages(images), margin), true)</code>
+	 * 
+	 * The sprite image will be generated in a temporary directory and the
+	 * {@link UriImage} will points to it.
 	 * 
 	 * @param images
 	 *            the list of image streams
@@ -42,8 +51,38 @@ public class SpriteUtil {
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromServerImages(List<Base64ServerImage> images, int margin) throws IOException, MimetypeDetectionException {
-		return toServerSprite(generate(ImageUtil.read(images), margin));
+	public static ServerSprite fromUriImages(List<UriImage> images, int margin) throws IOException, MimetypeDetectionException {
+		return toServerSprite(generate(ImageUtil.readUriImages(images), margin), true);
+	}
+
+	/**
+	 * Shortcut for
+	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.read(images)), false)</code>
+	 * 
+	 * @param images
+	 *            the list of image streams
+	 * @return the sprite image
+	 * @throws IOException
+	 *             when any image couldn't be read
+	 */
+	public static ServerSprite fromBase64Images(List<Base64ServerImage> images) throws IOException, MimetypeDetectionException {
+		return fromBase64Images(images, 0);
+	}
+
+	/**
+	 * Shortcut for
+	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.read(images), margin), false)</code>
+	 * 
+	 * @param images
+	 *            the list of image streams
+	 * @param margin
+	 *            the margin in pixel between each image
+	 * @return the sprite image
+	 * @throws IOException
+	 *             when any image couldn't be read
+	 */
+	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, int margin) throws IOException, MimetypeDetectionException {
+		return toServerSprite(generate(ImageUtil.read(images), margin), false);
 	}
 
 	/**
@@ -110,20 +149,35 @@ public class SpriteUtil {
 	}
 
 	/**
-	 * Convert a sprite into a {@link Base64ServerImage} that will be used in events.
+	 * Convert the sprite image into a logical representation of an image. If
+	 * store is true, then the sprite is converted into a {@link UriImage}. If
+	 * store is false, then the sprite is converted into a
+	 * {@link Base64ServerImage}.
 	 * 
 	 * @param sprite
 	 *            the sprite to convert
+	 * @param store
+	 *            store the sprite into temporary file
 	 * @return the sprite that contains the server image
 	 * @throws MimetypeDetectionException
 	 *             when the mimetype of the sprite couldn't be determined
 	 * @throws IOException
 	 *             when the sprite couldn't be converted
 	 */
-	public static ServerSprite toServerSprite(SpriteImage sprite) throws MimetypeDetectionException, IOException {
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		ImageIO.write(sprite.getSprite(), "png", output);
+	public static ServerSprite toServerSprite(SpriteImage sprite, boolean store) throws MimetypeDetectionException, IOException {
+		ServerImage image;
+		if (store) {
+			File file = File.createTempFile("survival-sprite", ".png");
+			ImageIO.write(sprite.getSprite(), "png", file);
+			image = new UriImage(file);
+		} else {
+			ByteArrayOutputStream output = new ByteArrayOutputStream();
+			ImageIO.write(sprite.getSprite(), "png", output);
+			image = new Base64ServerImage(output.toByteArray());
+		}
 		BufferedImage frame = sprite.getFrames().get(0);
-		return new ServerSprite(new Base64ServerImage(output.toByteArray()), new Dimension(sprite.getSprite().getWidth(), sprite.getSprite().getHeight()), new Dimension(frame.getWidth(), frame.getHeight()));
+		Dimension imageSize = new Dimension(sprite.getSprite().getWidth(), sprite.getSprite().getHeight());
+		Dimension frameSize = new Dimension(frame.getWidth(), frame.getHeight());
+		return new ServerSprite(image, imageSize, frameSize);
 	}
 }
