@@ -22,7 +22,7 @@ public class ImmobilizeAnimationProvider implements AnimationProvider {
 	@Override
 	public Animation provide() throws AnimationInitializationException {
 		try {
-			return new SpriteAnimation("immobilized", 5000, new Sprite("images/immobilized"), new float[] {
+			return new SpriteAnimation("immobilized", 5000, new Sprite("images/immobilize"), new float[] {
 				// roots are getting out the earth
 				0,
 				2,

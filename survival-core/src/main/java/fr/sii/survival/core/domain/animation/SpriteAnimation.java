@@ -38,6 +38,7 @@ public class SpriteAnimation extends PropertiesAnimation {
 	 */
 	public SpriteAnimation(String name, long duration, Sprite sprite, AnimationOptions options) {
 		super(name, duration, options, toFrames(sprite, null));
+		this.sprite = sprite;
 	}
 
 	/**
@@ -52,6 +53,7 @@ public class SpriteAnimation extends PropertiesAnimation {
 	 */
 	public SpriteAnimation(String name, long duration, Sprite sprite) {
 		super(name, duration, toFrames(sprite, null));
+		this.sprite = sprite;
 	}
 
 	/**
@@ -70,6 +72,7 @@ public class SpriteAnimation extends PropertiesAnimation {
 	 */
 	public SpriteAnimation(String name, long duration, Sprite sprite, AnimationOptions options, float... steps) {
 		super(name, duration, options, toFrames(sprite, steps));
+		this.sprite = sprite;
 	}
 
 	/**
@@ -86,6 +89,7 @@ public class SpriteAnimation extends PropertiesAnimation {
 	 */
 	public SpriteAnimation(String name, long duration, Sprite sprite, float... steps) {
 		super(name, duration, toFrames(sprite, steps));
+		this.sprite = sprite;
 	}
 
 	public Sprite getSprite() {
