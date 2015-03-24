@@ -9,6 +9,8 @@ import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
+import fr.sii.survival.core.domain.action.StartAnimation;
+import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.service.message.MessageService;
@@ -78,6 +80,16 @@ public class ParallelActionListenerManager implements ActionListenerManager {
 		// TODO
 	}
 	
+	@Override
+	public void triggerAnimationStarted(Game game, StartAnimation action) {
+		// TODO 
+	}
+
+	@Override
+	public void triggerAnimationStopped(Game game, StopAnimation action) {
+		// TODO 
+	}
+
 	private String getKey(ActionListener listener) {
 		return listener.getClass().toString();
 	}

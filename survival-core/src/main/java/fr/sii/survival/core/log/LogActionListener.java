@@ -9,6 +9,8 @@ import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
+import fr.sii.survival.core.domain.action.StartAnimation;
+import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListener;
@@ -44,6 +46,16 @@ public class LogActionListener implements ActionListener {
 	@Override
 	public void stateChanged(Game game, Player player, ChangeStates action) {
 		logger.info("states {} applied to {}", action.getStateChanges(), player);
+	}
+
+	@Override
+	public void animationStarted(Game game, StartAnimation action) {
+		logger.info("animation {} started on game {}", action.getName(), game);
+	}
+
+	@Override
+	public void animationStopped(Game game, StopAnimation action) {
+		logger.info("animation {} stopped on game {}", action.getName(), game);
 	}
 
 }

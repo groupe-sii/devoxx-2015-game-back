@@ -3,7 +3,7 @@ package fr.sii.survival.ext;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import fr.sii.survival.core.domain.image.ServerImage;
+import fr.sii.survival.core.domain.image.Base64ServerImage;
 import fr.sii.survival.core.domain.player.Wizard;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 import fr.sii.survival.core.ext.DelegateEnemyExtension;
@@ -25,7 +25,7 @@ import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 public class WorldBoss extends DelegateEnemyExtension implements SpecialEnemy {
 
 	public WorldBoss() throws IOException, MimetypeDetectionException {
-		super("WorldBoss", new ServerImage("images/worldboss.png"), Integer.MAX_VALUE);
+		super("WorldBoss", new Base64ServerImage("images/worldboss.png"), Integer.MAX_VALUE);
 	}
 
 	@Override

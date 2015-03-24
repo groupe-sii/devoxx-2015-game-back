@@ -9,6 +9,8 @@ import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
+import fr.sii.survival.core.domain.action.StartAnimation;
+import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionListenerException;
@@ -59,7 +61,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 			try {
 				listener.lifeUpdated(game, player, action);
 			} catch(Throwable e) {
-				errorService.addError(new ActionListenerException("failed to trigger life updated event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("life updated", listener, e);
 			}
 		}
 	}
@@ -70,7 +72,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 			try {
 				listener.positionChanged(game, player, action);
 			} catch(Throwable e) {
-				errorService.addError(new ActionListenerException("failed to trigger position changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("position changed", listener, e);
 			}
 		}
 	}
@@ -81,7 +83,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 			try {
 				listener.imageAdded(game, action);
 			} catch(Throwable e) {
-				errorService.addError(new ActionListenerException("failed to trigger image added event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("image added", listener, e);
 			}
 		}
 	}
@@ -92,18 +94,18 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 			try {
 				listener.imageMoved(game, action);
 			} catch(Throwable e) {
-				errorService.addError(new ActionListenerException("failed to trigger image moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("image moved", listener, e);
 			}
 		}
 	}
-	
+
 	@Override
 	public void triggerImageRemoved(Game game, RemoveImage action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.imageRemoved(game, action);
 			} catch(Throwable e) {
-				errorService.addError(new ActionListenerException("failed to trigger image removed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("image removed", listener, e);
 			}
 		}
 	}
@@ -114,9 +116,35 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 			try {
 				listener.stateChanged(game, player, action);
 			} catch(Throwable e) {
-				errorService.addError(new ActionListenerException("failed to trigger state changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("state changed", listener, e);
 			}
 		}
+	}
+
+	@Override
+	public void triggerAnimationStarted(Game game, StartAnimation action) {
+		for(ActionListener listener : listeners.values()) {
+			try {
+				listener.animationStarted(game, action);
+			} catch(Throwable e) {
+				manageError("animation started", listener, e);
+			}
+		}
+	}
+
+	@Override
+	public void triggerAnimationStopped(Game game, StopAnimation action) {
+		for(ActionListener listener : listeners.values()) {
+			try {
+				listener.animationStopped(game, action);
+			} catch(Throwable e) {
+				manageError("animation stopped", listener, e);
+			}
+		}
+	}
+	
+	private void manageError(String event, ActionListener listener, Throwable e) {
+		errorService.addError(new ActionListenerException("failed to trigger "+event+" event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 	}
 	
 	private String getKey(ActionListener listener) {

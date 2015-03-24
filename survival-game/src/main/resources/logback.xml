@@ -8,7 +8,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="fr.sii.survival.core.log.LogBoardListener" level="DEBUG" />
+	<logger name="fr.sii.survival.core.log.LogBoardListener" level="WARN" />
 	<logger name="fr.sii.survival.core.log.LogActionListener" level="WARN" />
 	<logger name="fr.sii.survival.core.log.LogPlayerListener" level="WARN" />
 	<logger name="net.sf.jmimemagic.MagicParser" level="WARN" />

@@ -1,5 +1,6 @@
 package fr.sii.survival.core.domain.image;
 
+import java.awt.Dimension;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
@@ -32,14 +33,24 @@ public class Sprite implements Image {
 	private ServerImage image;
 
 	/**
-	 * The width of one image
+	 * The width of sprite image
 	 */
 	private int width;
 
 	/**
-	 * The height of one image
+	 * The height of sprite image
 	 */
 	private int height;
+
+	/**
+	 * The width of one image contained in the sprite
+	 */
+	private int frameWidth;
+
+	/**
+	 * The height of one image contained in the sprite
+	 */
+	private int frameHeight;
 
 	/**
 	 * Generate a sprite image with all images contained in the provided folder
@@ -118,20 +129,26 @@ public class Sprite implements Image {
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined for any of the images
 	 */
-	public Sprite(ServerImage... images) throws IOException, MimetypeDetectionException {
+	public Sprite(Base64ServerImage... images) throws IOException, MimetypeDetectionException {
 		this(SpriteUtil.fromServerImages(Arrays.asList(images)));
 	}
 
 	protected Sprite(ServerSprite serverSprite) throws IOException, MimetypeDetectionException {
-		this(serverSprite.getImage(), serverSprite.getImageSize().width, serverSprite.getImageSize().height);
+		this(serverSprite.getImage(), serverSprite.getImageSize(), serverSprite.getFrameSize());
 	}
 
-	protected Sprite(ServerImage image, int width, int height) {
+	protected Sprite(ServerImage image, Dimension imageSize, Dimension frameSize) {
+		this(image, imageSize.width, imageSize.height, frameSize.width, frameSize.height);
+	}
+
+	protected Sprite(ServerImage image, int width, int height, int frameWidth, int frameHeight) {
 		super();
 		this.id = "Sprite-" + (counter++);
 		this.image = image;
 		this.width = width;
 		this.height = height;
+		this.frameWidth = frameWidth;
+		this.frameHeight = frameHeight;
 	}
 
 	public static long getCounter() {
@@ -152,5 +169,13 @@ public class Sprite implements Image {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public int getFrameWidth() {
+		return frameWidth;
+	}
+
+	public int getFrameHeight() {
+		return frameHeight;
 	}
 }

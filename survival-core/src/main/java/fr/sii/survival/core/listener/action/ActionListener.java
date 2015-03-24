@@ -6,6 +6,8 @@ import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
+import fr.sii.survival.core.domain.action.StartAnimation;
+import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 
@@ -69,6 +71,26 @@ public interface ActionListener {
 	 *            the action that has been executed
 	 */
 	public void imageRemoved(Game game, RemoveImage action);
+
+	/**
+	 * Fired when an animation has started
+	 * 
+	 * @param game
+	 *            the game in which the action was executed
+	 * @param action
+	 *            the action that has been executed
+	 */
+	public void animationStarted(Game game, StartAnimation action);
+
+	/**
+	 * Fired when an animation has stopped
+	 * 
+	 * @param game
+	 *            the game in which the action was executed
+	 * @param action
+	 *            the action that has been executed
+	 */
+	public void animationStopped(Game game, StopAnimation action);
 
 	/**
 	 * Fired when the states of a player has changed

@@ -78,4 +78,12 @@ public abstract class EnemyExtension {
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
 	}
+
+	public PlayerService getPlayerService() {
+		return playerService;
+	}
+
+	public void setPlayerService(PlayerService playerService) {
+		this.playerService = playerService;
+	}
 }

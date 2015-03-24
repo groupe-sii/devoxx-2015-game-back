@@ -33,6 +33,7 @@ import fr.sii.survival.core.service.game.SimpleGameRunner;
 import fr.sii.survival.core.service.game.SimpleGameSelector;
 import fr.sii.survival.core.service.game.SimpleGameService;
 import fr.sii.survival.core.service.message.MessageService;
+import fr.sii.survival.core.service.player.PlayerService;
 
 @Configuration
 public class GameConfiguration {
@@ -40,6 +41,9 @@ public class GameConfiguration {
 
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	PlayerService playerService;
 	
 	@Autowired
 	MessageService messageService;
@@ -91,9 +95,9 @@ public class GameConfiguration {
 		// special enemy filter -> if predicate returns true, then enemy is added to the registry
 		Predicate<Class<?>> specialEnemyFilter = new TypePredicate(SpecialEnemy.class).and(excludeFilter.negate());
 		// provider for basic enemies
-		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, extensionService, new PostFilteredRegistry(basicEnemyFilter, extensionRegistry()));
+		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, new PostFilteredRegistry(basicEnemyFilter, extensionRegistry()));
 		// provider for special enemies
-		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, extensionService, new PostFilteredRegistry(specialEnemyFilter, extensionRegistry()));
+		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, new PostFilteredRegistry(specialEnemyFilter, extensionRegistry()));
 		// invoke special enemies every n basic enemies
 		ExtensionProvider everyProvider = new EveryEnemyProvider(enemyOptions.getSpecialEvery(), basicRandomProvider, specialRandomProvider);
 		// limit the maximum number of enemies on the board

@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import fr.sii.survival.core.domain.image.ServerImage;
+import fr.sii.survival.core.domain.image.Base64ServerImage;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 import fr.sii.survival.core.util.sprite.ServerSprite;
 import fr.sii.survival.core.util.sprite.SpriteImage;
@@ -26,7 +26,7 @@ public class SpriteUtil {
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromServerImages(List<ServerImage> images) throws IOException, MimetypeDetectionException {
+	public static ServerSprite fromServerImages(List<Base64ServerImage> images) throws IOException, MimetypeDetectionException {
 		return fromServerImages(images, 0);
 	}
 
@@ -42,7 +42,7 @@ public class SpriteUtil {
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromServerImages(List<ServerImage> images, int margin) throws IOException, MimetypeDetectionException {
+	public static ServerSprite fromServerImages(List<Base64ServerImage> images, int margin) throws IOException, MimetypeDetectionException {
 		return toServerSprite(generate(ImageUtil.read(images), margin));
 	}
 
@@ -110,7 +110,7 @@ public class SpriteUtil {
 	}
 
 	/**
-	 * Convert a sprite into a {@link ServerImage} that will be used in events.
+	 * Convert a sprite into a {@link Base64ServerImage} that will be used in events.
 	 * 
 	 * @param sprite
 	 *            the sprite to convert
@@ -123,6 +123,7 @@ public class SpriteUtil {
 	public static ServerSprite toServerSprite(SpriteImage sprite) throws MimetypeDetectionException, IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		ImageIO.write(sprite.getSprite(), "png", output);
-		return new ServerSprite(new ServerImage(output.toByteArray()), new Dimension(sprite.getSprite().getWidth(), sprite.getSprite().getHeight()));
+		BufferedImage frame = sprite.getFrames().get(0);
+		return new ServerSprite(new Base64ServerImage(output.toByteArray()), new Dimension(sprite.getSprite().getWidth(), sprite.getSprite().getHeight()), new Dimension(frame.getWidth(), frame.getHeight()));
 	}
 }

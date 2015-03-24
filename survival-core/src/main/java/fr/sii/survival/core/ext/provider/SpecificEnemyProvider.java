@@ -9,6 +9,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.player.PlayerService;
 
 /**
  * Invoke a specific enemy every n enemies
@@ -35,8 +36,8 @@ public class SpecificEnemyProvider extends AbstractProvider {
 
 	private int count;
 
-	public SpecificEnemyProvider(ActionService actionService, BoardService boardService, ExtensionService extensionService, int every, Class<? extends EnemyExtension> special, ExtensionProvider delegate) {
-		super(actionService, boardService, extensionService);
+	public SpecificEnemyProvider(ActionService actionService, BoardService boardService, PlayerService playerService, ExtensionService extensionService, int every, Class<? extends EnemyExtension> special, ExtensionProvider delegate) {
+		super(actionService, boardService, playerService, extensionService);
 		this.delegate = delegate;
 		this.every = every;
 		this.special = special;

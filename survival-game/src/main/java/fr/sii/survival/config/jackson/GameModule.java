@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 import fr.sii.survival.core.domain.action.Action;
+import fr.sii.survival.core.domain.animation.Animation;
 import fr.sii.survival.core.domain.image.Image;
 import fr.sii.survival.core.domain.player.Life;
 import fr.sii.survival.core.domain.player.Player;
@@ -29,6 +30,7 @@ public class GameModule extends SimpleModule {
 		context.setMixInAnnotations(Player.class, JsonNameIdMixin.class);
 		context.setMixInAnnotations(Life.class, JsonNameIdMixin.class);
 		context.setMixInAnnotations(Image.class, JsonNameIdMixin.class);
+		context.setMixInAnnotations(Animation.class, JsonNameIdMixin.class);
 	}
 
 }

@@ -6,6 +6,8 @@ import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
+import fr.sii.survival.core.domain.action.StartAnimation;
+import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 
@@ -22,4 +24,8 @@ public interface ActionListenerTrigger {
 	public void triggerImageRemoved(Game game, RemoveImage action);
 
 	public void triggerStateChanged(Game game, Player player, ChangeStates action);
+
+	public void triggerAnimationStarted(Game game, StartAnimation action);
+
+	public void triggerAnimationStopped(Game game, StopAnimation action);
 }

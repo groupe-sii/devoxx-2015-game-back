@@ -15,7 +15,7 @@ import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.util.ClasspathHelper;
 
-import fr.sii.survival.core.domain.image.ServerImage;
+import fr.sii.survival.core.domain.image.Base64ServerImage;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 
 public class ImageUtil {
@@ -32,11 +32,11 @@ public class ImageUtil {
 	 * @throws MimetypeDetectionException
 	 *             when the mimetype of an image couldn't be found
 	 */
-	public static List<ServerImage> load(String folder, boolean reverse) throws IOException, MimetypeDetectionException {
+	public static List<Base64ServerImage> load(String folder, boolean reverse) throws IOException, MimetypeDetectionException {
 		List<InputStream> streams = loadStreams(folder, reverse);
-		List<ServerImage> images = new ArrayList<>(streams.size());
+		List<Base64ServerImage> images = new ArrayList<>(streams.size());
 		for (InputStream stream : streams) {
-			images.add(new ServerImage(stream));
+			images.add(new Base64ServerImage(stream));
 		}
 		return images;
 	}
@@ -62,8 +62,11 @@ public class ImageUtil {
 		List<InputStream> images = new ArrayList<>(files.size());
 		for (String file : files) {
 			if (file.contains(folder)) {
-				images.add(ServerImage.class.getResourceAsStream("/" + file));
+				images.add(Base64ServerImage.class.getResourceAsStream("/" + file));
 			}
+		}
+		if(images.size()==0) {
+			throw new IOException("Folder "+folder+" doesn't contain any image");
 		}
 		return images;
 	}
@@ -100,7 +103,7 @@ public class ImageUtil {
 	 * @throws IOException
 	 *             when image couldn't be read
 	 */
-	public static BufferedImage read(ServerImage image) throws IOException {
+	public static BufferedImage read(Base64ServerImage image) throws IOException {
 		BufferedImage img = ImageIO.read(new ByteArrayInputStream(Base64.getDecoder().decode(image.getContent())));
 		if (img == null) {
 			throw new IOException("Failed to read server image");
@@ -117,9 +120,9 @@ public class ImageUtil {
 	 * @throws IOException
 	 *             when any of the image couldn't be read
 	 */
-	public static List<BufferedImage> read(List<ServerImage> images) throws IOException {
+	public static List<BufferedImage> read(List<Base64ServerImage> images) throws IOException {
 		List<BufferedImage> imgs = new ArrayList<>(images.size());
-		for (ServerImage img : images) {
+		for (Base64ServerImage img : images) {
 			imgs.add(read(img));
 		}
 		return imgs;

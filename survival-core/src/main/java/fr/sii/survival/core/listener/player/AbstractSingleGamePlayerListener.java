@@ -8,7 +8,7 @@ import fr.sii.survival.core.domain.player.Player;
 
 public abstract class AbstractSingleGamePlayerListener implements PlayerListener {
 
-	private Game game;
+	protected Game game;
 	
 	public AbstractSingleGamePlayerListener(Game game) {
 		super();

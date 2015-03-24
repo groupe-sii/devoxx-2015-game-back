@@ -5,13 +5,19 @@ import java.io.IOException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import fr.sii.survival.core.domain.image.Animation;
+import fr.sii.survival.core.domain.animation.SpriteAnimation;
+import fr.sii.survival.core.domain.image.Sprite;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 
 public class AnimationTest {
 	@Test
-	public void folder() throws IOException, MimetypeDetectionException {
-		Animation animation = new Animation("images/immobilize", 100);
-		Assert.assertEquals("animation should contain 9 images", 9, animation.getImages().size());
+	public void sprite() throws IOException, MimetypeDetectionException {
+		SpriteAnimation animation = new SpriteAnimation("immobilized", 5000, new Sprite("images/immobilize"));
+		Assert.assertEquals("animation should contain 9 frames", 9, animation.getFrames().size());
+	}
+	
+	@Test(expected=IOException.class)
+	public void spriteNoImage() throws IOException, MimetypeDetectionException {
+		new SpriteAnimation("immobilized", 5000, new Sprite(""));
 	}
 }

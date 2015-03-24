@@ -15,6 +15,8 @@ import fr.sii.survival.core.domain.action.ChangePosition;
 import fr.sii.survival.core.domain.action.ChangeStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
+import fr.sii.survival.core.domain.action.StartAnimation;
+import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionException;
@@ -62,6 +64,16 @@ public class ActionController extends ErrorController implements ActionListener 
 	}
 
 	@Override
+	public void animationStarted(Game game, StartAnimation action) {
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/animation/started", action);
+	}
+
+	@Override
+	public void animationStopped(Game game, StopAnimation action) {
+		template.convertAndSend(SERVER_PUBLISH_PREFIX+"/"+game.getId()+"/animation/stopped", action);
+	}
+	
+	@Override
 	public void lifeUpdated(Game game, Player player, UpdateLife action) {
 		// nothing to do: an event is already triggered when life of player has changed in PlayerController
 	}
@@ -76,5 +88,6 @@ public class ActionController extends ErrorController implements ActionListener 
 	public void stateChanged(Game game, Player player, ChangeStates action) {
 		// nothing to do: an event is already triggered when states of player has changed in PlayerController
 	}
+
 	
 }

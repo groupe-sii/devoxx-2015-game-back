@@ -11,6 +11,7 @@ import fr.sii.survival.core.ext.registry.ExtensionRegistry;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.player.PlayerService;
 
 /**
  * Select only one enemy from the list of available enemies
@@ -22,8 +23,8 @@ public class RandomProvider extends AbstractProvider {
 
 	private ExtensionRegistry registry;
 
-	public RandomProvider(ActionService actionService, BoardService boardService, ExtensionService extensionService, ExtensionRegistry registry) {
-		super(actionService, boardService, extensionService);
+	public RandomProvider(ActionService actionService, BoardService boardService, PlayerService playerService, ExtensionService extensionService, ExtensionRegistry registry) {
+		super(actionService, boardService, playerService, extensionService);
 		this.registry = registry;
 	}
 

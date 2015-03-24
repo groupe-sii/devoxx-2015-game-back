@@ -9,10 +9,13 @@ public class ServerSprite {
 	
 	private Dimension imageSize;
 
-	public ServerSprite(ServerImage image, Dimension imageSize) {
+	private Dimension frameSize;
+
+	public ServerSprite(ServerImage image, Dimension imageSize, Dimension frameSize) {
 		super();
 		this.image = image;
 		this.imageSize = imageSize;
+		this.frameSize = frameSize;
 	}
 
 	public ServerImage getImage() {
@@ -21,5 +24,9 @@ public class ServerSprite {
 
 	public Dimension getImageSize() {
 		return imageSize;
+	}
+
+	public Dimension getFrameSize() {
+		return frameSize;
 	}
 }
