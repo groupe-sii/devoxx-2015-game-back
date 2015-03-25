@@ -1,6 +1,8 @@
-package fr.sii.survival.core.service.rules;
+package fr.sii.survival.core.service.rule.registry;
 
 import java.util.List;
+
+import fr.sii.survival.core.service.rule.Rule;
 
 /**
  * Registry that stores rule implementations to apply on the game management
@@ -10,7 +12,7 @@ import java.util.List;
  * @param <R>
  *            The type of the rule managed by this registry
  */
-public interface RuleRegistry<R> {
+public interface RuleRegistry<R extends Rule> {
 	/**
 	 * Register a new rule
 	 * 

@@ -5,7 +5,7 @@ import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.ext.annotation.Developer;
 import fr.sii.survival.core.service.board.Direction;
-import fr.sii.survival.core.service.board.rules.AllowMoveRule;
+import fr.sii.survival.core.service.board.rule.AllowMoveRule;
 import fr.sii.survival.ext.constants.States;
 
 /**

@@ -1,10 +1,12 @@
-package fr.sii.survival.core.service.rules;
+package fr.sii.survival.core.service.rule.registry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class SimpleRuleRegistry<R> implements RuleRegistry<R> {
+import fr.sii.survival.core.service.rule.Rule;
+
+public class SimpleRuleRegistry<R extends Rule> implements RuleRegistry<R> {
 
 	private List<R> rules;
 	

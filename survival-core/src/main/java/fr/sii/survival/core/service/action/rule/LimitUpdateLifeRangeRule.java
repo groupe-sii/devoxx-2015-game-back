@@ -1,4 +1,4 @@
-package fr.sii.survival.core.service.action.rules;
+package fr.sii.survival.core.service.action.rule;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;

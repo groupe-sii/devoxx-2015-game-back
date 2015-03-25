@@ -1,4 +1,4 @@
-package fr.sii.survival.core.service.action.rules;
+package fr.sii.survival.core.service.action.rule;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
@@ -6,6 +6,7 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.listener.action.ActionListener;
 import fr.sii.survival.core.service.action.ActionService;
+import fr.sii.survival.core.service.action.rule.registry.AllowActionRuleRegistry;
 
 /**
  * Action service decorator that allows to register rules in order to prevent

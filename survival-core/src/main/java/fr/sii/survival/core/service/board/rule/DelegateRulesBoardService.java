@@ -1,4 +1,4 @@
-package fr.sii.survival.core.service.board.rules;
+package fr.sii.survival.core.service.board.rule;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.board.BoardListener;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.board.Direction;
+import fr.sii.survival.core.service.board.rule.registry.AllowMoveRuleRegistry;
 
 /**
  * Board service decorator that allows to register rules in order to prevent board moves.

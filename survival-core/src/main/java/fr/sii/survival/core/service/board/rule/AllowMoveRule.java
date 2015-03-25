@@ -1,11 +1,12 @@
-package fr.sii.survival.core.service.board.rules;
+package fr.sii.survival.core.service.board.rule;
 
 import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.service.board.Direction;
+import fr.sii.survival.core.service.rule.Rule;
 
-public interface AllowMoveRule {
+public interface AllowMoveRule extends Rule {
 	/**
 	 * Check if the player is allowed to move
 	 * 

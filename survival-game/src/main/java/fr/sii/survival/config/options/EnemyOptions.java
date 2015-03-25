@@ -14,22 +14,22 @@ public class EnemyOptions {
 	/**
 	 * The maximum number of enemies on the field at the same time
 	 */
-	private int maxEnemies;
+	private final int maxEnemies;
 	
 	/**
 	 * Number of enemies to wait before invoking a special enemy
 	 */
-	private int specialEvery;
+	private final int specialEvery;
 	
 	/**
 	 * The delay to wait before adding a new enemy
 	 */
-	private int addDelay;
+	private final int addDelay;
 	
 	/**
 	 * Patterns used for excluding some enemy implementations
 	 */
-	private List<Pattern> excludes; 
+	private final List<Pattern> excludes; 
 
 	@Autowired
 	public EnemyOptions(@Value("${game.enemy.max}") int maxEnemies, @Value("${game.enemy.special.every}") int specialEvery, @Value("${game.enemy.add.delay}") int addDelay, @Value("${game.enemy.exclude}") String[] excludes) {

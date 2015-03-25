@@ -22,7 +22,7 @@ public class RegexPredicate implements Predicate<Class<?>> {
 
 	@Override
 	public boolean test(Class<?> t) {
-		return pattern.matcher(t.getSimpleName()).find();
+		return pattern.matcher(t.getName()).find();
 	}
 
 }

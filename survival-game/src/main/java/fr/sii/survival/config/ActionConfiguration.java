@@ -2,11 +2,13 @@ package fr.sii.survival.config;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import fr.sii.survival.config.options.RuleOptions;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.listener.action.ActionListenerManager;
 import fr.sii.survival.core.listener.action.SimpleActionListenerManager;
@@ -22,12 +24,16 @@ import fr.sii.survival.core.service.action.StartAnimationActionManager;
 import fr.sii.survival.core.service.action.StopAnimationActionManager;
 import fr.sii.survival.core.service.action.UpdateCurrentLifeActionManager;
 import fr.sii.survival.core.service.action.UpdateMaxLifeActionManager;
-import fr.sii.survival.core.service.action.rules.AutoDiscoveryActionRuleRegistry;
-import fr.sii.survival.core.service.action.rules.DelegateRulesActionService;
+import fr.sii.survival.core.service.action.rule.AllowActionRule;
+import fr.sii.survival.core.service.action.rule.DelegateRulesActionService;
+import fr.sii.survival.core.service.action.rule.registry.AllowActionRuleRegistry;
+import fr.sii.survival.core.service.action.rule.registry.AutoDiscoveryActionRuleRegistry;
+import fr.sii.survival.core.service.action.rule.registry.PostFilteredActionRuleRegistry;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.core.service.player.PlayerService;
+import fr.sii.survival.core.service.rule.registry.predicate.RegexRulePredicate;
 
 @Configuration
 public class ActionConfiguration {
@@ -45,10 +51,23 @@ public class ActionConfiguration {
 	@Autowired
 	PlayerService playerService;
 	
+	@Autowired
+	RuleOptions ruleOptions;
+	
 	@Bean
 	public ActionService actionService() {
 		ActionService simpleActionService = new DelegateActionService(actionListenerManager(), actionManagers());
-		return new DelegateRulesActionService(simpleActionService, new AutoDiscoveryActionRuleRegistry(extensionService, "fr.sii.survival.ext.rules"));
+		return new DelegateRulesActionService(simpleActionService, allowActionRuleRegistry());
+	}
+	
+	@Bean
+	public AllowActionRuleRegistry allowActionRuleRegistry() {
+		// transform list of exclusion patterns into a list of RegexPredicate. Then the list of predicates is combined using a Or operator
+		Predicate<AllowActionRule> excludeFilter = ruleOptions.getExcludes().stream()
+									.<Predicate<AllowActionRule>>map(exclude -> new RegexRulePredicate<AllowActionRule>(exclude))
+									.reduce(Predicate::or)
+									.orElse(p -> false);
+		return new PostFilteredActionRuleRegistry(excludeFilter.negate(), new AutoDiscoveryActionRuleRegistry(extensionService, "fr.sii.survival.ext.rules"));
 	}
 
 	@Bean

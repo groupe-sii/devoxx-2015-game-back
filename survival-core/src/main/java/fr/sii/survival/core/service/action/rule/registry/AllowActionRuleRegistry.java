@@ -1,6 +1,7 @@
-package fr.sii.survival.core.service.action.rules;
+package fr.sii.survival.core.service.action.rule.registry;
 
-import fr.sii.survival.core.service.rules.RuleRegistry;
+import fr.sii.survival.core.service.action.rule.AllowActionRule;
+import fr.sii.survival.core.service.rule.registry.RuleRegistry;
 
 /**
  * Specialization that stores the rules that can prevent some actions under some

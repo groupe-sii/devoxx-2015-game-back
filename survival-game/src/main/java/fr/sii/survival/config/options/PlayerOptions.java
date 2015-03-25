@@ -8,7 +8,7 @@ public class PlayerOptions {
 	/**
 	 * Life options
 	 */
-	private LifeOptions lifeOptions;
+	private final LifeOptions lifeOptions;
 
 	@Autowired
 	public PlayerOptions(LifeOptions lifeOptions) {

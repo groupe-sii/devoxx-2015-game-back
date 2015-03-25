@@ -11,12 +11,12 @@ public class LifeOptions {
 	/**
 	 * The range (minimum and maximum value) of the maximum life
 	 */
-	private Range<Integer> max;
+	private final Range<Integer> max;
 	
 	/**
 	 * The default life for players
 	 */
-	private int defaultLife;
+	private final int defaultLife;
 
 	public LifeOptions(int defaultLife, Range<Integer> max) {
 		super();

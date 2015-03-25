@@ -9,12 +9,12 @@ public class BoardOptions {
 	/**
 	 * The width of the board
 	 */
-	private int width;
+	private final int width;
 	
 	/**
 	 * The height of the board
 	 */
-	private int height;
+	private final int height;
 
 	@Autowired
 	public BoardOptions(@Value("${game.board.width}") int width, @Value("${game.board.height}") int height) {

@@ -1,4 +1,4 @@
-package fr.sii.survival.core.service.rules;
+package fr.sii.survival.core.service.rule.registry;
 
 import java.lang.reflect.Modifier;
 import java.util.function.Function;
@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.service.rule.Rule;
 import fr.sii.survival.core.util.AutoDiscoveryUtil;
 
 /**
@@ -18,7 +19,7 @@ import fr.sii.survival.core.util.AutoDiscoveryUtil;
  * @param <R>
  *            The type of the rules
  */
-public class AutoDiscoveryRuleRegistry<R> extends SimpleRuleRegistry<R> {
+ public class AutoDiscoveryRuleRegistry<R extends Rule> extends SimpleRuleRegistry<R> {
 	private static final Logger LOG = LoggerFactory.getLogger(AutoDiscoveryExtensionRegistry.class);
 
 	public AutoDiscoveryRuleRegistry(ExtensionService extensionService, Class<R> clazz) {
