@@ -14,16 +14,6 @@ public class Cell {
 	 */
 	private int y;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public Cell() {
-		super();
-	}
-
 	public Cell(int x, int y) {
 		super();
 		this.x = x;

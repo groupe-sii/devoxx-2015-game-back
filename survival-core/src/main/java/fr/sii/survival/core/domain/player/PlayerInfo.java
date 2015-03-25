@@ -16,16 +16,6 @@ public class PlayerInfo {
 	 */
 	private Image avatar;
 	
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public PlayerInfo() {
-		super();
-	}
-
 	public PlayerInfo(String name) {
 		this(name, null);
 	}

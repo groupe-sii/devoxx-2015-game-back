@@ -17,16 +17,6 @@ public class AddImage implements Action {
 	 */
 	private Cell cell;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public AddImage() {
-		super();
-	}
-
 	public AddImage(Image image, Cell cell) {
 		super();
 		this.image = image;

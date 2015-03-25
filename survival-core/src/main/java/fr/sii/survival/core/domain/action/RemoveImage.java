@@ -17,16 +17,6 @@ public class RemoveImage implements Action {
 	 */
 	private Cell cell;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public RemoveImage() {
-		super();
-	}
-
 	public RemoveImage(Image image, Cell cell) {
 		super();
 		this.image = image;

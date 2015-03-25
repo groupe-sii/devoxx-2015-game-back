@@ -13,16 +13,6 @@ public class StopAnimation implements Action {
 	 */
 	private String name;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public StopAnimation() {
-		super();
-	}
-
 	public StopAnimation(String name) {
 		super();
 		this.name = name;

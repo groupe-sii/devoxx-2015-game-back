@@ -30,15 +30,16 @@ public class ClientImage implements Image {
 	private String folder;
 	
 	/**
-	 * Default constructor for internal use
+	 * Define an image that is located in the client implementation. No folder
+	 * is specified so the default one will be used.
 	 * 
-	 * @deprecated For technical use only, do not use it in your code
+	 * @param name
+	 *            the name of the image (without the extension)
 	 */
-	@Deprecated
-	public ClientImage() {
-		super();
+	public ClientImage(String name) {
+		this(name, null);
 	}
-
+	
 	/**
 	 * Define an image that is located in the client implementation.
 	 * 
@@ -54,17 +55,6 @@ public class ClientImage implements Image {
 		this.folder = folder;
 	}
 
-	/**
-	 * Define an image that is located in the client implementation. No folder
-	 * is specified so the default one will be used.
-	 * 
-	 * @param name
-	 *            the name of the image (without the extension)
-	 */
-	public ClientImage(String name) {
-		this(name, null);
-	}
-	
 	public void setId(String id) {
 		this.id = id;
 	}

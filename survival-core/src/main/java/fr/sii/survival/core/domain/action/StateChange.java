@@ -19,16 +19,6 @@ public class StateChange {
 	private Change change;
 
 	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public StateChange() {
-		super();
-	}
-	
-	/**
 	 * Add a new state
 	 * 
 	 * @param state

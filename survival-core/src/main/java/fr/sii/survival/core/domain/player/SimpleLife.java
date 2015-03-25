@@ -19,16 +19,6 @@ public class SimpleLife implements Life {
 	 */
 	private int max;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public SimpleLife() {
-		super();
-	}
-	
 	public SimpleLife(int max) {
 		this(max, max);
 	}

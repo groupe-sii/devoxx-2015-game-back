@@ -22,16 +22,6 @@ public class MoveImage implements Action {
 	 */
 	private Cell end;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public MoveImage() {
-		super();
-	}
-
 	public MoveImage(Image image, Cell start, Cell end) {
 		super();
 		this.image = image;

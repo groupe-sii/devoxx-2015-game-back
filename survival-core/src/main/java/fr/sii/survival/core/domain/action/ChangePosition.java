@@ -16,16 +16,6 @@ public class ChangePosition implements Action {
 	 */
 	private Cell end;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public ChangePosition() {
-		super();
-	}
-
 	public ChangePosition(Cell start, Cell end) {
 		super();
 		this.start = start;

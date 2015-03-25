@@ -1,4 +1,4 @@
-package fr.sii.survival.config.jackson;
+package fr.sii.survival.config.jackson.mixin;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 

@@ -19,16 +19,6 @@ public class UpdateLife implements Action {
 	 */
 	private Cell cell;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public UpdateLife() {
-		super();
-	}
-
 	public UpdateLife(int increment, Cell cell) {
 		super();
 		this.increment = increment;

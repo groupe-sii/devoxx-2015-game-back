@@ -46,16 +46,6 @@ public class Base64ServerImage implements ServerImage {
 	private String mimetype;
 
 	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public Base64ServerImage() {
-		super();
-	}
-
-	/**
 	 * Initialize the image with the content. The content is encoded into base64
 	 * 
 	 * @param content

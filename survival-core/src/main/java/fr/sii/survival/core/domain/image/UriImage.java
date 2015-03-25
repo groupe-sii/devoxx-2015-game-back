@@ -19,16 +19,6 @@ public class UriImage implements ServerImage {
 	 */
 	private URI uri;
 
-	/**
-	 * Default constructor for internal use
-	 * 
-	 * @deprecated For technical use only, do not use it in your code
-	 */
-	@Deprecated
-	public UriImage() {
-		super();
-	}
-	
 	public UriImage(String path) throws IOException, URISyntaxException {
 		this(check(UriImage.class.getResource("/"+path), path));
 	}
