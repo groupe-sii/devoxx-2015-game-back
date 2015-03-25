@@ -29,7 +29,6 @@ import fr.sii.survival.core.domain.action.StartAnimation;
 import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateCurrentLife;
-import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.action.UpdateMaxLife;
 import fr.sii.survival.core.domain.animation.Animation;
 import fr.sii.survival.core.domain.board.Cell;
@@ -71,7 +70,6 @@ public class GameModule extends SimpleModule {
 		context.setMixInAnnotations(StartAnimation.class, StartAnimationMixin.class);
 		context.setMixInAnnotations(StateChange.class, StateChangeMixin.class);
 		context.setMixInAnnotations(StopAnimation.class, StopAnimationMixin.class);
-		context.setMixInAnnotations(UpdateLife.class, UpdateLifeMixin.class);
 		context.setMixInAnnotations(UpdateCurrentLife.class, UpdateLifeMixin.class);
 		context.setMixInAnnotations(UpdateMaxLife.class, UpdateLifeMixin.class);
 		context.setMixInAnnotations(SimpleLife.class, SimpleLifeMixin.class);

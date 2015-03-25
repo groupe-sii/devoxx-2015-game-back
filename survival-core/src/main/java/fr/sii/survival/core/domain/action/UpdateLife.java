@@ -5,7 +5,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import fr.sii.survival.core.domain.board.Cell;
 
-public class UpdateLife implements Action {
+public abstract class UpdateLife implements Action {
 	/**
 	 * The increment value to apply on the location. If increment is positive,
 	 * then life will be incremented. If increment is negative, then life will
