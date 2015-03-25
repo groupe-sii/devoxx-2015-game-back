@@ -9,7 +9,7 @@ import fr.sii.survival.core.domain.message.Error;
 public class ErrorController {
 	@MessageExceptionHandler
 	@SendToUser("/queue/errors")
-	public Error handleException(Throwable exception) {
+	public Error handleException(Exception exception) {
 		return new Error(exception);
 	}
 }

@@ -53,7 +53,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 		for(GameListener listener : listeners.values()) {
 			try {
 				listener.started(game);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -64,7 +64,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 		for(GameListener listener : listeners.values()) {
 			try {
 				listener.stopped(game);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -75,7 +75,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 		for(GameListener listener : listeners.values()) {
 			try {
 				listener.joined(player, game);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -86,7 +86,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 		for(GameListener listener : listeners.values()) {
 			try {
 				listener.left(player, game);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}

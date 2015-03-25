@@ -53,7 +53,7 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 		for(BoardListener listener : listeners.values()) {
 			try {
 				listener.moved(game, player, oldCell, newCell);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new BoardListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -64,7 +64,7 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 		for(BoardListener listener : listeners.values()) {
 			try {
 				listener.added(game, player, cell);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new BoardListenerException("failed to trigger added event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -75,7 +75,7 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 		for(BoardListener listener : listeners.values()) {
 			try {
 				listener.removed(game, player, cell);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new BoardListenerException("failed to trigger removed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}

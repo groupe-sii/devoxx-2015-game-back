@@ -53,7 +53,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		for(PlayerListener listener : listeners.values()) {
 			try {
 				listener.dead(game, player);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new PlayerListenerException("failed to trigger dead event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -64,7 +64,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		for(PlayerListener listener : listeners.values()) {
 			try {
 				listener.revived(game, player);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new PlayerListenerException("failed to trigger revived event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -75,7 +75,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		for(PlayerListener listener : listeners.values()) {
 			try {
 				listener.hit(game, player, damage);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new ActionListenerException("failed to trigger hit event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -86,7 +86,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		for(PlayerListener listener : listeners.values()) {
 			try {
 				listener.healed(game, player, amount);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new PlayerListenerException("failed to trigger healed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -97,7 +97,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		for(PlayerListener listener : listeners.values()) {
 			try {
 				listener.statesChanged(game, player, changes);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new PlayerListenerException("failed to trigger healed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
@@ -108,7 +108,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		for(PlayerListener listener : listeners.values()) {
 			try {
 				listener.maxLifeChanged(game, player, amount);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				errorService.addError(new PlayerListenerException("failed to trigger max life changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}

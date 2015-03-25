@@ -11,7 +11,7 @@ public class Error {
 	
 	private final Developer developer;
 
-	public Error(Throwable e) {
+	public Error(Exception e) {
 		this(e.getMessage(), e.getCause()==null ? null : e.getCause().getMessage(), null);
 	}
 	

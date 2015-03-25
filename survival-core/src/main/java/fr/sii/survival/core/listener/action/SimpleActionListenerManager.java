@@ -60,7 +60,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.lifeUpdated(game, player, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("life updated", listener, e);
 			}
 		}
@@ -71,7 +71,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.positionChanged(game, player, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("position changed", listener, e);
 			}
 		}
@@ -82,7 +82,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.imageAdded(game, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("image added", listener, e);
 			}
 		}
@@ -93,7 +93,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.imageMoved(game, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("image moved", listener, e);
 			}
 		}
@@ -104,7 +104,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.imageRemoved(game, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("image removed", listener, e);
 			}
 		}
@@ -115,7 +115,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.stateChanged(game, player, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("state changed", listener, e);
 			}
 		}
@@ -126,7 +126,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.animationStarted(game, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("animation started", listener, e);
 			}
 		}
@@ -137,13 +137,13 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.animationStopped(game, action);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				manageError("animation stopped", listener, e);
 			}
 		}
 	}
 	
-	private void manageError(String event, ActionListener listener, Throwable e) {
+	private void manageError(String event, ActionListener listener, Exception e) {
 		errorService.addError(new ActionListenerException("failed to trigger "+event+" event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 	}
 	

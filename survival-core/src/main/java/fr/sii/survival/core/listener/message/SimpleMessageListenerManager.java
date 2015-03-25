@@ -48,7 +48,7 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 		for(MessageListener listener : listeners.values()) {
 			try {
 				listener.error(exception);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				LOG.error("failed to trigger error event on listener {}. Cause: {}", listener.getClass().getName(), e);
 			}
 		}
@@ -59,7 +59,7 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 		for(MessageListener listener : listeners.values()) {
 			try {
 				listener.message(message);
-			} catch(Throwable e) {
+			} catch(Exception e) {
 				LOG.error("failed to trigger message event on listener {}. Cause: {}", listener.getClass().getName(), e);
 			}
 		}
