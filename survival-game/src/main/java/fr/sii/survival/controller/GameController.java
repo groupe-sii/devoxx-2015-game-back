@@ -28,7 +28,7 @@ import fr.sii.survival.session.UserContext;
 @Controller
 public class GameController extends ErrorController implements GameListener {
 
-	private static final Logger logger = LoggerFactory.getLogger(GameController.class);
+	private static final Logger LOG = LoggerFactory.getLogger(GameController.class);
 
 	@Autowired
 	SimpMessagingTemplate template;
@@ -57,9 +57,9 @@ public class GameController extends ErrorController implements GameListener {
 	@MessageMapping(GAME_MAPPING_PREFIX+"/select")
 	@SendToUser(SERVER_PUBLISH_PREFIX+"/selected")
 	public Game select() {
-		logger.debug("selecting game");
+		LOG.debug("selecting game");
 		Game game = gameService.select();
-		logger.info("game selected {}", game);
+		LOG.info("game selected {}", game);
 		return game;
 	}
 	
@@ -72,7 +72,7 @@ public class GameController extends ErrorController implements GameListener {
 	@MessageMapping(GAME_MAPPING_PREFIX+"/{gameId}/join")
 	@SendToUser(SERVER_PUBLISH_PREFIX+"/joined")
 	public Player join(@DestinationVariable String gameId, PlayerInfo player) throws GameException {
-		logger.info("player {} is joining the game {}", player, gameId);
+		LOG.info("player {} is joining the game {}", player, gameId);
 		Player p = playerService.create(player);
 		Game game = gameService.getGame(gameId);
 		gameService.join(game, p);
@@ -91,11 +91,11 @@ public class GameController extends ErrorController implements GameListener {
 	public Player quit(@DestinationVariable String gameId) throws GameException {
 		Game game = gameService.getGame(gameId);
 		Player player = gameService.getPlayer(game, userContext.getPlayerId());
-		logger.info("player {} is leaving the game {}", player, game);
+		LOG.info("player {} is leaving the game {}", player, game);
 		gameService.quit(game, player);
 		userContext.setGameId(null);
 		// automatically stops the game when there is no more player
-		if(gameOptions.isAutoStop() && gameService.isStarted(game) && game.getPlayers(p -> p instanceof Wizard).size()<=0) {
+		if(gameOptions.isAutoStop() && gameService.isStarted(game) && game.getPlayers(p -> p instanceof Wizard).isEmpty()) {
 			gameService.stop(game);
 		}
 		return player;

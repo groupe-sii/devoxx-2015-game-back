@@ -21,6 +21,7 @@ public class PlayerInfo {
 	 * 
 	 * @deprecated For technical use only, do not use it in your code
 	 */
+	@Deprecated
 	public PlayerInfo() {
 		super();
 	}

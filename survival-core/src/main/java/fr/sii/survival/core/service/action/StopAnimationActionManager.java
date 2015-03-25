@@ -16,7 +16,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
  *
  */
 public class StopAnimationActionManager implements ActionManager<StopAnimation> {
-	private static final Logger logger = LoggerFactory.getLogger(StopAnimationActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StopAnimationActionManager.class);
 
 	private ActionListenerTrigger actionListenerTrigger;
 
@@ -32,7 +32,7 @@ public class StopAnimationActionManager implements ActionManager<StopAnimation> 
 
 	@Override
 	public void execute(Game game, Player p, StopAnimation action) {
-		logger.debug("stop animation {}", action.getName());
+		LOG.debug("stop animation {}", action.getName());
 		// nothing special to do, image move is just for client
 		actionListenerTrigger.triggerAnimationStopped(game, action);
 	}

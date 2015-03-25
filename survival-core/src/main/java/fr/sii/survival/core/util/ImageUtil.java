@@ -20,6 +20,10 @@ import fr.sii.survival.core.domain.image.UriImage;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 
 public class ImageUtil {
+	private ImageUtil() {
+		super();
+	}
+	
 	/**
 	 * Load all images available in the provided folder
 	 * 

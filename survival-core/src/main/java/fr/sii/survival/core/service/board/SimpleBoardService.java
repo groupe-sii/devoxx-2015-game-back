@@ -22,7 +22,7 @@ import fr.sii.survival.core.listener.board.BoardListenerManager;
  *
  */
 public class SimpleBoardService implements BoardService {
-	private static final Logger logger = LoggerFactory.getLogger(SimpleBoardService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleBoardService.class);
 
 	/**
 	 * A cell provider use to place new players on the board
@@ -66,7 +66,7 @@ public class SimpleBoardService implements BoardService {
 	@Override
 	public List<Player> getPlayers(Board board, Cell cell) {
 		List<Player> players = new ArrayList<>(board.getPlayers(cell));
-		logger.debug("players found on {} : {}", cell, players);
+		LOG.debug("players found on {} : {}", cell, players);
 		return players;
 	}
 
@@ -77,7 +77,7 @@ public class SimpleBoardService implements BoardService {
 			board.remove(player, old);
 		}
 		board.add(player, cell);
-		logger.debug("player {} moved from {} to {}", player, old, cell);
+		LOG.debug("player {} moved from {} to {}", player, old, cell);
 		listenerManager.triggerMoved(gameHelper.getGame(board), player, old, cell);
 		return cell;
 	}
@@ -115,7 +115,7 @@ public class SimpleBoardService implements BoardService {
 	@Override
 	public Cell getCell(Board board, Player player) {
 		Cell cell = board.getCell(player);
-		logger.debug("player {} is on {}", player, cell);
+		LOG.debug("player {} is on {}", player, cell);
 		return cell;
 	}
 

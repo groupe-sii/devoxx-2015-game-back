@@ -16,7 +16,7 @@ import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 public class FunctionalTestHelper {
-	private static final Logger logger = LoggerFactory.getLogger(FunctionalTestHelper.class);
+	private static final Logger LOG = LoggerFactory.getLogger(FunctionalTestHelper.class);
 
 	public SockJsClient socksJs(WebSocketHttpHeaders headers) throws Exception {
 		List<Transport> transports = new ArrayList<>();

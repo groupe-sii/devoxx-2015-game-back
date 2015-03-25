@@ -50,6 +50,7 @@ public class Base64ServerImage implements ServerImage {
 	 * 
 	 * @deprecated For technical use only, do not use it in your code
 	 */
+	@Deprecated
 	public Base64ServerImage() {
 		super();
 	}

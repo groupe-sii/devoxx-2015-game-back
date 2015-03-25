@@ -19,6 +19,10 @@ import fr.sii.survival.core.util.sprite.ServerSprite;
 import fr.sii.survival.core.util.sprite.SpriteImage;
 
 public class SpriteUtil {
+	private SpriteUtil() {
+		super();
+	}
+	
 	/**
 	 * Shortcut for
 	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.read(images)), true)</code>

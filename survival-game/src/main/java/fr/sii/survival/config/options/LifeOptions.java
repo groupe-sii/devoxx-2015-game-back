@@ -26,7 +26,7 @@ public class LifeOptions {
 	
 	@Autowired
 	public LifeOptions(@Value("${game.life.default}") int defaultLife, @Value("${game.life.max.lower}") int maxLower, @Value("${game.life.max.upper}") int maxUpper) {
-		this(defaultLife, Range.closed(maxUpper, maxUpper<=0 ? Integer.MAX_VALUE : maxUpper));
+		this(defaultLife, Range.closed(maxLower, maxUpper<=0 ? Integer.MAX_VALUE : maxUpper));
 	}
 
 	public Range<Integer> getMax() {

@@ -14,7 +14,7 @@ import fr.sii.survival.core.service.game.GameService;
 
 @Component
 public class StopAppManager implements ApplicationListener<ContextClosedEvent> {
-	private static final Logger logger = LoggerFactory.getLogger(StopAppManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StopAppManager.class);
 
 	@Autowired
 	GameService gameService;
@@ -28,7 +28,7 @@ public class StopAppManager implements ApplicationListener<ContextClosedEvent> {
 			try {
 				gameService.stop(game);
 			} catch (GameException e) {
-				logger.error("Failed to stop game {}. Cause: {}", game, e);
+				LOG.error("Failed to stop game {}. Cause: {}", game, e);
 			}
 		}
 	}

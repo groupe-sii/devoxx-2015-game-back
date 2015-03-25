@@ -9,7 +9,7 @@ public class GameExtensionException extends GameException {
 	 */
 	private static final long serialVersionUID = 1268152636101497027L;
 	
-	private Developer developer;
+	private final Developer developer;
 	
 	public GameExtensionException(String message, Developer developer, Throwable cause) {
 		super(message, cause);
@@ -23,10 +23,12 @@ public class GameExtensionException extends GameException {
 
 	public GameExtensionException(String message, Throwable cause) {
 		super(message, cause);
+		this.developer = null;
 	}
 
 	public GameExtensionException(String message) {
 		super(message);
+		this.developer = null;
 	}
 
 	public Developer getDeveloper() {

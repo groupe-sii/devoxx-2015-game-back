@@ -8,26 +8,26 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.game.GameListener;
 
 public class LogGameListener implements GameListener {
-	private static final Logger logger = LoggerFactory.getLogger(LogGameListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(LogGameListener.class);
 
 	@Override
 	public void started(Game game) {
-		logger.info("game {} has started", game);
+		LOG.info("game {} has started", game);
 	}
 
 	@Override
 	public void stopped(Game game) {
-		logger.info("game {} has stopped", game);
+		LOG.info("game {} has stopped", game);
 	}
 
 	@Override
 	public void joined(Player player, Game game) {
-		logger.info("player {} has joined the game {}", player, game);
+		LOG.info("player {} has joined the game {}", player, game);
 	}
 
 	@Override
 	public void left(Player player, Game game) {
-		logger.info("player {} has left the game {}", player, game);
+		LOG.info("player {} has left the game {}", player, game);
 	}
 
 }

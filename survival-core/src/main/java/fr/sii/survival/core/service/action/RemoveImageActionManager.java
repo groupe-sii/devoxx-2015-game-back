@@ -16,7 +16,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
  *
  */
 public class RemoveImageActionManager implements ActionManager<RemoveImage> {
-	private static final Logger logger = LoggerFactory.getLogger(RemoveImageActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RemoveImageActionManager.class);
 
 	private ActionListenerTrigger actionListenerTrigger;
 
@@ -32,7 +32,7 @@ public class RemoveImageActionManager implements ActionManager<RemoveImage> {
 
 	@Override
 	public void execute(Game game, Player p, RemoveImage action) {
-		logger.debug("remove image from {}", action.getCell());
+		LOG.debug("remove image from {}", action.getCell());
 		// nothing special to do, image remove is just for client
 		actionListenerTrigger.triggerImageRemoved(game, action);
 	}

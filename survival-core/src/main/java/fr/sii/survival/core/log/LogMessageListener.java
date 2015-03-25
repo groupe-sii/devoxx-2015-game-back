@@ -8,24 +8,25 @@ import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.message.MessageListener;
 
 public class LogMessageListener implements MessageListener {
-	private static final Logger logger = LoggerFactory.getLogger(LogMessageListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(LogMessageListener.class);
 
 	@Override
 	public void error(GameException e) {
-		logger.error(e.getMessage(), e);
+		LOG.error(e.getMessage(), e);
 	}
 
 	@Override
 	public void message(Message message) {
 		switch (message.getLevel()) {
 			case DEBUG:
-				logger.debug(message.getMessage());
-			break;
-			case INFO:
-				logger.info(message.getMessage());
+				LOG.debug(message.getMessage());
 			break;
 			case WARNING:
-				logger.warn(message.getMessage());
+				LOG.warn(message.getMessage());
+			break;
+			case INFO:
+			default:
+				LOG.info(message.getMessage());
 			break;
 		}
 	}

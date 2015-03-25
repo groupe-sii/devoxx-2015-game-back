@@ -16,7 +16,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
  *
  */
 public class MoveImageActionManager implements ActionManager<MoveImage> {
-	private static final Logger logger = LoggerFactory.getLogger(MoveImageActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MoveImageActionManager.class);
 
 	private ActionListenerTrigger actionListenerTrigger;
 
@@ -32,7 +32,7 @@ public class MoveImageActionManager implements ActionManager<MoveImage> {
 
 	@Override
 	public void execute(Game game, Player p, MoveImage action) {
-		logger.debug("move image from {} to {}", action.getStart(), action.getEnd());
+		LOG.debug("move image from {} to {}", action.getStart(), action.getEnd());
 		// nothing special to do, image move is just for client
 		actionListenerTrigger.triggerImageMoved(game, action);
 	}

@@ -5,11 +5,11 @@ import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.exception.GameExtensionException;
 
 public class Error {
-	private String message;
+	private final String message;
 	
-	private String cause;
+	private final String cause;
 	
-	private Developer developer;
+	private final Developer developer;
 
 	public Error(Throwable e) {
 		this(e.getMessage(), e.getCause()==null ? null : e.getCause().getMessage(), null);

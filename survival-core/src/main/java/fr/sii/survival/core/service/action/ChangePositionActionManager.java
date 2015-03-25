@@ -20,7 +20,7 @@ import fr.sii.survival.core.service.board.BoardService;
  *
  */
 public class ChangePositionActionManager implements ActionManager<ChangePosition> {
-	private static final Logger logger = LoggerFactory.getLogger(ChangePositionActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(ChangePositionActionManager.class);
 
 	private BoardService boardService;
 	
@@ -39,7 +39,7 @@ public class ChangePositionActionManager implements ActionManager<ChangePosition
 
 	@Override
 	public void execute(Game game, Player p, ChangePosition action) throws GameException {
-		logger.debug("change position of players from {} to {}", action.getStart(), action.getEnd());
+		LOG.debug("change position of players from {} to {}", action.getStart(), action.getEnd());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getStart());
 		for(Player player : players) {
 			boardService.move(game.getBoard(), player, action.getEnd());

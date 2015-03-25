@@ -27,6 +27,7 @@ public class MoveImage implements Action {
 	 * 
 	 * @deprecated For technical use only, do not use it in your code
 	 */
+	@Deprecated
 	public MoveImage() {
 		super();
 	}

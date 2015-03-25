@@ -42,7 +42,7 @@ public class RandomPlayerTargetBehavior implements TargetBehavior {
 		List<Player> players = context.getGame().getPlayers().stream()
 								.filter(p -> type.isAssignableFrom(p.getClass()))
 								.collect(Collectors.toList());
-		if (players.size() > 0) {
+		if (!players.isEmpty()) {
 			Player player = players.get((int) Math.floor(Math.random() * players.size()));
 			Cell cell = context.getBoard().getCell(player);
 			return cell == null ? new ArrayList<>() : Arrays.asList(cell);

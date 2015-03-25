@@ -19,7 +19,7 @@ import fr.sii.survival.core.util.AutoDiscoveryUtil;
  *            The type of the rules
  */
 public class AutoDiscoveryRuleRegistry<R> extends SimpleRuleRegistry<R> {
-	private static final Logger logger = LoggerFactory.getLogger(AutoDiscoveryExtensionRegistry.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AutoDiscoveryExtensionRegistry.class);
 
 	public AutoDiscoveryRuleRegistry(ExtensionService extensionService, Class<R> clazz) {
 		this(extensionService, clazz, "fr.sii.survival.ext.rules");
@@ -42,10 +42,10 @@ public class AutoDiscoveryRuleRegistry<R> extends SimpleRuleRegistry<R> {
 		public R apply(Class<? extends R> type) {
 			if (!type.isInterface() && !Modifier.isAbstract(type.getModifiers())) {
 				try {
-					logger.info("found rule {} created by {}", type.getName(), extensionService.getDeveloper(type));
+					LOG.info("found rule {} created by {}", type.getName(), extensionService.getDeveloper(type));
 					return type.newInstance();
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.error("cannot instantiate rule {} created by {}", type.getName(), extensionService.getDeveloper(type));
+					LOG.error("cannot instantiate rule {} created by {}", type.getName(), extensionService.getDeveloper(type));
 				}
 			}
 			return null;

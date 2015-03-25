@@ -17,7 +17,7 @@ import fr.sii.survival.core.exception.GameException;
  *
  */
 public class MultiActionBehavior implements EnemyActionBehavior {
-	private static final Logger logger = LoggerFactory.getLogger(MultiActionBehavior.class);
+	private static final Logger LOG = LoggerFactory.getLogger(MultiActionBehavior.class);
 
 	private List<EnemyActionBehavior> actions;
 
@@ -32,7 +32,7 @@ public class MultiActionBehavior implements EnemyActionBehavior {
 
 	@Override
 	public void execute(Game game, Cell cell) throws GameException {
-		logger.debug("executing several actions {} for game {} on cell {}", actions, game, cell);
+		LOG.debug("executing several actions {} for game {} on cell {}", actions, game, cell);
 		for (EnemyActionBehavior action : actions) {
 			action.execute(game, cell);
 		}

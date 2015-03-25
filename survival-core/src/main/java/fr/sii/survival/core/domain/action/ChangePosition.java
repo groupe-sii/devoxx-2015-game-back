@@ -21,6 +21,7 @@ public class ChangePosition implements Action {
 	 * 
 	 * @deprecated For technical use only, do not use it in your code
 	 */
+	@Deprecated
 	public ChangePosition() {
 		super();
 	}

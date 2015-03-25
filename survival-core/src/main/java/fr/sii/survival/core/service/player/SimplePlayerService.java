@@ -42,7 +42,7 @@ import fr.sii.survival.core.listener.player.PlayerListenerTrigger;
  *
  */
 public class SimplePlayerService implements PlayerService {
-	private static final Logger logger = LoggerFactory.getLogger(SimplePlayerService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimplePlayerService.class);
 
 	/**
 	 * The registry that stores the list of action listeners that will be
@@ -94,32 +94,33 @@ public class SimplePlayerService implements PlayerService {
 
 	@Override
 	public int updateCurrentLife(Player player, int increment) throws GameException {
+		int inc = increment;
 		Life life = player.getLife();
 		int oldValue = life.getCurrent();
-		int lifeValue = life.updateCurrent(increment);
-		logger.debug("update player life from {} to {}", oldValue, lifeValue);
+		int lifeValue = life.updateCurrent(inc);
+		LOG.debug("update player life from {} to {}", oldValue, lifeValue);
 		Game game = gameHelper.getGame(player);
 		if (lifeValue <= 0 && oldValue>0) {
 			// new life<=0 => player is now dead
 			life.setCurrent(0);
-			increment = -oldValue;
+			inc = -oldValue;
 			playerListenerTrigger.triggerDead(game, player);
 		} else if (lifeValue > life.getMax()) {
 			// new life>max => prevent life to exceed max life
 			life.setCurrent(life.getMax());
-			increment = life.getMax() - oldValue;
+			inc = life.getMax() - oldValue;
 		}
 		if (oldValue <= 0 && lifeValue > 0) {
 			// player was dead and new life>=0 => player revived
 			playerListenerTrigger.triggerRevived(game, player);
-		} else if (increment > 0) {
+		} else if (inc > 0) {
 			// player is healed
-			playerListenerTrigger.triggerHealed(game, player, increment);
-		} else if (increment < 0) {
+			playerListenerTrigger.triggerHealed(game, player, inc);
+		} else if (inc < 0) {
 			// player is hit
-			playerListenerTrigger.triggerHit(game, player, -increment);
+			playerListenerTrigger.triggerHit(game, player, -inc);
 		}
-		return increment;
+		return inc;
 	}
 
 	@Override
@@ -127,7 +128,7 @@ public class SimplePlayerService implements PlayerService {
 		Life life = player.getLife();
 		int oldValue = life.getMax();
 		int lifeValue = life.updateMax(increment);
-		logger.debug("update player maximum life from {} to {}", oldValue, lifeValue);
+		LOG.debug("update player maximum life from {} to {}", oldValue, lifeValue);
 		if (lifeValue < maximumLifeRange.lowerEndpoint()) {
 			life.setMax(maximumLifeRange.lowerEndpoint());
 			increment = -oldValue+maximumLifeRange.lowerEndpoint();
@@ -144,7 +145,7 @@ public class SimplePlayerService implements PlayerService {
 
 	@Override
 	public List<StateChange> updateStates(Player player, List<StateChange> stateChanges) throws GameException {
-		logger.debug("update states {} on {}", stateChanges, player);
+		LOG.debug("update states {} on {}", stateChanges, player);
 		List<StateChange> appliedChanges = new ArrayList<StateChange>(stateChanges.size());
 		for (StateChange change : stateChanges) {
 			boolean applied = false;

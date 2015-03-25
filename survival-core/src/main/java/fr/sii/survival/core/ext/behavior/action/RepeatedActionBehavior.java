@@ -20,7 +20,7 @@ import fr.sii.survival.core.exception.GameException;
  *
  */
 public class RepeatedActionBehavior implements EnemyActionBehavior {
-	private static final Logger logger = LoggerFactory.getLogger(RepeatedActionBehavior.class);
+	private static final Logger LOG = LoggerFactory.getLogger(RepeatedActionBehavior.class);
 
 	/**
 	 * The action manager to execute
@@ -48,20 +48,20 @@ public class RepeatedActionBehavior implements EnemyActionBehavior {
 
 	@Override
 	public void execute(Game game, Cell cell) throws GameException {
-		logger.debug("start repeated action {} (game: {}, cell: {})", delegate, game, cell);
+		LOG.debug("start repeated action {} (game: {}, cell: {})", delegate, game, cell);
 		count = 0;
 		ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
 		service.scheduleAtFixedRate(() -> {
 			try {
 				if(count < numExecutions) {
-					logger.debug("execute repeated action {} (game: {}, cell: {})", delegate, game, cell);
+					LOG.debug("execute repeated action {} (game: {}, cell: {})", delegate, game, cell);
 					delegate.execute(game, cell);
 				}
 				if (count++ > numExecutions) {
 					service.shutdown();
 				}
 			} catch (GameException e) {
-				logger.error("Failed to execute repeated action", e);
+				LOG.error("Failed to execute repeated action", e);
 				service.shutdown();
 			}
 		}, 0, rate, TimeUnit.MILLISECONDS);

@@ -9,7 +9,7 @@ public class ActionManagerNotFoundException extends ActionException {
 	 */
 	private static final long serialVersionUID = 1341467474676161054L;
 
-	private Action action;
+	private final Action action;
 	
 	public ActionManagerNotFoundException(String message, Action action) {
 		super(message);

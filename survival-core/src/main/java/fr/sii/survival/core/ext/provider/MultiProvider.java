@@ -29,7 +29,7 @@ public class MultiProvider implements ExtensionProvider {
 
 	@Override
 	public List<EnemyExtension> getEnemies(Game game) throws ExtensionInitializationException {
-		ArrayList<EnemyExtension> extensions = new ArrayList<>();
+		List<EnemyExtension> extensions = new ArrayList<>();
 		for (ExtensionProvider delegate : delegates) {
 			extensions.addAll(delegate.getEnemies(game));
 		}

@@ -16,46 +16,46 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.listener.action.ActionListener;
 
 public class LogActionListener implements ActionListener {
-	private static final Logger logger = LoggerFactory.getLogger(LogActionListener.class);
+	private static final Logger LOG = LoggerFactory.getLogger(LogActionListener.class);
 
 	@Override
 	public void lifeUpdated(Game game, Player player, UpdateLife action) {
-		logger.info("life update {} for player {}", action.getIncrement(), player);
+		LOG.info("life update {} for player {}", action.getIncrement(), player);
 	}
 
 	@Override
 	public void positionChanged(Game game, Player player, ChangePosition action) {
-		logger.info("player {} moved from {} to {}", player, action.getStart(), action.getEnd());
+		LOG.info("player {} moved from {} to {}", player, action.getStart(), action.getEnd());
 	}
 
 	@Override
 	public void imageAdded(Game game, AddImage action) {
-		logger.info("image {} add on {}", action.getImage(), action.getCell());
+		LOG.info("image {} add on {}", action.getImage(), action.getCell());
 	}
 
 	@Override
 	public void imageMoved(Game game, MoveImage action) {
-		logger.info("image {} moved from {} to {}", action.getImage(), action.getStart(), action.getEnd());
+		LOG.info("image {} moved from {} to {}", action.getImage(), action.getStart(), action.getEnd());
 	}
 
 	@Override
 	public void imageRemoved(Game game, RemoveImage action) {
-		logger.info("image {} removed from {}", action.getImage(), action.getCell());
+		LOG.info("image {} removed from {}", action.getImage(), action.getCell());
 	}
 
 	@Override
 	public void stateChanged(Game game, Player player, ChangeStates action) {
-		logger.info("states {} applied to {}", action.getStateChanges(), player);
+		LOG.info("states {} applied to {}", action.getStateChanges(), player);
 	}
 
 	@Override
 	public void animationStarted(Game game, StartAnimation action) {
-		logger.info("animation {} started on game {}", action.getName(), game);
+		LOG.info("animation {} started on game {}", action.getName(), game);
 	}
 
 	@Override
 	public void animationStopped(Game game, StopAnimation action) {
-		logger.info("animation {} stopped on game {}", action.getName(), game);
+		LOG.info("animation {} stopped on game {}", action.getName(), game);
 	}
 
 }

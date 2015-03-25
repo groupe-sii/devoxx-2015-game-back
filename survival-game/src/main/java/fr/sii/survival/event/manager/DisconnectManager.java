@@ -13,7 +13,7 @@ import fr.sii.survival.session.UserContext;
 
 @Component
 public class DisconnectManager implements ApplicationListener<SessionDisconnectEvent> {
-	private static final Logger logger = LoggerFactory.getLogger(DisconnectManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DisconnectManager.class);
 
 	@Autowired
 	GameController gameController;
@@ -26,7 +26,7 @@ public class DisconnectManager implements ApplicationListener<SessionDisconnectE
 		try {
 			gameController.quit(userContext.getGameId());
 		} catch (GameException e) {
-			logger.warn("Failed to disconnect user with session id: {}. Cause: {}", event.getSessionId(), e.getMessage());
+			LOG.warn("Failed to disconnect user with session id: {}. Cause: {}", event.getSessionId(), e.getMessage());
 		}
 	}
 

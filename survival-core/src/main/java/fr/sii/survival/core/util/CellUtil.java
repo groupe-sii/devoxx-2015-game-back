@@ -3,6 +3,10 @@ package fr.sii.survival.core.util;
 import fr.sii.survival.core.domain.board.Cell;
 
 public class CellUtil {
+	private CellUtil() {
+		super();
+	}
+	
 	/**
 	 * Compute the distance between the two cells
 	 * 

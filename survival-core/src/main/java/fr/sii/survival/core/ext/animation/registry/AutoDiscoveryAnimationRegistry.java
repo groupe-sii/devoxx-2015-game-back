@@ -11,7 +11,7 @@ import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.util.AutoDiscoveryUtil;
 
 public class AutoDiscoveryAnimationRegistry extends SimpleAnimationRegistry {
-	private static final Logger logger = LoggerFactory.getLogger(AutoDiscoveryAnimationRegistry.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AutoDiscoveryAnimationRegistry.class);
 
 	public AutoDiscoveryAnimationRegistry(ExtensionService extensionService) {
 		this(extensionService, "fr.sii.survival.ext.animation");
@@ -33,10 +33,10 @@ public class AutoDiscoveryAnimationRegistry extends SimpleAnimationRegistry {
 		public AnimationProvider apply(Class<? extends AnimationProvider> type) {
 			if (!type.isInterface() && !Modifier.isAbstract(type.getModifiers())) {
 				try {
-					logger.info("found animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
+					LOG.info("found animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
 					return type.newInstance();
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.error("cannot instantiate animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
+					LOG.error("cannot instantiate animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
 				}
 			}
 			return null;

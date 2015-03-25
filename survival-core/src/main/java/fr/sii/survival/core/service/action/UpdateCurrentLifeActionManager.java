@@ -21,7 +21,7 @@ import fr.sii.survival.core.service.player.PlayerService;
  *
  */
 public class UpdateCurrentLifeActionManager implements ActionManager<UpdateCurrentLife> {
-	private static final Logger logger = LoggerFactory.getLogger(UpdateCurrentLifeActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UpdateCurrentLifeActionManager.class);
 
 	private BoardService boardService;
 	
@@ -43,7 +43,7 @@ public class UpdateCurrentLifeActionManager implements ActionManager<UpdateCurre
 
 	@Override
 	public void execute(Game game, Player p, UpdateCurrentLife action) throws GameException {
-		logger.debug("update current life {} on {}", action.getIncrement(), action.getCell());
+		LOG.debug("update current life {} on {}", action.getIncrement(), action.getCell());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {
 			int inc = playerService.updateCurrentLife(player, action.getIncrement());

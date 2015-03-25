@@ -21,7 +21,7 @@ import fr.sii.survival.core.service.message.MessageService;
  *
  */
 public class SimpleAnimationService implements AnimationService {
-	private static final Logger logger = LoggerFactory.getLogger(SimpleAnimationService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleAnimationService.class);
 
 	private AnimationRegistry registry;
 	
@@ -44,7 +44,7 @@ public class SimpleAnimationService implements AnimationService {
 			try {
 				animations.add(provider.provide());
 			} catch (AnimationInitializationException e) {
-				logger.error("Failed to provide animation", e);
+				LOG.error("Failed to provide animation", e);
 				messageService.addError(new ExtensionException("Failed to provide animation", extensionService.getDeveloper(provider.getClass()), e));
 			}
 		}

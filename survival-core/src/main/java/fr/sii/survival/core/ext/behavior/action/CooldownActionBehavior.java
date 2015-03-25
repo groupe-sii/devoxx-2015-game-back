@@ -19,7 +19,7 @@ import fr.sii.survival.core.exception.GameException;
  *
  */
 public class CooldownActionBehavior implements EnemyActionBehavior {
-	private static final Logger logger = LoggerFactory.getLogger(CooldownActionBehavior.class);
+	private static final Logger LOG = LoggerFactory.getLogger(CooldownActionBehavior.class);
 
 	private EnemyActionBehavior delegate;
 	
@@ -41,11 +41,11 @@ public class CooldownActionBehavior implements EnemyActionBehavior {
 	public void execute(Game game, Cell cell) throws GameException {
 		long now = System.currentTimeMillis();
 		if(now - last > cooldown) {
-			logger.debug("Cooldown finished => executing delegate action (Game: {}, Cell: {})", game, cell);
+			LOG.debug("Cooldown finished => executing delegate action (Game: {}, Cell: {})", game, cell);
 			last = now;
 			delegate.execute(game, cell);
 		} else {
-			logger.debug("Cooldown not finished, waiting (last: {}, next: {}, now: {}, cooldown: {}ms)", new Date(now), new Date(last+cooldown), new Date(last), cooldown);
+			LOG.debug("Cooldown not finished, waiting (last: {}, next: {}, now: {}, cooldown: {}ms)", new Date(now), new Date(last+cooldown), new Date(last), cooldown);
 		}
 	}
 }

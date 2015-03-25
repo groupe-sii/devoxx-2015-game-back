@@ -16,7 +16,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
  *
  */
 public class StartAnimationActionManager implements ActionManager<StartAnimation> {
-	private static final Logger logger = LoggerFactory.getLogger(StartAnimationActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(StartAnimationActionManager.class);
 
 	private ActionListenerTrigger actionListenerTrigger;
 
@@ -32,7 +32,7 @@ public class StartAnimationActionManager implements ActionManager<StartAnimation
 
 	@Override
 	public void execute(Game game, Player p, StartAnimation action) {
-		logger.debug("start animation {}", action.getName());
+		LOG.debug("start animation {}", action.getName());
 		// nothing special to do, image move is just for client
 		actionListenerTrigger.triggerAnimationStarted(game, action);
 	}

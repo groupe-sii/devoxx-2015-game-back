@@ -19,7 +19,7 @@ import fr.sii.survival.core.exception.GameException;
  *
  */
 public class DelayedActionBehavior implements EnemyActionBehavior {
-	private static final Logger logger = LoggerFactory.getLogger(DelayedActionBehavior.class);
+	private static final Logger LOG = LoggerFactory.getLogger(DelayedActionBehavior.class);
 
 	/**
 	 * The action manager to execute
@@ -48,7 +48,7 @@ public class DelayedActionBehavior implements EnemyActionBehavior {
 //			delegate.execute(cell);
 //		} catch (InterruptedException e) {
 //			// TODO: execute method should throw an exception to propagate it like other
-//			logger.error("Failed to execute delayed action", e);
+//			LOG.error("Failed to execute delayed action", e);
 //			throw new ActionException("Failed to execute delayed action", e);
 //		}
 //	}
@@ -64,7 +64,7 @@ public class DelayedActionBehavior implements EnemyActionBehavior {
 					delegate.execute(game, cell);
 				} catch (GameException e) {
 					// TODO: execute method should throw an exception to propagate it like other
-					logger.error("Failed to execute delayed action", e);
+					LOG.error("Failed to execute delayed action", e);
 				}
 			}
 		}, delay);

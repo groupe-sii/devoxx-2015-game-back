@@ -12,6 +12,10 @@ import org.reflections.util.ConfigurationBuilder;
 import fr.sii.survival.core.ext.EnemyExtension;
 
 public class AutoDiscoveryUtil {
+	private AutoDiscoveryUtil() {
+		super();
+	}
+	
 	/**
 	 * Automatically find implementations of the provided class in the provided
 	 * packages.

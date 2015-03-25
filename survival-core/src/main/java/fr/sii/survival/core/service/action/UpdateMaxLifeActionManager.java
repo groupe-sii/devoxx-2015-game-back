@@ -21,7 +21,7 @@ import fr.sii.survival.core.service.player.PlayerService;
  *
  */
 public class UpdateMaxLifeActionManager implements ActionManager<UpdateMaxLife> {
-	private static final Logger logger = LoggerFactory.getLogger(UpdateMaxLifeActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UpdateMaxLifeActionManager.class);
 
 	private BoardService boardService;
 	
@@ -43,7 +43,7 @@ public class UpdateMaxLifeActionManager implements ActionManager<UpdateMaxLife> 
 
 	@Override
 	public void execute(Game game, Player p, UpdateMaxLife action) throws GameException {
-		logger.info("update maximum life {} on {}", action.getIncrement(), action.getCell());
+		LOG.info("update maximum life {} on {}", action.getIncrement(), action.getCell());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {
 			int inc = playerService.updateMaxLife(player, action.getIncrement());

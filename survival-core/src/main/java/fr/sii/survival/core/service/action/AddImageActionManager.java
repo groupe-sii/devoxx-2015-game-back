@@ -16,7 +16,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
  *
  */
 public class AddImageActionManager implements ActionManager<AddImage> {
-	private static final Logger logger = LoggerFactory.getLogger(AddImageActionManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AddImageActionManager.class);
 
 	private ActionListenerTrigger actionListenerTrigger;
 
@@ -32,7 +32,7 @@ public class AddImageActionManager implements ActionManager<AddImage> {
 
 	@Override
 	public void execute(Game game, Player p, AddImage action) {
-		logger.debug("add image to {}", action.getCell());
+		LOG.debug("add image to {}", action.getCell());
 		// nothing special to do, image add is just for client
 		actionListenerTrigger.triggerImageAdded(game, action);
 	}

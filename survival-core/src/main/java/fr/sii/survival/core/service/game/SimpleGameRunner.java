@@ -18,7 +18,7 @@ import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.message.MessageService;
 
 public class SimpleGameRunner implements GameRunner {
-	private static final Logger logger = LoggerFactory.getLogger(SimpleGameRunner.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleGameRunner.class);
 
 	/**
 	 * The associated game
@@ -76,7 +76,7 @@ public class SimpleGameRunner implements GameRunner {
 					}
 				}
 				// execute extensions
-				logger.debug("============debut============");
+				LOG.debug("============debut============");
 				extensions.parallelStream().forEach(extension -> {
 					try {
 						extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
@@ -87,10 +87,10 @@ public class SimpleGameRunner implements GameRunner {
 //				for(EnemyExtension extension : extensions) {
 //					extension.run(new GameContext(game, new Board(game.getBoard()), boardService.getCell(extension.getEnemy())));
 //				}
-				logger.debug("============fin============");
+				LOG.debug("============fin============");
 			}
 		} catch (Exception e) {
-			logger.error("Failed to run extensions", e);
+			LOG.error("Failed to run extensions", e);
 			messageService.addError(new GameException("Failed to run extensions", e));
 		}
 	}

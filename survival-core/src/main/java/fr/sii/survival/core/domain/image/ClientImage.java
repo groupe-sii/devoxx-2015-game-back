@@ -34,6 +34,7 @@ public class ClientImage implements Image {
 	 * 
 	 * @deprecated For technical use only, do not use it in your code
 	 */
+	@Deprecated
 	public ClientImage() {
 		super();
 	}

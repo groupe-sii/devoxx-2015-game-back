@@ -12,7 +12,7 @@ import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.util.AutoDiscoveryUtil;
 
 public class AutoDiscoveryExtensionRegistry extends SimpleEnemyExtensionRegistry {
-	private static final Logger logger = LoggerFactory.getLogger(AutoDiscoveryExtensionRegistry.class);
+	private static final Logger LOG = LoggerFactory.getLogger(AutoDiscoveryExtensionRegistry.class);
 
 	public AutoDiscoveryExtensionRegistry(ExtensionService extensionService) {
 		this(extensionService, "fr.sii.survival.ext");
@@ -35,7 +35,7 @@ public class AutoDiscoveryExtensionRegistry extends SimpleEnemyExtensionRegistry
 			if(!type.isInterface() && !Modifier.isAbstract(type.getModifiers()) && type.getConstructors().length>0) {
 				for(Constructor<?> constructor : type.getConstructors()) {
 					if(constructor.getParameterCount()==0) {
-						logger.info("found enemy extension {} created by {}", type.getName(), extensionService.getDeveloper(type));
+						LOG.info("found enemy extension {} created by {}", type.getName(), extensionService.getDeveloper(type));
 						return type;
 					}
 				}

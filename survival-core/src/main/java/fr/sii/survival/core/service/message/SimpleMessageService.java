@@ -9,7 +9,7 @@ import fr.sii.survival.core.listener.message.MessageListener;
 import fr.sii.survival.core.listener.message.MessageListenerManager;
 
 public class SimpleMessageService implements MessageService {
-	private static final Logger logger = LoggerFactory.getLogger(SimpleMessageService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleMessageService.class);
 
 	MessageListenerManager listenerManager;
 	
@@ -20,7 +20,7 @@ public class SimpleMessageService implements MessageService {
 
 	@Override
 	public void addError(GameException e) {
-		logger.error(e.getMessage());
+		LOG.error(e.getMessage());
 		listenerManager.triggerError(e);
 	}
 
@@ -28,13 +28,14 @@ public class SimpleMessageService implements MessageService {
 	public void addMessage(Message message) {
 		switch (message.getLevel()) {
 			case DEBUG:
-				logger.debug(message.getMessage());
-			break;
-			case INFO:
-				logger.info(message.getMessage());
+				LOG.debug(message.getMessage());
 			break;
 			case WARNING:
-				logger.warn(message.getMessage());
+				LOG.warn(message.getMessage());
+				break;
+			case INFO:
+			default:
+				LOG.info(message.getMessage());
 			break;
 		}
 		listenerManager.triggerMessage(message);

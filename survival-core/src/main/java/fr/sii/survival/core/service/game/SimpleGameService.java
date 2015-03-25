@@ -24,7 +24,7 @@ import fr.sii.survival.core.service.board.BoardService;
 
 
 public class SimpleGameService implements GameService {
-	private static final Logger logger = LoggerFactory.getLogger(SimpleGameService.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleGameService.class);
 
 	/**
 	 * The board service used to add/remove players on it
@@ -147,13 +147,13 @@ public class SimpleGameService implements GameService {
 	public void start(Game game) throws GameException {
 		// start running the game and execute enemy extensions
 		if(!game.isStarted()) {
-			logger.info("Start the game {}", game);
+			LOG.info("Start the game {}", game);
 			ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 			executors.put(game, executor);
 			gameRunner.setGame(game);
 			executor.scheduleWithFixedDelay(gameRunner, 0L, delay, TimeUnit.MILLISECONDS);
 			game.setStarted(true);
-			logger.info("Game {} started", game);
+			LOG.info("Game {} started", game);
 		} else {
 			throw new GameException("Game already started");
 		}
@@ -162,11 +162,11 @@ public class SimpleGameService implements GameService {
 	@Override
 	public void stop(Game game) throws GameException {
 		if(game.isStarted()) {
-			logger.info("Stopping the game {}", game);
+			LOG.info("Stopping the game {}", game);
 			executors.get(game).shutdown();
 			gameRunner.stop();
 			game.setStarted(false);
-			logger.info("Game {} stopped", game);
+			LOG.info("Game {} stopped", game);
 		} else {
 			throw new GameException("Game already stopped");
 		}

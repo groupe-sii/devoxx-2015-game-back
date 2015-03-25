@@ -24,6 +24,7 @@ public class UriImage implements ServerImage {
 	 * 
 	 * @deprecated For technical use only, do not use it in your code
 	 */
+	@Deprecated
 	public UriImage() {
 		super();
 	}

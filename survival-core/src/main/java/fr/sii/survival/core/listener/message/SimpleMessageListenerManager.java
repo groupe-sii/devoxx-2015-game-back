@@ -12,7 +12,7 @@ import fr.sii.survival.core.exception.GameException;
 // TODO: manage locks to avoid concurrentmodifexception
 public class SimpleMessageListenerManager implements MessageListenerManager {
 
-	private static final Logger logger = LoggerFactory.getLogger(SimpleMessageListenerManager.class);
+	private static final Logger LOG = LoggerFactory.getLogger(SimpleMessageListenerManager.class);
 	
 	private Map<String, MessageListener> listeners;
 	
@@ -49,7 +49,7 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 			try {
 				listener.error(exception);
 			} catch(Throwable e) {
-				logger.error("failed to trigger error event on listener {}. Cause: {}", listener.getClass().getName(), e);
+				LOG.error("failed to trigger error event on listener {}. Cause: {}", listener.getClass().getName(), e);
 			}
 		}
 	}
@@ -60,7 +60,7 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 			try {
 				listener.message(message);
 			} catch(Throwable e) {
-				logger.error("failed to trigger message event on listener {}. Cause: {}", listener.getClass().getName(), e);
+				LOG.error("failed to trigger message event on listener {}. Cause: {}", listener.getClass().getName(), e);
 			}
 		}
 	}
