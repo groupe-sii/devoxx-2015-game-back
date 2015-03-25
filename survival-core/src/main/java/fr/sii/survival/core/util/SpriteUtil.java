@@ -19,6 +19,8 @@ import fr.sii.survival.core.util.sprite.ServerSprite;
 import fr.sii.survival.core.util.sprite.SpriteImage;
 
 public class SpriteUtil {
+	public static final String SPRITE_GENERATION_FOLDER = "survival-sprites";
+
 	private SpriteUtil() {
 		super();
 	}
@@ -171,7 +173,7 @@ public class SpriteUtil {
 	public static ServerSprite toServerSprite(SpriteImage sprite, boolean store) throws MimetypeDetectionException, IOException {
 		ServerImage image;
 		if (store) {
-			File file = File.createTempFile("survival-sprite", ".png");
+			File file = FileUtil.getRandomFile(SPRITE_GENERATION_FOLDER, "sprite", ".png");
 			ImageIO.write(sprite.getSprite(), "png", file);
 			image = new UriImage(file);
 		} else {

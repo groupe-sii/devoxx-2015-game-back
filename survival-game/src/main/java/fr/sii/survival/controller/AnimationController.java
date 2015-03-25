@@ -5,6 +5,7 @@ import static fr.sii.survival.config.AnimationConfiguration.ANIMATION_MAPPING_PR
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class AnimationController {
 	@MessageMapping(ANIMATION_MAPPING_PREFIX+"/all")
 	@SendToUser
 	@RequestMapping(method=RequestMethod.GET)
+	@Cacheable("animations")
 	public List<Animation> all() {
 		return animationService.getAvailableAnimations();
 	}
