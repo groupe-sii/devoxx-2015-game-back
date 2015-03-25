@@ -56,7 +56,7 @@ public class ImageUtil {
 	 */
 	public static List<InputStream> loadStreams(String folder, boolean reverse) throws IOException, MimetypeDetectionException {
 		List<InputStream> images = ScanUtil.scan(folder, reverse, file -> Base64ServerImage.class.getResourceAsStream("/" + file));
-		if(images.size()==0) {
+		if(images.isEmpty()) {
 			throw new IOException("Folder "+folder+" doesn't contain any image");
 		}
 		return images;

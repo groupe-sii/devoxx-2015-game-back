@@ -125,22 +125,23 @@ public class SimplePlayerService implements PlayerService {
 
 	@Override
 	public int updateMaxLife(Player player, int increment) throws GameException {
+		int inc = increment;
 		Life life = player.getLife();
 		int oldValue = life.getMax();
-		int lifeValue = life.updateMax(increment);
+		int lifeValue = life.updateMax(inc);
 		LOG.debug("update player maximum life from {} to {}", oldValue, lifeValue);
 		if (lifeValue < maximumLifeRange.lowerEndpoint()) {
 			life.setMax(maximumLifeRange.lowerEndpoint());
-			increment = -oldValue+maximumLifeRange.lowerEndpoint();
+			inc = -oldValue+maximumLifeRange.lowerEndpoint();
 		} else if(lifeValue > maximumLifeRange.upperEndpoint()) {
 			life.setMax(maximumLifeRange.upperEndpoint());
-			increment = maximumLifeRange.upperEndpoint() - oldValue;
+			inc = maximumLifeRange.upperEndpoint() - oldValue;
 		}
 		updateCurrentLife(player, 0);
-		if(increment!=0) {
-			playerListenerTrigger.triggerMaxLifeChanged(gameHelper.getGame(player), player, increment);
+		if(inc!=0) {
+			playerListenerTrigger.triggerMaxLifeChanged(gameHelper.getGame(player), player, inc);
 		}
-		return increment;
+		return inc;
 	}
 
 	@Override

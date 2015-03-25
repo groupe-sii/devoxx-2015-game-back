@@ -26,7 +26,7 @@ public class DisconnectManager implements ApplicationListener<SessionDisconnectE
 		try {
 			gameController.quit(userContext.getGameId());
 		} catch (GameException e) {
-			LOG.warn("Failed to disconnect user with session id: {}. Cause: {}", event.getSessionId(), e.getMessage());
+			LOG.warn("Failed to disconnect user with session id: {}. Cause: {}", event.getSessionId(), e);
 		}
 	}
 

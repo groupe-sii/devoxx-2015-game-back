@@ -54,7 +54,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 			try {
 				listener.started(game);
 			} catch(Exception e) {
-				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("started", listener, e);
 			}
 		}
 	}
@@ -65,7 +65,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 			try {
 				listener.stopped(game);
 			} catch(Exception e) {
-				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("stopped", listener, e);
 			}
 		}
 	}
@@ -76,7 +76,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 			try {
 				listener.joined(player, game);
 			} catch(Exception e) {
-				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("joined", listener, e);
 			}
 		}
 	}
@@ -87,12 +87,16 @@ public class SimpleGameListenerManager implements GameListenerManager {
 			try {
 				listener.left(player, game);
 			} catch(Exception e) {
-				errorService.addError(new GameListenerException("failed to trigger moved event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
+				manageError("leaved", listener, e);
 			}
 		}
 	}
 	
 	private String getKey(GameListener listener) {
 		return listener.getClass().toString();
+	}
+
+	private void manageError(String event, GameListener listener, Exception e) {
+		errorService.addError(new GameListenerException("failed to trigger '"+event+"' event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 	}
 }

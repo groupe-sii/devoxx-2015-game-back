@@ -36,7 +36,7 @@ public class AutoDiscoveryAnimationRegistry extends SimpleAnimationRegistry {
 					LOG.info("found animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
 					return type.newInstance();
 				} catch (InstantiationException | IllegalAccessException e) {
-					LOG.error("cannot instantiate animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
+					LOG.error("cannot instantiate animation {} created by {}. Cause: {}", type.getName(), extensionService.getDeveloper(type), e);
 				}
 			}
 			return null;

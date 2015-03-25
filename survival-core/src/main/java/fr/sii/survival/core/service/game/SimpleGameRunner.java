@@ -58,7 +58,6 @@ public class SimpleGameRunner implements GameRunner {
 	@Override
 	public void run() {
 		try {
-			// TODO: externalize ?
 			synchronized(extensions) {
 				// add new enemies
 				List<EnemyExtension> enemies = extensionProvider.getEnemies(game);
@@ -81,7 +80,7 @@ public class SimpleGameRunner implements GameRunner {
 					try {
 						extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
 					} catch (Exception e) {
-						messageService.addError(new GameException("Failed to run extensions", e));
+						messageService.addError(new GameException("Failed to run extension", e));
 					}
 				});
 //				for(EnemyExtension extension : extensions) {
@@ -90,8 +89,8 @@ public class SimpleGameRunner implements GameRunner {
 				LOG.debug("============fin============");
 			}
 		} catch (Exception e) {
-			LOG.error("Failed to run extensions", e);
-			messageService.addError(new GameException("Failed to run extensions", e));
+			LOG.error("Failed to add or remove enemy on game {}. Cause: {}", game, e);
+			messageService.addError(new GameException("Failed to add or remove enemy", e));
 		}
 	}
 	

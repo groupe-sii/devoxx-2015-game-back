@@ -7,9 +7,11 @@ public class MessageListenerAdapter implements MessageListener {
 
 	@Override
 	public void error(GameException e) {
+		// nothing to do
 	}
 
 	@Override
 	public void message(Message message) {
+		// nothing to do
 	}
 }

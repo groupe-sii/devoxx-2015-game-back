@@ -76,8 +76,7 @@ public class Matrix<T> {
 	private int position(int col, int row) {
 		checkArgs(row, col);
 		int rowIdx = (int) Math.floor(row * cols);
-		int idx = rowIdx + col;
-		return idx;
+		return rowIdx + col;
 	}
 
 	private void checkPosition(int idx) {
