@@ -1,4 +1,4 @@
-package fr.sii.survival;
+package fr.sii.survival.config;
 
 import java.util.List;
 

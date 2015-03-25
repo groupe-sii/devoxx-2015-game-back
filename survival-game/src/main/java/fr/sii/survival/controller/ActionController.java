@@ -1,7 +1,7 @@
 package fr.sii.survival.controller;
 
-import static fr.sii.survival.WebSocketConfig.SERVER_PUBLISH_PREFIX;
 import static fr.sii.survival.config.ActionConfiguration.ACTION_MAPPING_PREFIX;
+import static fr.sii.survival.config.WebSocketConfig.SERVER_PUBLISH_PREFIX;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;

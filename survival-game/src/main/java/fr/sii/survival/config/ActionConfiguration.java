@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.listener.action.ActionListenerManager;
 import fr.sii.survival.core.listener.action.SimpleActionListenerManager;

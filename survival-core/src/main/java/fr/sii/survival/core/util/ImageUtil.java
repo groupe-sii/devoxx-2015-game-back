@@ -6,14 +6,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-
-import org.reflections.Reflections;
-import org.reflections.scanners.ResourcesScanner;
-import org.reflections.util.ClasspathHelper;
 
 import fr.sii.survival.core.domain.image.Base64ServerImage;
 import fr.sii.survival.core.domain.image.UriImage;
@@ -60,16 +55,7 @@ public class ImageUtil {
 	 *             when the mimetype of an image couldn't be found
 	 */
 	public static List<InputStream> loadStreams(String folder, boolean reverse) throws IOException, MimetypeDetectionException {
-		int sign = reverse ? -1 : 1;
-		Reflections reflections = new Reflections(ClasspathHelper.forResource(folder), new ResourcesScanner());
-		List<String> files = new ArrayList<>(reflections.getResources(f -> true));
-		Collections.sort(files, (a, b) -> sign * a.compareToIgnoreCase(b));
-		List<InputStream> images = new ArrayList<>(files.size());
-		for (String file : files) {
-			if (file.contains(folder)) {
-				images.add(Base64ServerImage.class.getResourceAsStream("/" + file));
-			}
-		}
+		List<InputStream> images = ScanUtil.scan(folder, reverse, file -> Base64ServerImage.class.getResourceAsStream("/" + file));
 		if(images.size()==0) {
 			throw new IOException("Folder "+folder+" doesn't contain any image");
 		}

@@ -1,7 +1,7 @@
 package fr.sii.survival.controller;
 
-import static fr.sii.survival.WebSocketConfig.SERVER_PUBLISH_PREFIX;
 import static fr.sii.survival.config.GameConfiguration.GAME_MAPPING_PREFIX;
+import static fr.sii.survival.config.WebSocketConfig.SERVER_PUBLISH_PREFIX;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

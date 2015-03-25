@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.core.ext.animation.registry.AnimationRegistry;
 import fr.sii.survival.core.ext.animation.registry.AutoDiscoveryAnimationRegistry;
 import fr.sii.survival.core.service.animation.AnimationService;

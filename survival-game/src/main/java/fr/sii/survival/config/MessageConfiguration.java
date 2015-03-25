@@ -3,7 +3,6 @@ package fr.sii.survival.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import fr.sii.survival.WebSocketConfig;
 import fr.sii.survival.core.listener.message.MessageListenerManager;
 import fr.sii.survival.core.listener.message.SimpleMessageListenerManager;
 import fr.sii.survival.core.service.message.MessageService;
