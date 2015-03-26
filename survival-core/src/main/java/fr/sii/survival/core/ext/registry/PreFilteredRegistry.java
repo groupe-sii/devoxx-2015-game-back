@@ -27,14 +27,14 @@ public class PreFilteredRegistry implements ExtensionRegistry {
 	}
 
 	@Override
-	public void register(Class<? extends EnemyExtension> extension) {
+	public void register(Class<EnemyExtension> extension) {
 		if(predicate.test(extension)) {
 			delegate.register(extension);
 		}
 	}
 
 	@Override
-	public List<Class<? extends EnemyExtension>> getEnemyExtensions() {
+	public List<Class<EnemyExtension>> getEnemyExtensions() {
 		return delegate.getEnemyExtensions();
 	}
 

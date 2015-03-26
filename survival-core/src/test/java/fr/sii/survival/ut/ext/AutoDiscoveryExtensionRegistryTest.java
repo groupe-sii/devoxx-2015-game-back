@@ -31,9 +31,9 @@ public class AutoDiscoveryExtensionRegistryTest {
 
 	@Test
 	public void basicEnemy() {
-		List<Class<? extends EnemyExtension>> classes = registry.getEnemyExtensions();
+		List<Class<EnemyExtension>> classes = registry.getEnemyExtensions();
 		Assert.assertEquals("should have 1 valid extension", 1, classes.size());
-		Class<? extends EnemyExtension> clazz = classes.get(0);
+		Class<EnemyExtension> clazz = classes.get(0);
 		Assert.assertEquals("class should be "+BasicEnemyExtension.class.getSimpleName(), BasicEnemyExtension.class, clazz);
 		Assert.assertEquals("developer should be abaudet", "abaudet", extensionService.getDeveloper(clazz).getNickname());
 	}

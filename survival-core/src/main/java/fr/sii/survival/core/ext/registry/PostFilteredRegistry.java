@@ -27,15 +27,15 @@ public class PostFilteredRegistry implements ExtensionRegistry {
 	}
 
 	@Override
-	public void register(Class<? extends EnemyExtension> extension) {
+	public void register(Class<EnemyExtension> extension) {
 		delegate.register(extension);
 	}
 
 	@Override
-	public List<Class<? extends EnemyExtension>> getEnemyExtensions() {
-		List<Class<? extends EnemyExtension>> enemyExtensions = delegate.getEnemyExtensions();
-		List<Class<? extends EnemyExtension>> filtered = new ArrayList<>(enemyExtensions.size());
-		for(Class<? extends EnemyExtension> extension : enemyExtensions) {
+	public List<Class<EnemyExtension>> getEnemyExtensions() {
+		List<Class<EnemyExtension>> enemyExtensions = delegate.getEnemyExtensions();
+		List<Class<EnemyExtension>> filtered = new ArrayList<>(enemyExtensions.size());
+		for(Class<EnemyExtension> extension : enemyExtensions) {
 			if(predicate.test(extension)) {
 				filtered.add(extension);
 			}

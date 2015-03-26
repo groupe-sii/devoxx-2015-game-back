@@ -11,12 +11,12 @@ public interface ExtensionRegistry {
 	 * @param extension
 	 *            the extension to register
 	 */
-	public void register(Class<? extends EnemyExtension> extension);
+	public void register(Class<EnemyExtension> extension);
 
 	/**
 	 * Give the whole list of available extensions
 	 * 
 	 * @return the list of available extensions
 	 */
-	public List<Class<? extends EnemyExtension>> getEnemyExtensions();
+	public List<Class<EnemyExtension>> getEnemyExtensions();
 }

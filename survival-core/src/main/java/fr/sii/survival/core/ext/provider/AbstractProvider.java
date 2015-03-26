@@ -30,7 +30,7 @@ public abstract class AbstractProvider implements ExtensionProvider {
 		this.extensionService = extensionService;
 	}
 
-	protected EnemyExtension instantiate(Class<? extends EnemyExtension> type) throws ExtensionInitializationException {
+	protected EnemyExtension instantiate(Class<EnemyExtension> type) throws ExtensionInitializationException {
 		try {
 			EnemyExtension instance = type.newInstance();
 			instance.setActionService(actionService);

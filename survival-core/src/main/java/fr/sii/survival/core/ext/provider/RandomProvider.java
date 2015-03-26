@@ -30,10 +30,10 @@ public class RandomProvider extends AbstractProvider {
 
 	@Override
 	public List<EnemyExtension> getEnemies(Game game) throws ExtensionInitializationException {
-		List<Class<? extends EnemyExtension>> classes = registry.getEnemyExtensions();
+		List<Class<EnemyExtension>> classes = registry.getEnemyExtensions();
 		if(!classes.isEmpty()) {
 			int idx = (int) Math.floor(classes.size() * Math.random());
-			Class<? extends EnemyExtension> clazz = classes.get(idx);
+			Class<EnemyExtension> clazz = classes.get(idx);
 			EnemyExtension ext = instantiate(clazz);
 			return Arrays.asList(ext);
 		} else {

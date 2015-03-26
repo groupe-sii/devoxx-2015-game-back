@@ -32,11 +32,11 @@ public class SpecificEnemyProvider extends AbstractProvider {
 	/**
 	 * The class of the enemy to invoke
 	 */
-	private Class<? extends EnemyExtension> special;
+	private Class<EnemyExtension> special;
 
 	private int count;
 
-	public SpecificEnemyProvider(ActionService actionService, BoardService boardService, PlayerService playerService, ExtensionService extensionService, int every, Class<? extends EnemyExtension> special, ExtensionProvider delegate) {
+	public SpecificEnemyProvider(ActionService actionService, BoardService boardService, PlayerService playerService, ExtensionService extensionService, int every, Class<EnemyExtension> special, ExtensionProvider delegate) {
 		super(actionService, boardService, playerService, extensionService);
 		this.delegate = delegate;
 		this.every = every;

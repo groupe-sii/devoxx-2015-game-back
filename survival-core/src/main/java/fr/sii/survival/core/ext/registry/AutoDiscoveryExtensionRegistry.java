@@ -22,7 +22,7 @@ public class AutoDiscoveryExtensionRegistry extends SimpleEnemyExtensionRegistry
 		super(AutoDiscoveryUtil.find(EnemyExtension.class, new EnemyExtensionProvider(extensionService), packageNames));
 	}
 	
-	private static final class EnemyExtensionProvider implements Function<Class<? extends EnemyExtension>, Class<? extends EnemyExtension>> {
+	private static final class EnemyExtensionProvider implements Function<Class<? extends EnemyExtension>, Class<EnemyExtension>> {
 		private ExtensionService extensionService;
 
 		public EnemyExtensionProvider(ExtensionService extensionService) {
@@ -31,12 +31,13 @@ public class AutoDiscoveryExtensionRegistry extends SimpleEnemyExtensionRegistry
 		}
 
 		@Override
-		public Class<? extends EnemyExtension> apply(Class<? extends EnemyExtension> type) {
+		@SuppressWarnings("unchecked")
+		public Class<EnemyExtension> apply(Class<? extends EnemyExtension> type) {
 			if(!type.isInterface() && !Modifier.isAbstract(type.getModifiers()) && type.getConstructors().length>0) {
 				for(Constructor<?> constructor : type.getConstructors()) {
 					if(constructor.getParameterCount()==0) {
 						LOG.info("found enemy extension {} created by {}", type.getName(), extensionService.getDeveloper(type));
-						return type;
+						return (Class<EnemyExtension>) type;
 					}
 				}
 			}
