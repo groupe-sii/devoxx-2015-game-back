@@ -1,6 +1,6 @@
 package fr.sii.survival.core.domain.message;
 
-public class Message {
+public class GameMessage {
 	/**
 	 * The message to provide to the client
 	 */
@@ -11,7 +11,7 @@ public class Message {
 	 */
 	private Level level;
 
-	public Message(String message, Level level) {
+	public GameMessage(String message, Level level) {
 		super();
 		this.message = message;
 		this.level = level;
@@ -23,7 +23,7 @@ public class Message {
 	 * @param message
 	 *            the message to provide to the client
 	 */
-	public Message(String message) {
+	public GameMessage(String message) {
 		this(message, Level.INFO);
 	}
 

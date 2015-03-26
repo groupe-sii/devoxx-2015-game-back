@@ -3,7 +3,7 @@ package fr.sii.survival.core.log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.sii.survival.core.domain.message.Message;
+import fr.sii.survival.core.domain.message.GameMessage;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.message.MessageListener;
 
@@ -16,7 +16,7 @@ public class LogMessageListener implements MessageListener {
 	}
 
 	@Override
-	public void message(Message message) {
+	public void message(GameMessage message) {
 		switch (message.getLevel()) {
 			case DEBUG:
 				LOG.debug(message.getMessage());

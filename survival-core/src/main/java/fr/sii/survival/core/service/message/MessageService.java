@@ -1,6 +1,6 @@
 package fr.sii.survival.core.service.message;
 
-import fr.sii.survival.core.domain.message.Message;
+import fr.sii.survival.core.domain.message.GameMessage;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.message.MessageListenerRegistry;
 
@@ -19,5 +19,5 @@ public interface MessageService extends MessageListenerRegistry {
 	 * @param message
 	 *            the message
 	 */
-	public void addMessage(Message message);
+	public void addMessage(GameMessage message);
 }

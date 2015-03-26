@@ -7,7 +7,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import fr.sii.survival.core.domain.message.Error;
-import fr.sii.survival.core.domain.message.Message;
+import fr.sii.survival.core.domain.message.GameMessage;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.message.MessageListener;
 
@@ -22,7 +22,7 @@ public class MessageController extends ErrorController implements MessageListene
 	}
 
 	@Override
-	public void message(Message message) {
+	public void message(GameMessage message) {
 		template.convertAndSend(MESSAGE_PUBLISH_PREFIX, message);
 	}
 }

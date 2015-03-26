@@ -6,7 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.sii.survival.core.domain.message.Message;
+import fr.sii.survival.core.domain.message.GameMessage;
 import fr.sii.survival.core.exception.GameException;
 
 // TODO: manage locks to avoid concurrentmodifexception
@@ -55,7 +55,7 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 	}
 
 	@Override
-	public void triggerMessage(Message message) {
+	public void triggerMessage(GameMessage message) {
 		for(MessageListener listener : listeners.values()) {
 			try {
 				listener.message(message);

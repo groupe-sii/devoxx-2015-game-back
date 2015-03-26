@@ -3,7 +3,7 @@ package fr.sii.survival.core.service.message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import fr.sii.survival.core.domain.message.Message;
+import fr.sii.survival.core.domain.message.GameMessage;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.message.MessageListener;
 import fr.sii.survival.core.listener.message.MessageListenerManager;
@@ -25,7 +25,7 @@ public class SimpleMessageService implements MessageService {
 	}
 
 	@Override
-	public void addMessage(Message message) {
+	public void addMessage(GameMessage message) {
 		switch (message.getLevel()) {
 			case DEBUG:
 				LOG.debug(message.getMessage());
