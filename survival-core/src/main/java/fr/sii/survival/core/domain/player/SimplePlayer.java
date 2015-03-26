@@ -24,7 +24,7 @@ public class SimplePlayer implements Player {
 	/**
 	 * The current states of the wizard
 	 */
-	private States states;
+	private PlayerStates playerStates;
 
 	/**
 	 * The player information
@@ -121,7 +121,7 @@ public class SimplePlayer implements Player {
 	 *            the life of the wizard
 	 */
 	public SimplePlayer(PlayerInfo info, Life life) {
-		this(info, life, new States());
+		this(info, life, new PlayerStates());
 	}
 
 	/**
@@ -136,7 +136,7 @@ public class SimplePlayer implements Player {
 	 * @param states
 	 *            the states to apply on
 	 */
-	public SimplePlayer(String name, Image avatar, Life life, States states) {
+	public SimplePlayer(String name, Image avatar, Life life, PlayerStates states) {
 		this(new PlayerInfo(name, avatar), life, states);
 	}
 
@@ -150,12 +150,12 @@ public class SimplePlayer implements Player {
 	 * @param states
 	 *            the states to apply on
 	 */
-	public SimplePlayer(PlayerInfo info, Life life, States states) {
+	public SimplePlayer(PlayerInfo info, Life life, PlayerStates states) {
 		super();
 		id = getClass().getSimpleName() + "-" + (counter++);
 		this.playerInfo = info;
 		this.life = life;
-		this.states = states;
+		this.playerStates = states;
 	}
 
 	@Override
@@ -164,8 +164,8 @@ public class SimplePlayer implements Player {
 	}
 
 	@Override
-	public States getStates() {
-		return states;
+	public PlayerStates getPlayerStates() {
+		return playerStates;
 	}
 
 	@Override
@@ -197,7 +197,7 @@ public class SimplePlayer implements Player {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("{").append(getId()).append(playerInfo).append(life).append(states).append("}");
+		builder.append("{").append(getId()).append(playerInfo).append(life).append(playerStates).append("}");
 		return builder.toString();
 	}
 }

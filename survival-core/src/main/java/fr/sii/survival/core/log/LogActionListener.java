@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.AddImage;
-import fr.sii.survival.core.domain.action.ChangePosition;
-import fr.sii.survival.core.domain.action.ChangeStates;
+import fr.sii.survival.core.domain.action.UpdatePosition;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.StartAnimation;
@@ -24,7 +24,7 @@ public class LogActionListener implements ActionListener {
 	}
 
 	@Override
-	public void positionChanged(Game game, Player player, ChangePosition action) {
+	public void positionChanged(Game game, Player player, UpdatePosition action) {
 		LOG.info("player {} moved from {} to {}", player, action.getStart(), action.getEnd());
 	}
 
@@ -44,7 +44,7 @@ public class LogActionListener implements ActionListener {
 	}
 
 	@Override
-	public void stateChanged(Game game, Player player, ChangeStates action) {
+	public void stateChanged(Game game, Player player, UpdateStates action) {
 		LOG.info("states {} applied to {}", action.getStateChanges(), player);
 	}
 

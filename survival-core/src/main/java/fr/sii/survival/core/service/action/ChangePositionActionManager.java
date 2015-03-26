@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
-import fr.sii.survival.core.domain.action.ChangePosition;
+import fr.sii.survival.core.domain.action.UpdatePosition;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.listener.action.ActionListenerTrigger;
@@ -19,7 +19,7 @@ import fr.sii.survival.core.service.board.BoardService;
  * @author aurelien
  *
  */
-public class ChangePositionActionManager implements ActionManager<ChangePosition> {
+public class ChangePositionActionManager implements ActionManager<UpdatePosition> {
 	private static final Logger LOG = LoggerFactory.getLogger(ChangePositionActionManager.class);
 
 	private BoardService boardService;
@@ -34,11 +34,11 @@ public class ChangePositionActionManager implements ActionManager<ChangePosition
 
 	@Override
 	public boolean supports(Action action) {
-		return action instanceof ChangePosition;
+		return action instanceof UpdatePosition;
 	}
 
 	@Override
-	public void execute(Game game, Player p, ChangePosition action) throws GameException {
+	public void execute(Game game, Player p, UpdatePosition action) throws GameException {
 		LOG.debug("change position of players from {} to {}", action.getStart(), action.getEnd());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getStart());
 		for(Player player : players) {

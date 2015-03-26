@@ -9,7 +9,14 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import fr.sii.survival.core.domain.board.Cell;
 
-public class ChangeStates implements Action {
+/**
+ * Action that enable to update several states for players that are available on
+ * the cell
+ * 
+ * @author aurelien
+ *
+ */
+public class UpdateStates implements Action {
 	/**
 	 * The cell to target
 	 */
@@ -21,15 +28,15 @@ public class ChangeStates implements Action {
 	 */
 	private List<StateChange> stateChanges;
 
-	public ChangeStates(ChangeStates action) {
+	public UpdateStates(UpdateStates action) {
 		this(action.getCell(), new ArrayList<>(action.getStateChanges()));
 	}
-	
-	public ChangeStates(Cell cell, StateChange... changes) {
+
+	public UpdateStates(Cell cell, StateChange... changes) {
 		this(cell, new ArrayList<>(Arrays.asList(changes)));
 	}
 
-	public ChangeStates(Cell cell, List<StateChange> stateChanges) {
+	public UpdateStates(Cell cell, List<StateChange> stateChanges) {
 		super();
 		this.cell = cell;
 		this.stateChanges = stateChanges;
@@ -64,10 +71,10 @@ public class ChangeStates implements Action {
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
-		} else if (obj == null || !(obj instanceof ChangeStates)) {
+		} else if (obj == null || !(obj instanceof UpdateStates)) {
 			return false;
 		}
-		ChangeStates other = (ChangeStates) obj;
+		UpdateStates other = (UpdateStates) obj;
 		return new EqualsBuilder().append(cell, other.cell).append(stateChanges, other.stateChanges).isEquals();
 	}
 

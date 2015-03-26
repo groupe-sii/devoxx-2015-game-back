@@ -5,8 +5,8 @@ import java.util.Map;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.AddImage;
-import fr.sii.survival.core.domain.action.ChangePosition;
-import fr.sii.survival.core.domain.action.ChangeStates;
+import fr.sii.survival.core.domain.action.UpdatePosition;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.StartAnimation;
@@ -67,7 +67,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	}
 
 	@Override
-	public void triggerPositionChanged(Game game, Player player, ChangePosition action) {
+	public void triggerPositionChanged(Game game, Player player, UpdatePosition action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.positionChanged(game, player, action);
@@ -111,7 +111,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	}
 	
 	@Override
-	public void triggerStateChanged(Game game, Player player, ChangeStates action) {
+	public void triggerStateChanged(Game game, Player player, UpdateStates action) {
 		for(ActionListener listener : listeners.values()) {
 			try {
 				listener.stateChanged(game, player, action);

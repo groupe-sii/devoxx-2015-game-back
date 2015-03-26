@@ -12,7 +12,7 @@ public class SimpleWizard extends SimplePlayer implements Wizard {
 		super(info, life);
 	}
 
-	public SimpleWizard(PlayerInfo info, Life life, States states) {
+	public SimpleWizard(PlayerInfo info, Life life, PlayerStates states) {
 		super(info, life, states);
 	}
 
@@ -32,7 +32,7 @@ public class SimpleWizard extends SimplePlayer implements Wizard {
 		super(name, avatar, life);
 	}
 
-	public SimpleWizard(String name, Image avatar, Life life, States states) {
+	public SimpleWizard(String name, Image avatar, Life life, PlayerStates states) {
 		super(name, avatar, life, states);
 	}
 

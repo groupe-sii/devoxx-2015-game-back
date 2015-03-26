@@ -151,9 +151,9 @@ public class SimplePlayerService implements PlayerService {
 		for (StateChange change : stateChanges) {
 			boolean applied = false;
 			if (Change.ADD.equals(change.getChange())) {
-				applied = player.getStates().addState(change.getState());
+				applied = player.getPlayerStates().addState(change.getState());
 			} else {
-				applied = player.getStates().removeState(change.getState());
+				applied = player.getPlayerStates().removeState(change.getState());
 			}
 			if (applied) {
 				appliedChanges.add(change);

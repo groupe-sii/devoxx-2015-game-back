@@ -41,18 +41,6 @@ public class DelayedActionBehavior implements EnemyActionBehavior {
 		this.delay = delay;
 	}
 
-//	@Override
-//	public void execute(Cell cell) throws GameException {
-//		try {
-//			Thread.sleep(delay);
-//			delegate.execute(cell);
-//		} catch (InterruptedException e) {
-//			// TODO: execute method should throw an exception to propagate it like other
-//			LOG.error("Failed to execute delayed action", e);
-//			throw new ActionException("Failed to execute delayed action", e);
-//		}
-//	}
-
 
 	@Override
 	public void execute(Game game, Cell cell) throws GameException {

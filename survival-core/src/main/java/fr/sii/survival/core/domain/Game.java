@@ -16,17 +16,17 @@ public class Game {
 	/**
 	 * The game id
 	 */
-	private String id;
+	private final String id;
 	
 	/**
 	 * The list of players currently in the game
 	 */
-	private List<Player> players;
+	private final List<Player> players;
 
 	/**
 	 * The associated board that contains player positions
 	 */
-	private Board board;
+	private final Board board;
 
 	/**
 	 * Is the game started
@@ -118,7 +118,7 @@ public class Game {
 	public boolean contains(Player player) {
 		return players.stream()
 				.map(p -> p.getId())
-				.anyMatch(n -> n.equals(player.getId()));
+				.anyMatch(id -> id.equals(player.getId()));
 	}
 
 	/**

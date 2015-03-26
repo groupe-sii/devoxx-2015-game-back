@@ -12,7 +12,7 @@ public class SimpleEnemy extends SimplePlayer implements Enemy {
 		super(info, life);
 	}
 
-	public SimpleEnemy(PlayerInfo info, Life life, States states) {
+	public SimpleEnemy(PlayerInfo info, Life life, PlayerStates states) {
 		super(info, life, states);
 	}
 
@@ -32,7 +32,7 @@ public class SimpleEnemy extends SimplePlayer implements Enemy {
 		super(name, avatar, life);
 	}
 
-	public SimpleEnemy(String name, Image avatar, Life life, States states) {
+	public SimpleEnemy(String name, Image avatar, Life life, PlayerStates states) {
 		super(name, avatar, life, states);
 	}
 

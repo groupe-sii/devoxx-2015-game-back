@@ -20,7 +20,7 @@ public interface Player {
 	 * 
 	 * @return the current states on the player
 	 */
-	public States getStates();
+	public PlayerStates getPlayerStates();
 
 	/**
 	 * Get the player information (name and avatar)

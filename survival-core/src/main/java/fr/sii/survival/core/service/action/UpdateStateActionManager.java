@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
-import fr.sii.survival.core.domain.action.ChangeStates;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.GameException;
@@ -21,8 +21,8 @@ import fr.sii.survival.core.service.player.PlayerService;
  * @author aurelien
  *
  */
-public class ChangeStateActionManager implements ActionManager<ChangeStates> {
-	private static final Logger LOG = LoggerFactory.getLogger(ChangeStateActionManager.class);
+public class UpdateStateActionManager implements ActionManager<UpdateStates> {
+	private static final Logger LOG = LoggerFactory.getLogger(UpdateStateActionManager.class);
 
 	private BoardService boardService;
 
@@ -30,7 +30,7 @@ public class ChangeStateActionManager implements ActionManager<ChangeStates> {
 
 	private ActionListenerTrigger actionListenerTrigger;
 
-	public ChangeStateActionManager(BoardService boardService, PlayerService playerService, ActionListenerTrigger actionListenerTrigger) {
+	public UpdateStateActionManager(BoardService boardService, PlayerService playerService, ActionListenerTrigger actionListenerTrigger) {
 		super();
 		this.boardService = boardService;
 		this.playerService = playerService;
@@ -39,17 +39,17 @@ public class ChangeStateActionManager implements ActionManager<ChangeStates> {
 
 	@Override
 	public boolean supports(Action action) {
-		return action instanceof ChangeStates;
+		return action instanceof UpdateStates;
 	}
 
 	@Override
-	public void execute(Game game, Player p, ChangeStates action) throws GameException {
+	public void execute(Game game, Player p, UpdateStates action) throws GameException {
 		LOG.debug("apply state changes {} on {}", action.getStateChanges(), action.getCell());
 		List<Player> players = boardService.getPlayers(game.getBoard(), action.getCell());
 		for(Player player : players) {
 			List<StateChange> applied = playerService.updateStates(player, action.getStateChanges());
 			if(!applied.isEmpty()) {
-				actionListenerTrigger.triggerStateChanged(game, player, new ChangeStates(action.getCell(), applied));
+				actionListenerTrigger.triggerStateChanged(game, player, new UpdateStates(action.getCell(), applied));
 			}
 		}
 	}

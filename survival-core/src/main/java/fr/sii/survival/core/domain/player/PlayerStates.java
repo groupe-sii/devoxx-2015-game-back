@@ -3,18 +3,24 @@ package fr.sii.survival.core.domain.player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class States {
+/**
+ * Groups the list of states for a player
+ * 
+ * @author aurelien
+ *
+ */
+public class PlayerStates {
 	/**
 	 * The list of states
 	 */
 	private List<String> states;
 
-	public States(List<String> states) {
+	public PlayerStates(List<String> states) {
 		super();
 		this.states = states;
 	}
 
-	public States() {
+	public PlayerStates() {
 		this(new ArrayList<>());
 	}
 

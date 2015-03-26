@@ -9,7 +9,7 @@ import fr.sii.survival.core.service.action.ActionService;
 
 /**
  * Behavior that adds a state to a player and remove it after a provided delay.
- * This is a specialization of {@link MultiActionBehavior} that delegates state changes to {@link ChangeStateActionBehavior}.
+ * This is a specialization of {@link MultiActionBehavior} that delegates state changes to {@link UpdateStateActionBehavior}.
  * It also uses a {@link DelayedActionBehavior} to wait for the provided delay before automatically removing the state.
  * 
  * @author aurelien
@@ -19,8 +19,8 @@ public class TemporaryChangeState extends TemporaryActionBehavior {
 
 	public TemporaryChangeState(ActionService actionService, Enemy enemy, String state, long delay) {
 		super(
-				new ChangeStateActionBehavior(actionService, enemy, new StateChange(state, Change.ADD)),
-				new ChangeStateActionBehavior(actionService, enemy, new StateChange(state, Change.REMOVE)),
+				new UpdateStateActionBehavior(actionService, enemy, new StateChange(state, Change.ADD)),
+				new UpdateStateActionBehavior(actionService, enemy, new StateChange(state, Change.REMOVE)),
 				delay);
 	}
 	

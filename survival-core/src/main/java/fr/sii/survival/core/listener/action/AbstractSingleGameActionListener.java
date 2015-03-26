@@ -1,8 +1,8 @@
 package fr.sii.survival.core.listener.action;
 
 import fr.sii.survival.core.domain.Game;
-import fr.sii.survival.core.domain.action.ChangePosition;
-import fr.sii.survival.core.domain.action.ChangeStates;
+import fr.sii.survival.core.domain.action.UpdatePosition;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
@@ -24,7 +24,7 @@ public abstract class AbstractSingleGameActionListener implements ActionListener
 	}
 
 	@Override
-	public void positionChanged(Game game, Player player, ChangePosition action) {
+	public void positionChanged(Game game, Player player, UpdatePosition action) {
 		if(this.game.equals(game)) {
 			positionChanged(player, action);
 		}
@@ -38,7 +38,7 @@ public abstract class AbstractSingleGameActionListener implements ActionListener
 	}
 
 	@Override
-	public void stateChanged(Game game, Player player, ChangeStates action) {
+	public void stateChanged(Game game, Player player, UpdateStates action) {
 		if(this.game.equals(game)) {
 			stateChanged(player, action);
 		}
@@ -46,9 +46,9 @@ public abstract class AbstractSingleGameActionListener implements ActionListener
 
 	protected abstract void lifeUpdated(Player player, UpdateLife action);
 
-	protected abstract void positionChanged(Player player, ChangePosition action);
+	protected abstract void positionChanged(Player player, UpdatePosition action);
 
 	protected abstract void imageMoved(MoveImage action);
 
-	protected abstract void stateChanged(Player player, ChangeStates action);
+	protected abstract void stateChanged(Player player, UpdateStates action);
 }

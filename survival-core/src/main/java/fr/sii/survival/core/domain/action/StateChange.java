@@ -3,6 +3,12 @@ package fr.sii.survival.core.domain.action;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+/**
+ * Represents a single change (add or remove) to apply on the provided state
+ * 
+ * @author aurelien
+ *
+ */
 public class StateChange {
 	public enum Change {
 		ADD, REMOVE

@@ -1,7 +1,7 @@
 package fr.sii.survival.core.ext.behavior.action;
 
 import fr.sii.survival.core.domain.Game;
-import fr.sii.survival.core.domain.action.ChangeStates;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.StateChange;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Enemy;
@@ -40,7 +40,7 @@ public class FleeingEnemyBehavior extends SimpleActionBehavior {
 
 	@Override
 	public void execute(Game game, Cell cell) throws ActionException {
-		actionService.execute(game, enemy, new ChangeStates(cell, new StateChange(Insult.getInsult(iterate).toString())));
+		actionService.execute(game, enemy, new UpdateStates(cell, new StateChange(Insult.getInsult(iterate).toString())));
 		iterate = (iterate++)%insults;
 	}
 

@@ -2,8 +2,8 @@ package fr.sii.survival.core.listener.action;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.AddImage;
-import fr.sii.survival.core.domain.action.ChangePosition;
-import fr.sii.survival.core.domain.action.ChangeStates;
+import fr.sii.survival.core.domain.action.UpdatePosition;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.StartAnimation;
@@ -19,7 +19,7 @@ public class ActionListenerAdapter implements ActionListener {
 	}
 
 	@Override
-	public void positionChanged(Game game, Player player, ChangePosition action) {
+	public void positionChanged(Game game, Player player, UpdatePosition action) {
 		// nothing to do
 	}
 
@@ -39,7 +39,7 @@ public class ActionListenerAdapter implements ActionListener {
 	}
 
 	@Override
-	public void stateChanged(Game game, Player player, ChangeStates action) {
+	public void stateChanged(Game game, Player player, UpdateStates action) {
 		// nothing to do
 	}
 

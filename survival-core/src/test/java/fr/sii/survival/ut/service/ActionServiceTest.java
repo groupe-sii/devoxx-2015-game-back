@@ -15,7 +15,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
-import fr.sii.survival.core.domain.action.ChangePosition;
+import fr.sii.survival.core.domain.action.UpdatePosition;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.domain.player.Player;
@@ -27,7 +27,7 @@ import fr.sii.survival.core.listener.action.ActionListenerManager;
 import fr.sii.survival.core.service.action.ActionManager;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.action.ChangePositionActionManager;
-import fr.sii.survival.core.service.action.ChangeStateActionManager;
+import fr.sii.survival.core.service.action.UpdateStateActionManager;
 import fr.sii.survival.core.service.action.DelegateActionService;
 import fr.sii.survival.core.service.action.MoveImageActionManager;
 import fr.sii.survival.core.service.action.UpdateCurrentLifeActionManager;
@@ -59,7 +59,7 @@ public class ActionServiceTest {
 		managers.add((ActionManager) new MoveImageActionManager(listenerManager));
 		managers.add((ActionManager) new ChangePositionActionManager(boardService, listenerManager));
 		managers.add((ActionManager) new UpdateMaxLifeActionManager(boardService, playerService, listenerManager));
-		managers.add((ActionManager) new ChangeStateActionManager(boardService, playerService, listenerManager));
+		managers.add((ActionManager) new UpdateStateActionManager(boardService, playerService, listenerManager));
 		actionService = new DelegateActionService(listenerManager, managers);
 	}
 	
@@ -68,8 +68,8 @@ public class ActionServiceTest {
 		Player player = new SimpleWizard("test", new ClientImage("default"));
 		Mockito.when(boardService.getPlayers(any(), eq(new Cell(0, 0)))).thenReturn(Arrays.asList(player));
 		Mockito.when(boardService.move(any(), eq(player), eq(new Cell(9, 9)))).thenReturn(new Cell(9, 9));
-		actionService.execute(game, player, new ChangePosition(new Cell(0, 0), new Cell(9, 9)));
-		Mockito.verify(listenerManager).triggerPositionChanged(any(), eq(player), eq(new ChangePosition(new Cell(0, 0), new Cell(9, 9))));
+		actionService.execute(game, player, new UpdatePosition(new Cell(0, 0), new Cell(9, 9)));
+		Mockito.verify(listenerManager).triggerPositionChanged(any(), eq(player), eq(new UpdatePosition(new Cell(0, 0), new Cell(9, 9))));
 	}
 	
 	@Test

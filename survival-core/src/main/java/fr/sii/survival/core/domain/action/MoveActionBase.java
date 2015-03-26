@@ -5,18 +5,18 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import fr.sii.survival.core.domain.board.Cell;
 
-public class ChangePosition implements Action {
-	/**
-	 * The start position of the player to move on the game board
-	 */
-	private Cell start;
+public class MoveActionBase implements Action {
 
 	/**
-	 * The end position of the player to move on the game board
+	 * The start position on the game board
 	 */
-	private Cell end;
+	protected Cell start;
+	/**
+	 * The end position on the game board
+	 */
+	protected Cell end;
 
-	public ChangePosition(Cell start, Cell end) {
+	public MoveActionBase(Cell start, Cell end) {
 		super();
 		this.start = start;
 		this.end = end;
@@ -47,17 +47,17 @@ public class ChangePosition implements Action {
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
-		} else if (obj == null || !(obj instanceof ChangePosition)) {
+		} else if (obj == null || !(obj instanceof MoveActionBase)) {
 			return false;
 		}
-		ChangePosition other = (ChangePosition) obj;
+		MoveActionBase other = (MoveActionBase) obj;
 		return new EqualsBuilder().append(start, other.start).append(end, other.end).isEquals();
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("ChangePosition [start=").append(start).append(", end=").append(end).append("]");
+		builder.append("MoveActionBase [start=").append(start).append(", end=").append(end).append("]");
 		return builder.toString();
 	}
 }

@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.AddImage;
-import fr.sii.survival.core.domain.action.ChangePosition;
-import fr.sii.survival.core.domain.action.ChangeStates;
+import fr.sii.survival.core.domain.action.UpdatePosition;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.StartAnimation;
@@ -79,13 +79,13 @@ public class ActionController extends ErrorController implements ActionListener 
 	}
 
 	@Override
-	public void positionChanged(Game game, Player player, ChangePosition action) {
+	public void positionChanged(Game game, Player player, UpdatePosition action) {
 		// nothing to do: an event is already triggered when position of player has changed in BoardController
 		
 	}
 
 	@Override
-	public void stateChanged(Game game, Player player, ChangeStates action) {
+	public void stateChanged(Game game, Player player, UpdateStates action) {
 		// nothing to do: an event is already triggered when states of player has changed in PlayerController
 	}
 
