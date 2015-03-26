@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import fr.sii.survival.core.domain.animation.Animation;
 import fr.sii.survival.core.domain.animation.SpriteAnimation;
-import fr.sii.survival.core.domain.image.SpriteBase;
+import fr.sii.survival.core.domain.image.UriSprite;
 import fr.sii.survival.core.exception.AnimationInitializationException;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 import fr.sii.survival.core.ext.animation.AnimationProvider;
@@ -22,7 +22,7 @@ public class ImmobilizeAnimationProvider implements AnimationProvider {
 	@Override
 	public Animation provide() throws AnimationInitializationException {
 		try {
-			return new SpriteAnimation("immobilized", 5000, new SpriteBase("images/immobilize"), new float[] {
+			return new SpriteAnimation("immobilized", 5000, new UriSprite("images/immobilize"), new float[] {
 				// roots are getting out the earth
 				0,
 				2,

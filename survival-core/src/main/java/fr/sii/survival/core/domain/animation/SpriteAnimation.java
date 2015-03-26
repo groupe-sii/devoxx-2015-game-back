@@ -20,7 +20,7 @@ import fr.sii.survival.core.domain.image.Sprite;
  */
 public class SpriteAnimation extends PropertiesAnimation {
 	/**
-	 * The sprite image
+	 * The sprite image to animate
 	 */
 	private Sprite sprite;
 

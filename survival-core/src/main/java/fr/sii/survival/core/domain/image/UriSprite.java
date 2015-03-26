@@ -14,13 +14,13 @@ import fr.sii.survival.core.util.SpriteUtil;
  * provide the images to combine into one. The image will be generated
  * horizontally. All images MUST have the same size.
  * 
- * The sprite image will be generated in memory and base64 encoded (see
- * {@link Base64ServerImage})
+ * The sprite image will be generated into a temporary folder. The generated
+ * sprite will then be accessible through an URL (see {@link UriImage})
  * 
  * @author aurelien
  *
  */
-public class Base64Sprite extends SpriteBase {
+public class UriSprite extends SpriteBase {
 
 	/**
 	 * Generate a sprite image with all images contained in the provided folder
@@ -35,7 +35,7 @@ public class Base64Sprite extends SpriteBase {
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined for any of the images
 	 */
-	public Base64Sprite(String folder) throws IOException, MimetypeDetectionException {
+	public UriSprite(String folder) throws IOException, MimetypeDetectionException {
 		this(folder, false);
 	}
 
@@ -54,7 +54,7 @@ public class Base64Sprite extends SpriteBase {
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined for any of the images
 	 */
-	public Base64Sprite(String folder, boolean reverse) throws IOException, MimetypeDetectionException {
+	public UriSprite(String folder, boolean reverse) throws IOException, MimetypeDetectionException {
 		this(ImageUtil.loadStreams(folder, reverse));
 	}
 
@@ -69,7 +69,7 @@ public class Base64Sprite extends SpriteBase {
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined for any of the images
 	 */
-	public Base64Sprite(InputStream... images) throws IOException, MimetypeDetectionException {
+	public UriSprite(InputStream... images) throws IOException, MimetypeDetectionException {
 		this(Arrays.asList(images));
 	}
 
@@ -84,8 +84,8 @@ public class Base64Sprite extends SpriteBase {
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined for any of the images
 	 */
-	public Base64Sprite(List<InputStream> images) throws IOException, MimetypeDetectionException {
-		super(SpriteUtil.toServerSprite(SpriteUtil.fromStream(images), false));
+	public UriSprite(List<InputStream> images) throws IOException, MimetypeDetectionException {
+		super(SpriteUtil.toServerSprite(SpriteUtil.fromStream(images), true));
 	}
 
 	/**
@@ -99,8 +99,8 @@ public class Base64Sprite extends SpriteBase {
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined for any of the images
 	 */
-	public Base64Sprite(UriImage... images) throws IOException, MimetypeDetectionException {
-		super(SpriteUtil.fromUriImages(Arrays.asList(images), false));
+	public UriSprite(UriImage... images) throws IOException, MimetypeDetectionException {
+		super(SpriteUtil.fromUriImages(Arrays.asList(images), true));
 	}
 
 	/**
@@ -114,8 +114,8 @@ public class Base64Sprite extends SpriteBase {
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined for any of the images
 	 */
-	public Base64Sprite(Base64ServerImage... images) throws IOException, MimetypeDetectionException {
-		super(SpriteUtil.fromBase64Images(Arrays.asList(images), false));
+	public UriSprite(Base64ServerImage... images) throws IOException, MimetypeDetectionException {
+		super(SpriteUtil.fromBase64Images(Arrays.asList(images), true));
 	}
 
 }

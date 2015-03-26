@@ -34,12 +34,14 @@ public class SpriteUtil {
 	 * 
 	 * @param images
 	 *            the list of image streams
-	 * @return the sprite image
+	 * @param store
+	 *            store the sprite into temporary file
+	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromUriImages(List<UriImage> images) throws IOException, MimetypeDetectionException {
-		return fromUriImages(images, 0);
+	public static ServerSprite fromUriImages(List<UriImage> images, boolean store) throws IOException, MimetypeDetectionException {
+		return fromUriImages(images, 0, store);
 	}
 
 	/**
@@ -53,12 +55,14 @@ public class SpriteUtil {
 	 *            the list of image streams
 	 * @param margin
 	 *            the margin in pixel between each image
-	 * @return the sprite image
+	 * @param store
+	 *            store the sprite into temporary file
+	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromUriImages(List<UriImage> images, int margin) throws IOException, MimetypeDetectionException {
-		return toServerSprite(generate(ImageUtil.readUriImages(images), margin), true);
+	public static ServerSprite fromUriImages(List<UriImage> images, int margin, boolean store) throws IOException, MimetypeDetectionException {
+		return toServerSprite(generate(ImageUtil.readUriImages(images), margin), store);
 	}
 
 	/**
@@ -67,12 +71,16 @@ public class SpriteUtil {
 	 * 
 	 * @param images
 	 *            the list of image streams
-	 * @return the sprite image
+	 * @param store
+	 *            store the sprite into temporary file
+	 * @return the sprite image metadata
+	 * @param store
+	 *            store the sprite into temporary file
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromBase64Images(List<Base64ServerImage> images) throws IOException, MimetypeDetectionException {
-		return fromBase64Images(images, 0);
+	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, boolean store) throws IOException, MimetypeDetectionException {
+		return fromBase64Images(images, 0, store);
 	}
 
 	/**
@@ -83,12 +91,14 @@ public class SpriteUtil {
 	 *            the list of image streams
 	 * @param margin
 	 *            the margin in pixel between each image
-	 * @return the sprite image
+	 * @param store
+	 *            store the sprite into temporary file
+	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
-	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, int margin) throws IOException, MimetypeDetectionException {
-		return toServerSprite(generate(ImageUtil.read(images), margin), false);
+	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, int margin, boolean store) throws IOException, MimetypeDetectionException {
+		return toServerSprite(generate(ImageUtil.read(images), margin), store);
 	}
 
 	/**
@@ -96,7 +106,7 @@ public class SpriteUtil {
 	 * 
 	 * @param images
 	 *            the list of image streams
-	 * @return the sprite image
+	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
@@ -112,7 +122,7 @@ public class SpriteUtil {
 	 *            the list of image streams
 	 * @param margin
 	 *            the margin in pixel between each image
-	 * @return the sprite image
+	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 */
