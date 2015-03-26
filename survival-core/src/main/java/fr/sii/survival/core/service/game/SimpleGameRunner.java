@@ -76,21 +76,31 @@ public class SimpleGameRunner implements GameRunner {
 				}
 				// execute extensions
 				LOG.debug("============debut============");
-				extensions.parallelStream().forEach(extension -> {
-					try {
-						extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
-					} catch (Exception e) {
-						messageService.addError(new GameException("Failed to run extension", e));
-					}
-				});
-//				for(EnemyExtension extension : extensions) {
-//					extension.run(new GameContext(game, new Board(game.getBoard()), boardService.getCell(extension.getEnemy())));
-//				}
+//				extensions.parallelStream().forEach(extension -> {
+//					try {
+//						extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
+//					} catch (Exception e) {
+//						messageService.addError(new GameException("Failed to run extension", e));
+//					}
+//				});
+				for(EnemyExtension extension : extensions) {
+					runExtension(extension);
+				}
 				LOG.debug("============fin============");
 			}
 		} catch (Exception e) {
 			LOG.error("Failed to add or remove enemy on game {}. Cause: {}", game, e);
 			messageService.addError(new GameException("Failed to add or remove enemy", e));
+		}
+	}
+
+	private void runExtension(EnemyExtension extension) throws GameException {
+		synchronized (game.getBoard()) {
+			try {
+				extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
+			} catch (Exception e) {
+				messageService.addError(new GameException("Failed to run extension", e));
+			}
 		}
 	}
 	

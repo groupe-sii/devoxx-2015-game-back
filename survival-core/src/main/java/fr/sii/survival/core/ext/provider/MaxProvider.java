@@ -34,7 +34,7 @@ public class MaxProvider implements ExtensionProvider {
 
 	@Override
 	public List<EnemyExtension> getEnemies(Game game) throws ExtensionInitializationException {
-		if (max > 0 && game.getPlayers().size() < max) {
+		if (max <= 0 || game.getPlayers().size() < max) {
 			return delegate.getEnemies(game);
 		} else {
 			return new ArrayList<>(0);
