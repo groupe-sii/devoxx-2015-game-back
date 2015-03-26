@@ -1,6 +1,7 @@
 package fr.sii.survival.controller;
 
 import static fr.sii.survival.config.AnimationConfiguration.ANIMATION_MAPPING_PREFIX;
+import static fr.sii.survival.config.WebSocketConfig.SERVER_PUBLISH_PREFIX;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class AnimationController {
 	AnimationService animationService;
 	
 	@MessageMapping(ANIMATION_MAPPING_PREFIX+"/all")
-	@SendToUser
+	@SendToUser(SERVER_PUBLISH_PREFIX+"/animation/all")
 	@RequestMapping(method=RequestMethod.GET)
 	@Cacheable("animations")
 	public List<Animation> all() {
