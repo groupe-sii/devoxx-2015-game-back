@@ -3,13 +3,9 @@ package fr.sii.survival.core.util;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import javax.imageio.ImageIO;
 
 import fr.sii.survival.core.domain.image.Base64ServerImage;
 import fr.sii.survival.core.domain.image.ServerImage;
@@ -17,6 +13,7 @@ import fr.sii.survival.core.domain.image.UriImage;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 import fr.sii.survival.core.util.sprite.ServerSprite;
 import fr.sii.survival.core.util.sprite.SpriteImage;
+import fr.sii.survival.core.util.sprite.SpriteWriter;
 
 public class SpriteUtil {
 	public static final String SPRITE_GENERATION_FOLDER = "survival-sprites";
@@ -34,16 +31,16 @@ public class SpriteUtil {
 	 * 
 	 * @param images
 	 *            the list of image streams
-	 * @param store
-	 *            store the sprite into temporary file
+	 * @param writer
+	 *            the strategy to use for generating the sprite image
 	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined
 	 */
-	public static ServerSprite fromUriImages(List<UriImage> images, boolean store) throws IOException, MimetypeDetectionException {
-		return fromUriImages(images, 0, store);
+	public static ServerSprite fromUriImages(List<UriImage> images, SpriteWriter writer) throws IOException, MimetypeDetectionException {
+		return fromUriImages(images, 0, writer);
 	}
 
 	/**
@@ -57,16 +54,16 @@ public class SpriteUtil {
 	 *            the list of image streams
 	 * @param margin
 	 *            the margin in pixel between each image
-	 * @param store
-	 *            store the sprite into temporary file
+	 * @param writer
+	 *            the strategy to use for generating the sprite image
 	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined
 	 */
-	public static ServerSprite fromUriImages(List<UriImage> images, int margin, boolean store) throws IOException, MimetypeDetectionException {
-		return toServerSprite(generate(ImageUtil.readUriImages(images), margin), store);
+	public static ServerSprite fromUriImages(List<UriImage> images, int margin, SpriteWriter writer) throws IOException, MimetypeDetectionException {
+		return toServerSprite(generate(ImageUtil.readUriImages(images), margin), writer);
 	}
 
 	/**
@@ -75,18 +72,16 @@ public class SpriteUtil {
 	 * 
 	 * @param images
 	 *            the list of image streams
-	 * @param store
-	 *            store the sprite into temporary file
+	 * @param writer
+	 *            the strategy to use for generating the sprite image
 	 * @return the sprite image metadata
-	 * @param store
-	 *            store the sprite into temporary file
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined
 	 */
-	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, boolean store) throws IOException, MimetypeDetectionException {
-		return fromBase64Images(images, 0, store);
+	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, SpriteWriter writer) throws IOException, MimetypeDetectionException {
+		return fromBase64Images(images, 0, writer);
 	}
 
 	/**
@@ -97,16 +92,16 @@ public class SpriteUtil {
 	 *            the list of image streams
 	 * @param margin
 	 *            the margin in pixel between each image
-	 * @param store
-	 *            store the sprite into temporary file
+	 * @param writer
+	 *            the strategy to use for generating the sprite image
 	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
 	 * @throws MimetypeDetectionException
 	 *             when mimetype couldn't be determined
 	 */
-	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, int margin, boolean store) throws IOException, MimetypeDetectionException {
-		return toServerSprite(generate(ImageUtil.read(images), margin), store);
+	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, int margin, SpriteWriter writer) throws IOException, MimetypeDetectionException {
+		return toServerSprite(generate(ImageUtil.read(images), margin), writer);
 	}
 
 	/**
@@ -180,25 +175,16 @@ public class SpriteUtil {
 	 * 
 	 * @param sprite
 	 *            the sprite to convert
-	 * @param store
-	 *            store the sprite into temporary file
+	 * @param writer
+	 *            the strategy to use for generating the sprite image
 	 * @return the sprite that contains the server image
 	 * @throws MimetypeDetectionException
 	 *             when the mimetype of the sprite couldn't be determined
 	 * @throws IOException
 	 *             when the sprite couldn't be converted
 	 */
-	public static ServerSprite toServerSprite(SpriteImage sprite, boolean store) throws MimetypeDetectionException, IOException {
-		ServerImage image;
-		if (store) {
-			File file = FileUtil.getRandomFile(SPRITE_GENERATION_FOLDER, "sprite", ".png");
-			ImageIO.write(sprite.getSprite(), "png", file);
-			image = new UriImage(file);
-		} else {
-			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			ImageIO.write(sprite.getSprite(), "png", output);
-			image = new Base64ServerImage(output.toByteArray());
-		}
+	public static ServerSprite toServerSprite(SpriteImage sprite, SpriteWriter writer) throws MimetypeDetectionException, IOException {
+		ServerImage image = writer.write(sprite.getSprite());
 		BufferedImage frame = sprite.getFrames().get(0);
 		Dimension imageSize = new Dimension(sprite.getSprite().getWidth(), sprite.getSprite().getHeight());
 		Dimension frameSize = new Dimension(frame.getWidth(), frame.getHeight());

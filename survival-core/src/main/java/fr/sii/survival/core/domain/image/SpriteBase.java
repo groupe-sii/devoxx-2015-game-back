@@ -2,9 +2,15 @@ package fr.sii.survival.core.domain.image;
 
 import java.awt.Dimension;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import fr.sii.survival.core.exception.MimetypeDetectionException;
+import fr.sii.survival.core.util.ImageUtil;
+import fr.sii.survival.core.util.SpriteUtil;
 import fr.sii.survival.core.util.sprite.ServerSprite;
+import fr.sii.survival.core.util.sprite.SpriteWriter;
 
 /**
  * Provide useful information for sprite. Can also generate a sprite if you
@@ -46,6 +52,117 @@ public class SpriteBase implements Sprite {
 	 * The height of one image contained in the sprite
 	 */
 	private int frameHeight;
+
+	/**
+	 * Generate a sprite image with all images contained in the provided folder
+	 * (server side). The images are sorted by their name. All images MUST have
+	 * the same size. Use the provided sprite writing strategy
+	 * 
+	 * @param writer
+	 *            the sprite generation writing strategy
+	 * @param folder
+	 *            the folder that contains images
+	 * 
+	 * @throws IOException
+	 *             when any of the image couldn't be read or the folder doesn't
+	 *             exist
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined for any of the images
+	 */
+	public SpriteBase(SpriteWriter writer, String folder) throws IOException, MimetypeDetectionException {
+		this(writer, folder, false);
+	}
+
+	/**
+	 * Generate a sprite image with all images contained in the provided folder
+	 * (server side). The images are sorted by their name. All images MUST have
+	 * the same size. Use the provided sprite writing strategy
+	 * 
+	 * @param writer
+	 *            the sprite generation writing strategy
+	 * @param folder
+	 *            the folder that contains images
+	 * @param reverse
+	 *            walk images in reverse order
+	 * 
+	 * @throws IOException
+	 *             when any of the image couldn't be read or the folder doesn't
+	 *             exist
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined for any of the images
+	 */
+	public SpriteBase(SpriteWriter writer, String folder, boolean reverse) throws IOException, MimetypeDetectionException {
+		this(writer, ImageUtil.loadStreams(folder, reverse));
+	}
+
+	/**
+	 * Generate a sprite image with all provided images. All images MUST have
+	 * the same size. Use the provided sprite writing strategy
+	 * 
+	 * @param writer
+	 *            the sprite generation writing strategy
+	 * @param images
+	 *            the list of images that will compose the sprite
+	 * @throws IOException
+	 *             when any of the image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined for any of the images
+	 */
+	public SpriteBase(SpriteWriter writer, InputStream... images) throws IOException, MimetypeDetectionException {
+		this(writer, Arrays.asList(images));
+	}
+
+	/**
+	 * Generate a sprite image with all provided images. All images MUST have
+	 * the same size. Use the provided sprite writing strategy
+	 * 
+	 * @param writer
+	 *            the sprite generation writing strategy
+	 * @param images
+	 *            the list of images that will compose the sprite
+	 * 
+	 * @throws IOException
+	 *             when any of the image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined for any of the images
+	 */
+	public SpriteBase(SpriteWriter writer, List<InputStream> images) throws IOException, MimetypeDetectionException {
+		this(SpriteUtil.toServerSprite(SpriteUtil.fromStream(images), writer));
+	}
+
+	/**
+	 * Generate a sprite image with all provided images. All images MUST have
+	 * the same size. Use the provided sprite writing strategy
+	 * 
+	 * @param writer
+	 *            the sprite generation writing strategy
+	 * @param images
+	 *            the list of images that will compose the sprite
+	 * @throws IOException
+	 *             when any of the image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined for any of the images
+	 */
+	public SpriteBase(SpriteWriter writer, UriImage... images) throws IOException, MimetypeDetectionException {
+		this(SpriteUtil.fromUriImages(Arrays.asList(images), writer));
+	}
+
+	/**
+	 * Generate a sprite image with all provided images. All images MUST have
+	 * the same size. Use the provided sprite writing strategy
+	 * 
+	 * @param writer
+	 *            the sprite generation writing strategy
+	 * @param images
+	 *            the list of images that will compose the sprite
+	 * @throws IOException
+	 *             when any of the image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined for any of the images
+	 */
+	public SpriteBase(SpriteWriter writer, Base64ServerImage... images) throws IOException, MimetypeDetectionException {
+		this(SpriteUtil.fromBase64Images(Arrays.asList(images), writer));
+	}
 
 	protected SpriteBase(ServerSprite serverSprite) throws IOException, MimetypeDetectionException {
 		this(serverSprite.getImage(), serverSprite.getImageSize(), serverSprite.getFrameSize());
