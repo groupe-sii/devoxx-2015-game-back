@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
 /**
  * Template implementation that delegates IA to provided managers
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public abstract class DelegateEnemyExtension extends EnemyExtension {

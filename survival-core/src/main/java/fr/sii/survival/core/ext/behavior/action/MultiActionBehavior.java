@@ -13,7 +13,7 @@ import fr.sii.survival.core.exception.GameException;
 /**
  * Decorator that executes several delegate behaviors
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class MultiActionBehavior implements EnemyActionBehavior {

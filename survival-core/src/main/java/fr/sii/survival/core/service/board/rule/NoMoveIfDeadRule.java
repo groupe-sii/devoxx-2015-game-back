@@ -9,7 +9,7 @@ import fr.sii.survival.core.service.board.Direction;
 /**
  * Prevent player to move if the player is dead
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 @Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")

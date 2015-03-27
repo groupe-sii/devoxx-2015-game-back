@@ -17,7 +17,7 @@ import fr.sii.survival.core.service.message.MessageService;
 /**
  * Simple animation service that delegates the search of animation to {@link AnimationRegistry}.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SimpleAnimationService implements AnimationService {

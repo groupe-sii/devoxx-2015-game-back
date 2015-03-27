@@ -10,7 +10,7 @@ import fr.sii.survival.core.domain.player.Player;
  * Listener that only triggers when the provided state has been added or
  * removed.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public abstract class StateListener extends AbstractSingleGamePlayerListener {

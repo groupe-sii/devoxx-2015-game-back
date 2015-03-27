@@ -13,7 +13,7 @@ import fr.sii.survival.core.domain.board.Cell;
  * Action that enable to update several states for players that are available on
  * the cell
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class UpdateStates implements Action {

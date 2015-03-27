@@ -10,7 +10,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 /**
  * Helper provider that instantiates an enemy from its class
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public abstract class AbstractProvider implements ExtensionProvider {

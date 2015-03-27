@@ -7,7 +7,7 @@ import java.util.List;
  * Data structure based on {@link Matrix} that helps to handle multiple values
  * in same matrix position.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  * @param <T>
  *            The type of the values contained in the matrix

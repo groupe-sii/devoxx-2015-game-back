@@ -14,7 +14,7 @@ import fr.sii.survival.core.service.board.rule.registry.AllowMoveRuleRegistry;
 /**
  * Board service decorator that allows to register rules in order to prevent board moves.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DelegateRulesBoardService implements BoardService {

@@ -24,7 +24,7 @@ import fr.sii.survival.core.exception.MimetypeDetectionException;
  * Image that is located on the server. The image is serialized into base64 in
  * order to be usable by the client.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class Base64ServerImage implements ServerImage {

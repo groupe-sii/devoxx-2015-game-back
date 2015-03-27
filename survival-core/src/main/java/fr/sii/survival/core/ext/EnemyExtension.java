@@ -11,7 +11,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 /**
  * Base class for enemy extensions
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public abstract class EnemyExtension {

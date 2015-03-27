@@ -23,7 +23,7 @@ import fr.sii.survival.ext.constants.States;
 /**
  * Enemy that immobilize a player and hit him progressively
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 @Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")

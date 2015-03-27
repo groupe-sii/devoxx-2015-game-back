@@ -16,7 +16,7 @@ import fr.sii.survival.core.exception.GameException;
  * delegate action manager. The user can specify the number of executions and
  * can also specify the execution rate.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RepeatedActionBehavior implements EnemyActionBehavior {

@@ -12,7 +12,7 @@ import fr.sii.survival.core.service.action.rule.registry.AllowActionRuleRegistry
  * Action service decorator that allows to register rules in order to prevent
  * some actions under some conditions.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DelegateRulesActionService implements ActionService {

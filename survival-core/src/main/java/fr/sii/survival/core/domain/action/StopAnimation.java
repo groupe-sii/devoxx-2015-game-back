@@ -4,7 +4,7 @@ package fr.sii.survival.core.domain.action;
 /**
  * Action that stops an animation
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class StopAnimation implements Action {

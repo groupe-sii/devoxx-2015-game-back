@@ -18,7 +18,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 /**
  * Action manager that is able to update states applied to player.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class UpdateStateActionManager implements ActionManager<UpdateStates> {

@@ -14,7 +14,7 @@ import fr.sii.survival.core.domain.player.Player;
 /**
  * Listener that notifies when an action has been executed
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface ActionListener {

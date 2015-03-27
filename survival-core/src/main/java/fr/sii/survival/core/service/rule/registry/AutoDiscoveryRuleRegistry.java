@@ -14,7 +14,7 @@ import fr.sii.survival.core.util.AutoDiscoveryUtil;
 /**
  * Registry that automatically discovers implementations of specific rules
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  * @param <R>
  *            The type of the rules

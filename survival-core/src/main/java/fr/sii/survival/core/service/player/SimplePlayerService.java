@@ -38,7 +38,7 @@ import fr.sii.survival.core.listener.player.PlayerListenerTrigger;
  * value. By default the maximum life could be set to 0 and maximum life could
  * be set to {@link Integer}.MAX_VALUE.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SimplePlayerService implements PlayerService {

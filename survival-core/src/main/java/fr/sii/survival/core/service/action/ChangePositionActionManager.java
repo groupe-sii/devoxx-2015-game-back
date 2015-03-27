@@ -16,7 +16,7 @@ import fr.sii.survival.core.service.board.BoardService;
 /**
  * Action manager that is able to handle player moves.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class ChangePositionActionManager implements ActionManager<UpdatePosition> {

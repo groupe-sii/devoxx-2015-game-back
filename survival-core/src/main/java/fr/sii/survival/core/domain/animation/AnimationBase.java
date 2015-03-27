@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * animation can also provide other information useful for running it like the
  * number of times to run it and in which direction.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public abstract class AnimationBase implements Animation {

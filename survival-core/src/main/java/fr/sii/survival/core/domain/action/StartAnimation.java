@@ -5,7 +5,7 @@ import fr.sii.survival.core.domain.animation.AnimationOptions;
 /**
  * Action that starts an animation
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class StartAnimation implements Action {

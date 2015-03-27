@@ -6,7 +6,7 @@ import fr.sii.survival.core.domain.board.Cell;
 /**
  * Cell provider that always provides the same position.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class FixedCellProvider implements CellProvider {

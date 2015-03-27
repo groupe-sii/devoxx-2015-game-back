@@ -7,7 +7,7 @@ import fr.sii.survival.core.domain.player.Player;
 /**
  * Predicate that checks if the player implements/extends provided type
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class PlayerTypePredicate implements Predicate<Player> {

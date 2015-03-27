@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Groups the list of states for a player
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class PlayerStates {

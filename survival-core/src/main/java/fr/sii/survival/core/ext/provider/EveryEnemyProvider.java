@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
  * has not reached the provided value. Delegate enemy invocation to alternative
  * when the number of enemies has reached the provided value.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class EveryEnemyProvider implements ExtensionProvider {

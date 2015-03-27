@@ -9,7 +9,7 @@ import java.util.Map;
  * Declare an animation composed with provided frames. These frames are useful
  * for indicating to the client how to run it.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class PropertiesAnimation extends AnimationBase implements Animation {

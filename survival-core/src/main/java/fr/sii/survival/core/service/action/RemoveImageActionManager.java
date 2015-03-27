@@ -12,7 +12,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
 /**
  * Action manager that is able to handle remove of image.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RemoveImageActionManager implements ActionManager<RemoveImage> {

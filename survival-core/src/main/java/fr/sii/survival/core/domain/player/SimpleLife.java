@@ -4,7 +4,7 @@ package fr.sii.survival.core.domain.player;
  * Simple life bean that just stores values. No verification is done on values
  * (example: no check is done if current life is over max life).
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SimpleLife implements Life {

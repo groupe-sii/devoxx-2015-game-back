@@ -18,7 +18,7 @@ import fr.sii.survival.core.listener.board.BoardListenerManager;
  * Simple board service that allows all players to be anywhere on the board.
  * There is no collision detection at all.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SimpleBoardService implements BoardService {

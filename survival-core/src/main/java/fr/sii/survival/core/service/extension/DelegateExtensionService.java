@@ -11,7 +11,7 @@ import fr.sii.survival.core.listener.player.PlayerListener;
  * Simple service that just delegates developer providing to specialized
  * implementation
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DelegateExtensionService implements ExtensionService {

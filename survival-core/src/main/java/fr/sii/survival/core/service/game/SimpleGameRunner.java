@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.exception.ExtensionInitializationException;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.ext.GameContext;
@@ -58,31 +59,13 @@ public class SimpleGameRunner implements GameRunner {
 	@Override
 	public void run() {
 		try {
-			synchronized(extensions) {
+			synchronized(game) {
 				// add new enemies
-				List<EnemyExtension> enemies = extensionProvider.getEnemies(game);
-				for(EnemyExtension enemy : enemies) {
-					enemy.init();
-					gameService.join(game, enemy.getEnemy());
-				}
-				extensions.addAll(enemies);
+				addEnemies();
 				// remove dead enemies
-				for(Iterator<EnemyExtension> it = extensions.iterator() ; it.hasNext() ; ) {
-					EnemyExtension ext = it.next();
-					if(ext.getEnemy().getLife().getCurrent()<=0) {
-						gameService.quit(game, ext.getEnemy());
-						it.remove();
-					}
-				}
+				removeEnemies();
 				// execute extensions
 				LOG.debug("============debut============");
-//				extensions.parallelStream().forEach(extension -> {
-//					try {
-//						extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
-//					} catch (Exception e) {
-//						messageService.addError(new GameException("Failed to run extension", e));
-//					}
-//				});
 				for(EnemyExtension extension : extensions) {
 					runExtension(extension);
 				}
@@ -94,13 +77,30 @@ public class SimpleGameRunner implements GameRunner {
 		}
 	}
 
-	private void runExtension(EnemyExtension extension) throws GameException {
-		synchronized (game.getBoard()) {
-			try {
-				extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
-			} catch (Exception e) {
-				messageService.addError(new GameException("Failed to run extension", e));
+	private void addEnemies() throws ExtensionInitializationException, GameException {
+		List<EnemyExtension> enemies = extensionProvider.getEnemies(game);
+		for(EnemyExtension enemy : enemies) {
+			enemy.init();
+			gameService.join(game, enemy.getEnemy());
+		}
+		extensions.addAll(enemies);
+	}
+
+	private void removeEnemies() throws GameException {
+		for(Iterator<EnemyExtension> it = extensions.iterator() ; it.hasNext() ; ) {
+			EnemyExtension ext = it.next();
+			if(ext.getEnemy().getLife().getCurrent()<=0) {
+				gameService.quit(game, ext.getEnemy());
+				it.remove();
 			}
+		}
+	}
+
+	private void runExtension(EnemyExtension extension) throws GameException {
+		try {
+			extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
+		} catch (Exception e) {
+			messageService.addError(new GameException("Failed to run extension", e));
 		}
 	}
 	

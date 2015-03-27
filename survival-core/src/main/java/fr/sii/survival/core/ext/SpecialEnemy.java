@@ -3,7 +3,7 @@ package fr.sii.survival.core.ext;
 /**
  * Just a marker interface for special enemies
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface SpecialEnemy {

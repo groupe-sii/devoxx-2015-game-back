@@ -11,7 +11,7 @@ import fr.sii.survival.core.util.sprite.ServerSprite;
  * provide the images to combine into one. The image will be generated
  * horizontally. All images MUST have the same size.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SpriteBase implements Sprite {

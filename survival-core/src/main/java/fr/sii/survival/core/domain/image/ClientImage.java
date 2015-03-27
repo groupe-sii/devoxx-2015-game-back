@@ -8,7 +8,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * and a folder. The client implementation will resolve the image using the
  * provided name and folder and generate the full URL of the image.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class ClientImage implements Image {

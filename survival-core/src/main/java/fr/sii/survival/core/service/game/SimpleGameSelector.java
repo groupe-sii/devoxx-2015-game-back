@@ -7,7 +7,7 @@ import fr.sii.survival.core.domain.Game;
 /**
  * Simple selector that adds players into the first game that is not full.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SimpleGameSelector implements GameSelector {

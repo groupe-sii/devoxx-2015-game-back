@@ -17,7 +17,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 /**
  * Action manager that is able to handle current life update.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class UpdateCurrentLifeActionManager implements ActionManager<UpdateCurrentLife> {

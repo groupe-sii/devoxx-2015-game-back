@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
 /**
  * Provider that execute multiple delegate providers
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class MultiProvider implements ExtensionProvider {

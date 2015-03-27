@@ -14,7 +14,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 /**
  * Invoke a specific enemy every n enemies
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SpecificEnemyProvider extends AbstractProvider {

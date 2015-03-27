@@ -8,7 +8,7 @@ import fr.sii.survival.core.ext.annotation.Developer;
 /**
  * Prevent the player to execute actions if he is dead
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 @Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")

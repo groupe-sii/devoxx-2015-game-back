@@ -15,7 +15,7 @@ import fr.sii.survival.core.exception.GameException;
  * cooldown. This is used to prevent enemy to execute action too often. He has
  * now a time to wait before executing again the action.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class CooldownActionBehavior implements EnemyActionBehavior {

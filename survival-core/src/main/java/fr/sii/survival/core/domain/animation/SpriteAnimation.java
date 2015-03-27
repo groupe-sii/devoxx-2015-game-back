@@ -15,7 +15,7 @@ import fr.sii.survival.core.domain.image.Sprite;
  * if steps are provided, the animation is no more linear and let you provide
  * manually the steps.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SpriteAnimation extends PropertiesAnimation {

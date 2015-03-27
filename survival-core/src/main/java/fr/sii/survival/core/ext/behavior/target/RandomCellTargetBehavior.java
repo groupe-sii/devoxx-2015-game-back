@@ -10,7 +10,7 @@ import fr.sii.survival.core.ext.GameContext;
  * Stupid manager that just targets a cell on the board without checking if
  * there is at least one player on it or not.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RandomCellTargetBehavior implements TargetBehavior {

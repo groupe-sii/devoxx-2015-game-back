@@ -8,7 +8,7 @@ import com.google.common.base.Strings;
  * Data structure that handles simple matrix. A matrix has a number of rows and
  * a number of columns.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  * @param <T>
  *            The type of the values contained in the matrix

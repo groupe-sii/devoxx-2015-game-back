@@ -12,7 +12,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
 /**
  * Action manager that is able to handle image adds.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class AddImageActionManager implements ActionManager<AddImage> {

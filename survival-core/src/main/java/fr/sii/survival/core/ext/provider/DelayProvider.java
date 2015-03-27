@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
 /**
  * Provider that execute the delegate only after a certain delay
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DelayProvider implements ExtensionProvider {

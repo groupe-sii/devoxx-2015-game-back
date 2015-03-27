@@ -12,7 +12,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
 /**
  * Action manager that is able to handle image moves.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class MoveImageActionManager implements ActionManager<MoveImage> {

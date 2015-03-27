@@ -11,7 +11,7 @@ import fr.sii.survival.core.service.rule.Rule;
  * All rules are registered in the delegate registry.
  * The filter is applied when retrieving a rule.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class PostFilteredRegistry<R extends Rule> implements RuleRegistry<R> {

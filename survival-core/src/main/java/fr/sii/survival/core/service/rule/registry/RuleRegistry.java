@@ -7,7 +7,7 @@ import fr.sii.survival.core.service.rule.Rule;
 /**
  * Registry that stores rule implementations to apply on the game management
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  * @param <R>
  *            The type of the rule managed by this registry

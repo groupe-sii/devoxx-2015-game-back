@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.GameContext;
  * enemy can only move in one direction at a time (x axis or y axis but not
  * both).
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RandomMoveNearBehavior implements EnemyMoveBehavior {

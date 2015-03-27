@@ -6,7 +6,7 @@ import fr.sii.survival.core.domain.board.Cell;
 /**
  * Cell provider that randomly provides cell position.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RandomCellProvider implements CellProvider {

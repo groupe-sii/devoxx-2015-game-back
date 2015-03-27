@@ -3,7 +3,7 @@ package fr.sii.survival.core.domain.animation;
 /**
  * Animation that is defined on the client side.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class ClientAnimation extends AnimationBase {

@@ -12,7 +12,7 @@ import fr.sii.survival.ext.constants.States;
  * Rule that prevents a player moving if the player has the state {@link States}.IMMOBILIZED
  * applied on him.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 @Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")

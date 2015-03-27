@@ -7,7 +7,7 @@ import fr.sii.survival.core.domain.player.Player;
 /**
  * Listener that trigger events when the board changes.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface BoardListener {

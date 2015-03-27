@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 /**
  * Filters extensions that implements/extends the provided type.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class TypePredicate implements Predicate<Class<?>> {

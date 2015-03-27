@@ -9,7 +9,7 @@ import fr.sii.survival.core.domain.player.Player;
 /**
  * Listener that indicates changes applied on the player
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface PlayerListener {

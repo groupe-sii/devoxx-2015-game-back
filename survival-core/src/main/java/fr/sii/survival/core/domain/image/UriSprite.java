@@ -17,7 +17,7 @@ import fr.sii.survival.core.util.SpriteUtil;
  * The sprite image will be generated into a temporary folder. The generated
  * sprite will then be accessible through an URL (see {@link UriImage})
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class UriSprite extends SpriteBase {

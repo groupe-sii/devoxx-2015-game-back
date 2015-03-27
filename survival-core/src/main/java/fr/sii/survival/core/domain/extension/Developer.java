@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Developer information useful to inform if an extension has generated an error
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class Developer {

@@ -7,7 +7,7 @@ import fr.sii.survival.core.ext.GameContext;
  * Move manager that places the enemy one case around the current one.
  * The enemy can move on x axis and in y axis on the same time.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RandomAroundNearBehavior implements EnemyMoveBehavior {

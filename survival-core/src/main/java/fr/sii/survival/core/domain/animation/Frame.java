@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * Define a single step in the animation.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class Frame {

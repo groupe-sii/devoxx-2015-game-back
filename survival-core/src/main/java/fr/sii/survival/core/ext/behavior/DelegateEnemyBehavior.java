@@ -19,7 +19,7 @@ import fr.sii.survival.core.service.board.BoardService;
  * <li>a TargetManager for computing where the action must be executed</li>
  * </ul>
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DelegateEnemyBehavior {

@@ -12,7 +12,7 @@ import fr.sii.survival.core.ext.GameContext;
 /**
  * Manager that targets a random player every call.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RandomPlayerTargetBehavior implements TargetBehavior {

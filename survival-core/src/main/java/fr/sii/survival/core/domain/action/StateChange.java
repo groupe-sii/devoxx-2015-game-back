@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 /**
  * Represents a single change (add or remove) to apply on the provided state
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class StateChange {

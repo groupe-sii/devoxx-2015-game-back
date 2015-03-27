@@ -9,7 +9,7 @@ import fr.sii.survival.core.exception.GameException;
 /**
  * Manager for action that is able to handle one {@link Action}
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  * @param <A>
  *            the type of the action that the action manager is able to handle

@@ -3,7 +3,7 @@ package fr.sii.survival.core.domain.image;
 /**
  * Interface for all images that are a composition of sub images.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface Sprite extends Image {

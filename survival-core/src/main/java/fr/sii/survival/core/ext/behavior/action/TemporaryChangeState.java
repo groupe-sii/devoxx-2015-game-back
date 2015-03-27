@@ -12,7 +12,7 @@ import fr.sii.survival.core.service.action.ActionService;
  * This is a specialization of {@link MultiActionBehavior} that delegates state changes to {@link UpdateStateActionBehavior}.
  * It also uses a {@link DelayedActionBehavior} to wait for the provided delay before automatically removing the state.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class TemporaryChangeState extends TemporaryActionBehavior {

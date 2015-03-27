@@ -15,7 +15,7 @@ import fr.sii.survival.core.exception.GameException;
  * Action manager that execute an action after a delay. The action is provided by a
  * delegate action manager
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DelayedActionBehavior implements EnemyActionBehavior {

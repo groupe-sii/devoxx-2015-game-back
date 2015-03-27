@@ -12,7 +12,7 @@ import fr.sii.survival.core.ext.GameContext;
  * Manager that targets a single player. Until the player is not updated, this
  * target manager will always provide the current cell where the player is.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class SinglePlayerTargetBehavior implements TargetBehavior {

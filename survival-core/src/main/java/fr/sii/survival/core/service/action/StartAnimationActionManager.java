@@ -12,7 +12,7 @@ import fr.sii.survival.core.listener.action.ActionListenerTrigger;
 /**
  * Action manager that is able to handle animation starts.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class StartAnimationActionManager implements ActionManager<StartAnimation> {

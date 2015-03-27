@@ -16,7 +16,7 @@ import fr.sii.survival.core.listener.action.ActionListenerRegistry;
  * Action service that is able to register listeners and just delegates the
  * action execution to action managers.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DelegateActionService implements ActionService {

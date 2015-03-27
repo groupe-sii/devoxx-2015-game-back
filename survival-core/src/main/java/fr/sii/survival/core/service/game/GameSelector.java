@@ -7,7 +7,7 @@ import fr.sii.survival.core.domain.Game;
 /**
  * Interface for managers that are able to select a game
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface GameSelector {

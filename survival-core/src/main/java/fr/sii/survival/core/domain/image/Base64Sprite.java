@@ -17,7 +17,7 @@ import fr.sii.survival.core.util.SpriteUtil;
  * The sprite image will be generated in memory and base64 encoded (see
  * {@link Base64ServerImage})
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class Base64Sprite extends SpriteBase {

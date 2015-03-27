@@ -17,7 +17,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 /**
  * Action manager that is able to handle max life update.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class UpdateMaxLifeActionManager implements ActionManager<UpdateMaxLife> {

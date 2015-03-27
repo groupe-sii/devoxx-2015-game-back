@@ -15,7 +15,7 @@ public class AutoDiscoveryUtil {
 	private AutoDiscoveryUtil() {
 		super();
 	}
-	
+
 	/**
 	 * Automatically find implementations of the provided class in the provided
 	 * packages.
@@ -27,6 +27,10 @@ public class AutoDiscoveryUtil {
 	 * @param packageNames
 	 *            the list of packages where to find implementations
 	 * @return the list of found implementations
+	 * @param <T>
+	 *            The base type of the class to look for
+	 * @param <R>
+	 *            The type for the provided object for each found class
 	 */
 	public static <T, R> List<R> find(Class<T> clazz, Function<Class<? extends T>, R> provider, String... packageNames) {
 		ConfigurationBuilder builder = getBuilder(packageNames);

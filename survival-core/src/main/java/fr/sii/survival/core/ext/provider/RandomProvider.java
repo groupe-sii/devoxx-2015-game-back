@@ -16,7 +16,7 @@ import fr.sii.survival.core.service.player.PlayerService;
 /**
  * Select only one enemy from the list of available enemies
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RandomProvider extends AbstractProvider {

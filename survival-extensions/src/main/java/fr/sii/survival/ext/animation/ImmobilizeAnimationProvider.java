@@ -13,7 +13,7 @@ import fr.sii.survival.core.ext.annotation.Developer;
 /**
  * Animation that will start every time the CSS class "immobilized" is added on a player.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 @Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")

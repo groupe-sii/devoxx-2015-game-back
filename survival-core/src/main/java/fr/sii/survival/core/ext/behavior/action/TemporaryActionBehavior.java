@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
  * This is a specialization of {@link MultiActionBehavior}.
  * It uses a {@link DelayedActionBehavior} to wait for the provided delay before automatically executing the undo action.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class TemporaryActionBehavior extends MultiActionBehavior {

@@ -24,7 +24,7 @@ public class SpriteUtil {
 	private SpriteUtil() {
 		super();
 	}
-	
+
 	/**
 	 * Shortcut for
 	 * <code>SpriteUtil.toServerSprite(SpriteUtil.generate(ImageUtil.read(images)), true)</code>
@@ -39,6 +39,8 @@ public class SpriteUtil {
 	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined
 	 */
 	public static ServerSprite fromUriImages(List<UriImage> images, boolean store) throws IOException, MimetypeDetectionException {
 		return fromUriImages(images, 0, store);
@@ -60,6 +62,8 @@ public class SpriteUtil {
 	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined
 	 */
 	public static ServerSprite fromUriImages(List<UriImage> images, int margin, boolean store) throws IOException, MimetypeDetectionException {
 		return toServerSprite(generate(ImageUtil.readUriImages(images), margin), store);
@@ -78,6 +82,8 @@ public class SpriteUtil {
 	 *            store the sprite into temporary file
 	 * @throws IOException
 	 *             when any image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined
 	 */
 	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, boolean store) throws IOException, MimetypeDetectionException {
 		return fromBase64Images(images, 0, store);
@@ -96,6 +102,8 @@ public class SpriteUtil {
 	 * @return the sprite image metadata
 	 * @throws IOException
 	 *             when any image couldn't be read
+	 * @throws MimetypeDetectionException
+	 *             when mimetype couldn't be determined
 	 */
 	public static ServerSprite fromBase64Images(List<Base64ServerImage> images, int margin, boolean store) throws IOException, MimetypeDetectionException {
 		return toServerSprite(generate(ImageUtil.read(images), margin), store);

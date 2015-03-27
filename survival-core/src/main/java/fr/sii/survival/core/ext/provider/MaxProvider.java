@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
  * Provider that limits the number of enemies on the field. If the maximum
  * number is set to 0 or less then this provider has no effect.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class MaxProvider implements ExtensionProvider {

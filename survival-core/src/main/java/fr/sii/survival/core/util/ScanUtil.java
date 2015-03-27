@@ -69,7 +69,7 @@ public class ScanUtil {
 	/**
 	 * Utility class used for scanning files into a folder. This is a shortcut
 	 * of
-	 * <code>ScanUtil.scan(folder, (a, b) -> sign * a.compareToIgnoreCase(b), f -> true, f -> f)</code>
+	 * <code>ScanUtil.scan(folder, (a, b) -&gt; sign * a.compareToIgnoreCase(b), f -&gt; true, f -&gt; f)</code>
 	 * 
 	 * @param folder
 	 *            the root folder
@@ -85,7 +85,7 @@ public class ScanUtil {
 	/**
 	 * Utility class used for scanning files into a folder. This is a shortcut
 	 * of
-	 * <code>ScanUtil.scan(folder, (a, b) -> sign * a.compareToIgnoreCase(b), f -> true, transform)</code>
+	 * <code>ScanUtil.scan(folder, (a, b) -&gt; sign * a.compareToIgnoreCase(b), f -&gt; true, transform)</code>
 	 * 
 	 * @param folder
 	 *            the root folder

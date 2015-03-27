@@ -9,7 +9,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
 /**
  * Provide a list of enemies to add into the game
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface ExtensionProvider {

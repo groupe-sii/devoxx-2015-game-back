@@ -10,7 +10,7 @@ import fr.sii.survival.core.util.CellUtil;
  * Rule that prevent actions to be executed if player targets a cell that is too
  * far from him. This rule takes effect only for {@link UpdateLife} action
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  */
 public class LimitUpdateLifeRangeRule implements AllowActionRule {
 

@@ -8,7 +8,7 @@ public interface AnimationRegistry {
 	/**
 	 * Register a provider
 	 * 
-	 * @param extension
+	 * @param provider
 	 *            the provider to register
 	 */
 	public void register(AnimationProvider provider);

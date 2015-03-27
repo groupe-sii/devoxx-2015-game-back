@@ -63,7 +63,7 @@ public class Game {
 	 * Get filtered list of players
 	 * 
 	 * @param predicate the filter condition
-	 * @return the 
+	 * @return the filtered list of players
 	 */
 	public List<Player> getPlayers(Predicate<Player> predicate) {
 		List<Player> filtered = new ArrayList<>(players.size());
@@ -78,7 +78,7 @@ public class Game {
 	/**
 	 * Get the board information
 	 * 
-	 * @return 
+	 * @return the board information
 	 */
 	public Board getBoard() {
 		return board;

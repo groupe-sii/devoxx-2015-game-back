@@ -6,7 +6,7 @@ import fr.sii.survival.core.domain.board.Cell;
 /**
  * Provides a cell that is available on the board
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public interface CellProvider {

@@ -4,7 +4,7 @@ package fr.sii.survival.core.ext.provider;
  * Provider that call the same delegate provider twice to provide a list of
  * enemies
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class DoubleProvider extends MultiProvider {

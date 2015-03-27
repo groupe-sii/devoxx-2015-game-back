@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
  * All extensions are registered in the delegate registry.
  * The filter is applied when retrieving an extension.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class PostFilteredRegistry implements ExtensionRegistry {

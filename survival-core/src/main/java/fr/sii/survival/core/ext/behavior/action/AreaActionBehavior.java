@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.behavior.action.shape.Shape;
  * Action manager that applies the delegate action to the provided area.
  * The area computation is provided by the shape.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class AreaActionBehavior implements EnemyActionBehavior {

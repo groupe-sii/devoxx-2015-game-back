@@ -11,7 +11,7 @@ import fr.sii.survival.core.ext.EnemyExtension;
  * will only contain accepted extensions. Retrieving the list of extensions
  * directly gives delegate list.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class PreFilteredRegistry implements ExtensionRegistry {

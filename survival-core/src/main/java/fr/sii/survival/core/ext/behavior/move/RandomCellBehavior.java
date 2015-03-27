@@ -6,7 +6,7 @@ import fr.sii.survival.core.ext.GameContext;
 /**
  * Move manager that places the enemy on a random cell on the board.
  * 
- * @author aurelien
+ * @author Aurélien Baudet
  *
  */
 public class RandomCellBehavior implements EnemyMoveBehavior {
