@@ -3,7 +3,6 @@ package fr.sii.survival.core.service.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,7 +108,7 @@ public class SimpleGameRunner implements GameRunner {
 		// remove all players
 		synchronized(extensions) {
 			extensions.clear();
-			for(Player p : new CopyOnWriteArrayList<>(game.getPlayers())) {
+			for(Player p : game.getPlayers()) {
 				gameService.quit(game, p);
 			}
 		}
