@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Aurélien Baudet
  *
  */
-public class PropertiesAnimation extends AnimationBase implements Animation {
+public class PropertiesAnimation extends AnimationBase {
 	/**
 	 * The list of frames that compose the animation
 	 */

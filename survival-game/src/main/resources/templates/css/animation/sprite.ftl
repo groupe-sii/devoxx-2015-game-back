@@ -6,7 +6,7 @@
 	${vendorPrefix}animation-duration: ${animation.duration}ms;
 	${vendorPrefix}animation-delay: ${animation.options.delay}ms;
 	/*${vendorPrefix}animation-timing-function: steps(${animation.frames?size});*/
-	background: transparent url("${animation.sprite.image.uri}") no-repeat left center;
+	background: transparent url("${toCssUrl(animation.sprite.image)}") no-repeat left center;
 }
 
 @${vendorPrefix}keyframes ${animation.name} {
