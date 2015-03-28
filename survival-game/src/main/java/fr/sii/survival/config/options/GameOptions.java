@@ -1,39 +1,30 @@
 package fr.sii.survival.config.options;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConfigurationProperties(prefix="game")
 public class GameOptions {
 	/**
 	 * The scheduling delay in milliseconds
 	 */
-	private final int schedulingDelay;
+	private int schedulingDelay;
 	
 	/**
 	 * The maximum number of allowed players in the game (0 to disable)
 	 */
-	private final int maxPlayers;
+	private int maxPlayers;
 	
 	/**
 	 * Automatically starts the game when there is at least one player
 	 */
-	private final boolean autoStart;
+	private boolean autoStart;
 	
 	/**
 	 * Automatically stops the game when there is no more player
 	 */
-	private final boolean autoStop;
-
-	@Autowired
-	public GameOptions(@Value("${game.scheduling.delay}") int schedulingDelay, @Value("${game.players.max}") int maxPlayers, @Value("${game.start.auto}") boolean autoStart, @Value("${game.stop.auto}") boolean autoStop) {
-		super();
-		this.schedulingDelay = schedulingDelay;
-		this.maxPlayers = maxPlayers;
-		this.autoStart = autoStart;
-		this.autoStop = autoStop;
-	}
+	private boolean autoStop;
 
 	public int getSchedulingDelay() {
 		return schedulingDelay;
@@ -50,4 +41,21 @@ public class GameOptions {
 	public boolean isAutoStop() {
 		return autoStop;
 	}
+
+	public void setSchedulingDelay(int schedulingDelay) {
+		this.schedulingDelay = schedulingDelay;
+	}
+
+	public void setMaxPlayers(int maxPlayers) {
+		this.maxPlayers = maxPlayers;
+	}
+
+	public void setAutoStart(boolean autoStart) {
+		this.autoStart = autoStart;
+	}
+
+	public void setAutoStop(boolean autoStop) {
+		this.autoStop = autoStop;
+	}
+	
 }

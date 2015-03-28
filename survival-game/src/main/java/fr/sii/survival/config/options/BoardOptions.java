@@ -1,27 +1,20 @@
 package fr.sii.survival.config.options;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 @Component
+@ConfigurationProperties(prefix="game.board")
 public class BoardOptions {
 	/**
 	 * The width of the board
 	 */
-	private final int width;
+	private int width;
 	
 	/**
 	 * The height of the board
 	 */
-	private final int height;
-
-	@Autowired
-	public BoardOptions(@Value("${game.board.width}") int width, @Value("${game.board.height}") int height) {
-		super();
-		this.width = width;
-		this.height = height;
-	}
+	private int height;
 
 	public int getWidth() {
 		return width;
@@ -29,5 +22,13 @@ public class BoardOptions {
 
 	public int getHeight() {
 		return height;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
 	}
 }

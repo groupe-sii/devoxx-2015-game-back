@@ -28,6 +28,8 @@ public class ScanUtil {
 	 * @param transform
 	 *            apply a transformation on every found entry
 	 * @return the list of found files
+	 * @param <R>
+	 *            The type of the result after transform
 	 */
 	public static <R> List<R> scan(String folder, Comparator<String> comparator, Predicate<String> predicate, Function<String, R> transform) {
 		Reflections reflections = new Reflections(ClasspathHelper.forResource(folder), new ResourcesScanner());
@@ -43,7 +45,8 @@ public class ScanUtil {
 	}
 
 	/**
-	 * Utility class used for scanning available files into a folder. No transformation is applied on elements
+	 * Utility class used for scanning available files into a folder. No
+	 * transformation is applied on elements
 	 * 
 	 * @param folder
 	 *            the root folder
@@ -94,6 +97,8 @@ public class ScanUtil {
 	 * @param transform
 	 *            apply a transformation on every found entry
 	 * @return the list of found files
+	 * @param <R>
+	 *            The type of the result after transform
 	 */
 	public static <R> List<R> scan(String folder, boolean reverse, Function<String, R> transform) {
 		int sign = reverse ? -1 : 1;
@@ -102,8 +107,7 @@ public class ScanUtil {
 
 	/**
 	 * Utility class used for scanning files into a folder. This is a shortcut
-	 * of
-	 * <code>ScanUtil.scan(folder, false)</code>
+	 * of <code>ScanUtil.scan(folder, false)</code>
 	 * 
 	 * @param folder
 	 *            the root folder
@@ -115,15 +119,17 @@ public class ScanUtil {
 
 	/**
 	 * Utility class used for scanning files into a folder. This is a shortcut
-	 * of
-	 * <code>ScanUtil.scan(folder, false, transform)</code>
+	 * of <code>ScanUtil.scan(folder, false, transform)</code>
 	 * 
 	 * @param folder
 	 *            the root folder
 	 * @param transform
 	 *            apply a transformation on every found entry
 	 * @return the list of found files
+	 * @param <R>
+	 *            The type of the result after transform
 	 */
 	public static <R> List<R> scan(String folder, Function<String, R> transform) {
 		return scan(folder, false, transform);
-	}}
+	}
+}
