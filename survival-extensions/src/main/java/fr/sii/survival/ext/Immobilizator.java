@@ -18,6 +18,7 @@ import fr.sii.survival.core.ext.behavior.move.EnemyMoveBehavior;
 import fr.sii.survival.core.ext.behavior.move.RandomMoveNearBehavior;
 import fr.sii.survival.core.ext.behavior.target.RandomPlayerTargetBehavior;
 import fr.sii.survival.core.ext.behavior.target.TargetBehavior;
+import fr.sii.survival.core.service.game.PlayerTypePredicate;
 import fr.sii.survival.ext.constants.States;
 
 /**
@@ -52,7 +53,8 @@ public class Immobilizator extends DelegateEnemyExtension {
 
 	@Override
 	protected TargetBehavior getTargetBehavior(GameContext context) {
-		return new RandomPlayerTargetBehavior(Wizard.class);
+		// randomly targets one human player that is alive, if nobody matches then no action is executed
+		return new RandomPlayerTargetBehavior(new PlayerTypePredicate(Wizard.class).and(p -> p.isAlive()));
 	}
 
 }

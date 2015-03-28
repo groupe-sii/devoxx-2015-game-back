@@ -16,11 +16,7 @@ public class NoActionIfDeadRule implements AllowActionRule {
 
 	@Override
 	public boolean isAllowed(Game game, Player player, Action action) {
-		return isAlive(player);
-	}
-
-	private boolean isAlive(Player player) {
-		return player.getLife().getCurrent()>0;
+		return player.isAlive();
 	}
 
 }

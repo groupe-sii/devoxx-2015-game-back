@@ -17,16 +17,12 @@ public class NoMoveIfDeadRule implements AllowMoveRule {
 
 	@Override
 	public boolean isMoveAllowed(Board board, Player player, Cell cell) {
-		return isAlive(player);
+		return player.isAlive();
 	}
 
 	@Override
 	public boolean isMoveAllowed(Board board, Player player, Direction direction) {
-		return isAlive(player);
-	}
-
-	private boolean isAlive(Player player) {
-		return player.getLife().getCurrent()>0;
+		return player.isAlive();
 	}
 
 }

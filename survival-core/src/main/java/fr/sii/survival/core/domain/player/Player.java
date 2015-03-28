@@ -28,4 +28,11 @@ public interface Player {
 	 * @return the player information
 	 */
 	public PlayerInfo getPlayerInfo();
+	
+	/**
+	 * Is the player alive or dead. Shortcut to getLife().getCurrent()>0
+	 * 
+	 * @return true if the player is alive, false if dead
+	 */
+	public boolean isAlive();
 }

@@ -89,7 +89,7 @@ public class SimpleGameRunner implements GameRunner {
 	private void removeEnemies() throws GameException {
 		for(Iterator<EnemyExtension> it = extensions.iterator() ; it.hasNext() ; ) {
 			EnemyExtension ext = it.next();
-			if(ext.getEnemy().getLife().getCurrent()<=0) {
+			if(!ext.getEnemy().isAlive()) {
 				gameService.quit(game, ext.getEnemy());
 				it.remove();
 			}

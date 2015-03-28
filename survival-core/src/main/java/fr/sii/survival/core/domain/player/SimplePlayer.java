@@ -159,6 +159,11 @@ public class SimplePlayer implements Player {
 	}
 
 	@Override
+	public boolean isAlive() {
+		return life.getCurrent()>0;
+	}
+
+	@Override
 	public Life getLife() {
 		return life;
 	}
