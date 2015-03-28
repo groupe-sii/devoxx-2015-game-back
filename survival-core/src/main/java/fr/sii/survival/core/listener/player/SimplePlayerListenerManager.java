@@ -3,6 +3,7 @@ package fr.sii.survival.core.listener.player;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.StateChange;
@@ -50,7 +51,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 
 	@Override
 	public void triggerDead(Game game, Player player) {
-		for(PlayerListener listener : listeners.values()) {
+		for(PlayerListener listener : getListeners()) {
 			try {
 				listener.dead(game, player);
 			} catch(Exception e) {
@@ -61,7 +62,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 
 	@Override
 	public void triggerRevived(Game game, Player player) {
-		for(PlayerListener listener : listeners.values()) {
+		for(PlayerListener listener : getListeners()) {
 			try {
 				listener.revived(game, player);
 			} catch(Exception e) {
@@ -72,7 +73,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 
 	@Override
 	public void triggerHit(Game game, Player player, int damage) {
-		for(PlayerListener listener : listeners.values()) {
+		for(PlayerListener listener : getListeners()) {
 			try {
 				listener.hit(game, player, damage);
 			} catch(Exception e) {
@@ -83,7 +84,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 
 	@Override
 	public void triggerHealed(Game game, Player player, int amount) {
-		for(PlayerListener listener : listeners.values()) {
+		for(PlayerListener listener : getListeners()) {
 			try {
 				listener.healed(game, player, amount);
 			} catch(Exception e) {
@@ -94,7 +95,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 
 	@Override
 	public void triggerStates(Game game, Player player, List<StateChange> changes) {
-		for(PlayerListener listener : listeners.values()) {
+		for(PlayerListener listener : getListeners()) {
 			try {
 				listener.statesChanged(game, player, changes);
 			} catch(Exception e) {
@@ -105,13 +106,17 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 
 	@Override
 	public void triggerMaxLifeChanged(Game game, Player player, int amount) {
-		for(PlayerListener listener : listeners.values()) {
+		for(PlayerListener listener : getListeners()) {
 			try {
 				listener.maxLifeChanged(game, player, amount);
 			} catch(Exception e) {
 				errorService.addError(new PlayerListenerException("failed to trigger max life changed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
+	}
+
+	private CopyOnWriteArrayList<PlayerListener> getListeners() {
+		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 	
 	private String getKey(PlayerListener listener) {

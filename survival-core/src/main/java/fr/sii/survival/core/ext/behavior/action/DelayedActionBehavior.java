@@ -44,7 +44,7 @@ public class DelayedActionBehavior implements EnemyActionBehavior {
 
 	@Override
 	public void execute(Game game, Cell cell) throws GameException {
-		Timer timer = new Timer();
+		Timer timer = new Timer(getClass().getSimpleName());
 		timer.schedule(new TimerTask() {
 			@Override
 			public void run() {

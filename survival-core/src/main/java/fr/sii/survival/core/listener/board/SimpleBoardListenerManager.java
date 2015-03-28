@@ -2,6 +2,7 @@ package fr.sii.survival.core.listener.board;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Cell;
@@ -50,7 +51,7 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 
 	@Override
 	public void triggerMoved(Game game, Player player, Cell oldCell, Cell newCell) {
-		for(BoardListener listener : listeners.values()) {
+		for(BoardListener listener : getListeners()) {
 			try {
 				listener.moved(game, player, oldCell, newCell);
 			} catch(Exception e) {
@@ -61,7 +62,7 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 
 	@Override
 	public void triggerAdded(Game game, Player player, Cell cell) {
-		for(BoardListener listener : listeners.values()) {
+		for(BoardListener listener : getListeners()) {
 			try {
 				listener.added(game, player, cell);
 			} catch(Exception e) {
@@ -72,13 +73,17 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 
 	@Override
 	public void triggerRemoved(Game game, Player player, Cell cell) {
-		for(BoardListener listener : listeners.values()) {
+		for(BoardListener listener : getListeners()) {
 			try {
 				listener.removed(game, player, cell);
 			} catch(Exception e) {
 				errorService.addError(new BoardListenerException("failed to trigger removed event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 			}
 		}
+	}
+
+	private CopyOnWriteArrayList<BoardListener> getListeners() {
+		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 	
 	private String getKey(BoardListener listener) {

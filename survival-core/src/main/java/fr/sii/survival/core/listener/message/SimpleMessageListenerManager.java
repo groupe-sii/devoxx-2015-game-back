@@ -2,6 +2,7 @@ package fr.sii.survival.core.listener.message;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +46,7 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 
 	@Override
 	public void triggerError(GameException exception) {
-		for(MessageListener listener : listeners.values()) {
+		for(MessageListener listener : getListeners()) {
 			try {
 				listener.error(exception);
 			} catch(Exception e) {
@@ -56,13 +57,17 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 
 	@Override
 	public void triggerMessage(GameMessage message) {
-		for(MessageListener listener : listeners.values()) {
+		for(MessageListener listener : getListeners()) {
 			try {
 				listener.message(message);
 			} catch(Exception e) {
 				LOG.error("failed to trigger message event on listener {}. Cause: {}", listener.getClass().getName(), e);
 			}
 		}
+	}
+
+	private CopyOnWriteArrayList<MessageListener> getListeners() {
+		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 
 	private String getKey(MessageListener listener) {
