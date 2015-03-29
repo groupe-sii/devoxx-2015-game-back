@@ -86,6 +86,9 @@ public class ImageUrlUtil {
 	 * @param uri
 	 *            the URI that may point to a file on the system
 	 * @return the absolute URL
+	 * @throws IOException
+	 *             when the temporary for sprites generation couldn't be
+	 *             accessed
 	 */
 	public static URI absoluteUrl(HttpServletRequest request, URI uri) throws IOException {
 		return absoluteUrl(request, getRelativePath(uri.toString()));
@@ -98,6 +101,9 @@ public class ImageUrlUtil {
 	 * @param uri
 	 *            the URI that may point to a file on the system
 	 * @return the absolute URL
+	 * @throws IOException
+	 *             when the temporary for sprites generation couldn't be
+	 *             accessed
 	 */
 	public static URI absoluteUrl(URI uri) throws IOException {
 		return absoluteUrl(UriComponentsBuilder.fromUri(getBaseUrl()), getRelativePath(uri.toString()));

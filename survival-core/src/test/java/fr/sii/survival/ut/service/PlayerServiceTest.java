@@ -93,6 +93,13 @@ public class PlayerServiceTest {
 		Mockito.verify(listenerManager).triggerHit(any(), eq(fullLifePlayer), eq(100));
 		Mockito.verify(listenerManager).triggerDead(any(), eq(fullLifePlayer));
 		Mockito.verifyNoMoreInteractions(listenerManager);
+
+		inc = playerService.updateCurrentLife(fullLifePlayer, -150);
+		Assert.assertEquals("real increment should value 0", 0, inc);
+		Assert.assertEquals("player life should be", 0, fullLifePlayer.getLife().getCurrent());
+		Assert.assertEquals("player max life should be", 100, fullLifePlayer.getLife().getMax());
+		Assert.assertFalse("player should be dead", fullLifePlayer.isAlive());
+		Mockito.verifyNoMoreInteractions(listenerManager);
 	}
 	
 	@Test
@@ -140,6 +147,7 @@ public class PlayerServiceTest {
 		Assert.assertEquals("player life should be", 50, deadPlayer.getLife().getCurrent());
 		Assert.assertEquals("player max life should be", 100, deadPlayer.getLife().getMax());
 		Assert.assertTrue("player should be alive", fullLifePlayer.isAlive());
+		Mockito.verify(listenerManager).triggerHealed(any(), eq(deadPlayer), eq(50));
 		Mockito.verify(listenerManager).triggerRevived(any(), eq(deadPlayer));
 		Mockito.verifyNoMoreInteractions(listenerManager);
 	}

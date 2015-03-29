@@ -100,23 +100,28 @@ public class SimplePlayerService implements PlayerService {
 		int lifeValue = life.updateCurrent(inc);
 		LOG.debug("update player life from {} to {}", oldValue, lifeValue);
 		Game game = gameHelper.getGame(player);
-		if (lifeValue <= 0 && oldValue>0) {
+		if (lifeValue <= 0) {
 			// new life<=0 => player is now dead
 			life.setCurrent(0);
 			inc = -oldValue;
-			playerListenerTrigger.triggerDead(game, player);
 		} else if (lifeValue > life.getMax()) {
 			// new life>max => prevent life to exceed max life
 			life.setCurrent(life.getMax());
 			inc = life.getMax() - oldValue;
 		}
-		if (oldValue <= 0 && lifeValue > 0) {
+		// trigger events
+		if(lifeValue <= 0 && oldValue>0) {
+			// player was alive and new life<=0 => player dead
+			playerListenerTrigger.triggerHit(game, player, -inc);
+			playerListenerTrigger.triggerDead(game, player);
+		} else if (oldValue <= 0 && lifeValue > 0) {
 			// player was dead and new life>=0 => player revived
+			playerListenerTrigger.triggerHealed(game, player, inc);
 			playerListenerTrigger.triggerRevived(game, player);
-		} else if (inc > 0) {
+		} else if (inc > 0 && oldValue>0) {
 			// player is healed
 			playerListenerTrigger.triggerHealed(game, player, inc);
-		} else if (inc < 0) {
+		} else if (inc < 0 && oldValue>0) {
 			// player is hit
 			playerListenerTrigger.triggerHit(game, player, -inc);
 		}
