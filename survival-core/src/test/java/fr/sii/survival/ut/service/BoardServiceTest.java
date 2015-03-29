@@ -15,12 +15,12 @@ import fr.sii.survival.core.domain.image.ClientImage;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.GameException;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.board.Direction;
 import fr.sii.survival.core.service.board.FixedCellProvider;
 import fr.sii.survival.core.service.board.SimpleBoardService;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class BoardServiceTest {

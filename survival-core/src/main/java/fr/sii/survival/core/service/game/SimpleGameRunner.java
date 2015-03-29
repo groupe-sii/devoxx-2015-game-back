@@ -16,6 +16,7 @@ import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.provider.ExtensionProvider;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.message.MessageService;
+import fr.sii.survival.core.util.ConcurrentHelper;
 
 public class SimpleGameRunner implements GameRunner {
 	private static final Logger LOG = LoggerFactory.getLogger(SimpleGameRunner.class);
@@ -105,6 +106,8 @@ public class SimpleGameRunner implements GameRunner {
 	
 	@Override
 	public void stop() throws GameException {
+		// stop all threads that was eventually started by any implementation
+		ConcurrentHelper.stop(game);
 		// remove all players
 		synchronized(extensions) {
 			extensions.clear();

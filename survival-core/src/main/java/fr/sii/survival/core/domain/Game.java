@@ -119,7 +119,9 @@ public class Game {
 	 *         otherwise
 	 */
 	public boolean contains(Player player) {
-		return getReadOnlyPlayers().stream().map(p -> p.getId()).anyMatch(id -> id.equals(player.getId()));
+		return getReadOnlyPlayers().stream()
+							.map(p -> p.getId())
+							.anyMatch(id -> id.equals(player.getId()));
 	}
 
 	/**
@@ -132,7 +134,9 @@ public class Game {
 	 *         otherwise
 	 */
 	public boolean contains(String name) {
-		return getReadOnlyPlayers().stream().map(p -> p.getPlayerInfo().getName()).anyMatch(n -> n.equals(name));
+		return getReadOnlyPlayers().stream()
+							.map(p -> p.getPlayerInfo().getName())
+							.anyMatch(n -> n.equals(name));
 	}
 
 	/**
@@ -143,7 +147,10 @@ public class Game {
 	 * @return the player if found, null otherwise
 	 */
 	public Player getPlayer(String playerId) {
-		return getReadOnlyPlayers().stream().filter(p -> p.getId().equals(playerId)).findFirst().orElseGet(null);
+		return getReadOnlyPlayers().stream()
+							.filter(p -> p.getId().equals(playerId))
+							.findFirst()
+							.orElse(null);
 	}
 
 	public String getId() {

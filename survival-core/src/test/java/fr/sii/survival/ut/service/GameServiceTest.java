@@ -12,7 +12,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.ext.provider.ExtensionProvider;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListenerRegistry;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.game.GameRunner;
@@ -20,6 +19,7 @@ import fr.sii.survival.core.service.game.GameSelector;
 import fr.sii.survival.core.service.game.GameService;
 import fr.sii.survival.core.service.game.SimpleGameService;
 import fr.sii.survival.core.service.message.MessageService;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class GameServiceTest {

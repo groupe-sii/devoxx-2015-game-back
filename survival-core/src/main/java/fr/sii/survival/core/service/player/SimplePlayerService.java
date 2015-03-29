@@ -16,11 +16,11 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.PlayerInfo;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.GameException;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.player.PlayerListener;
 import fr.sii.survival.core.listener.player.PlayerListenerManager;
 import fr.sii.survival.core.listener.player.PlayerListenerRegistry;
 import fr.sii.survival.core.listener.player.PlayerListenerTrigger;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 /**
  * Simple service that update player life and also triggers associated player

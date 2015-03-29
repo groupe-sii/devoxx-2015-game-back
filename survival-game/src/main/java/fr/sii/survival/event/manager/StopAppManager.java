@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.exception.GameException;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.service.game.GameService;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @Component
 public class StopAppManager implements ApplicationListener<ContextClosedEvent> {
@@ -24,6 +24,7 @@ public class StopAppManager implements ApplicationListener<ContextClosedEvent> {
 	
 	@Override
 	public void onApplicationEvent(ContextClosedEvent event) {
+		// stop all games
 		for(Game game : gameHelper.getGames()) {
 			try {
 				gameService.stop(game);
