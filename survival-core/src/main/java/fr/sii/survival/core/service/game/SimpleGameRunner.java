@@ -3,7 +3,6 @@ package fr.sii.survival.core.service.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +16,7 @@ import fr.sii.survival.core.ext.GameContext;
 import fr.sii.survival.core.ext.provider.ExtensionProvider;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.message.MessageService;
+import fr.sii.survival.core.util.ConcurrentHelper;
 
 public class SimpleGameRunner implements GameRunner {
 	private static final Logger LOG = LoggerFactory.getLogger(SimpleGameRunner.class);
@@ -106,10 +106,12 @@ public class SimpleGameRunner implements GameRunner {
 	
 	@Override
 	public void stop() throws GameException {
+		// stop all threads that was eventually started by any implementation
+		ConcurrentHelper.stop(game);
 		// remove all players
 		synchronized(extensions) {
 			extensions.clear();
-			for(Player p : new CopyOnWriteArrayList<>(game.getPlayers())) {
+			for(Player p : game.getPlayers()) {
 				gameService.quit(game, p);
 			}
 		}

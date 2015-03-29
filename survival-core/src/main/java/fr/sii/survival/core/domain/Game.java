@@ -2,6 +2,7 @@ package fr.sii.survival.core.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.function.Predicate;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -12,12 +13,12 @@ import fr.sii.survival.core.domain.player.Player;
 
 public class Game {
 	private static int counter = 0;
-	
+
 	/**
 	 * The game id
 	 */
 	private final String id;
-	
+
 	/**
 	 * The list of players currently in the game
 	 */
@@ -32,43 +33,45 @@ public class Game {
 	 * Is the game started
 	 */
 	private boolean started;
-	
+
 	/**
 	 * Is the game full
 	 */
 	private boolean full;
-	
+
 	public Game(Board board) {
 		this(new ArrayList<>(), board);
 	}
 
 	public Game(List<Player> players, Board board) {
 		super();
-		this.id = "game-"+(counter++);
+		this.id = "game-" + (counter++);
 		this.players = players;
 		this.board = board;
 		started = false;
 	}
 
 	/**
-	 * Get the whole list of players
+	 * Get the whole list of players. This is a copy of the list of players that
+	 * is immutable.
 	 * 
 	 * @return the whole list of players
 	 */
 	public List<Player> getPlayers() {
-		return players;
+		return getReadOnlyPlayers();
 	}
 
 	/**
 	 * Get filtered list of players
 	 * 
-	 * @param predicate the filter condition
+	 * @param predicate
+	 *            the filter condition
 	 * @return the filtered list of players
 	 */
 	public List<Player> getPlayers(Predicate<Player> predicate) {
 		List<Player> filtered = new ArrayList<>(players.size());
-		for(Player p : players) {
-			if(predicate.test(p)) {
+		for (Player p : getReadOnlyPlayers()) {
+			if (predicate.test(p)) {
 				filtered.add(p);
 			}
 		}
@@ -116,9 +119,9 @@ public class Game {
 	 *         otherwise
 	 */
 	public boolean contains(Player player) {
-		return players.stream()
-				.map(p -> p.getId())
-				.anyMatch(id -> id.equals(player.getId()));
+		return getReadOnlyPlayers().stream()
+							.map(p -> p.getId())
+							.anyMatch(id -> id.equals(player.getId()));
 	}
 
 	/**
@@ -131,9 +134,9 @@ public class Game {
 	 *         otherwise
 	 */
 	public boolean contains(String name) {
-		return players.stream()
-				.map(p -> p.getPlayerInfo().getName())
-				.anyMatch(n -> n.equals(name));
+		return getReadOnlyPlayers().stream()
+							.map(p -> p.getPlayerInfo().getName())
+							.anyMatch(n -> n.equals(name));
 	}
 
 	/**
@@ -144,16 +147,16 @@ public class Game {
 	 * @return the player if found, null otherwise
 	 */
 	public Player getPlayer(String playerId) {
-		return players.stream()
-				.filter(p -> p.getId().equals(playerId))
-				.findFirst()
-				.orElseGet(null);
+		return getReadOnlyPlayers().stream()
+							.filter(p -> p.getId().equals(playerId))
+							.findFirst()
+							.orElse(null);
 	}
 
 	public String getId() {
 		return id;
 	}
-	
+
 	public boolean isStarted() {
 		return started;
 	}
@@ -185,13 +188,16 @@ public class Game {
 		Game other = (Game) obj;
 		return new EqualsBuilder().append(id, other.id).isEquals();
 	}
-	
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("(id=").append(id).append(",players=").append(players.size()).append(",started=").append(started).append(",full=").append(full).append(")");
 		return builder.toString();
 	}
-	
-	
+
+	private CopyOnWriteArrayList<Player> getReadOnlyPlayers() {
+		return new CopyOnWriteArrayList<>(players);
+	}
+
 }

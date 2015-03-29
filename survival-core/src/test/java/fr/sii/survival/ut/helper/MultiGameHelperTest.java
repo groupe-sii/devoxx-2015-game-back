@@ -13,7 +13,7 @@ import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.board.Board;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.GameNotFoundException;
-import fr.sii.survival.core.helper.MultiGameHelper;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MultiGameHelperTest {

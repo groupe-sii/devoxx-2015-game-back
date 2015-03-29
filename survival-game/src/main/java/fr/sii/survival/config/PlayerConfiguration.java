@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import fr.sii.survival.config.options.LifeOptions;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.player.PlayerListenerManager;
 import fr.sii.survival.core.listener.player.SimplePlayerListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
@@ -13,6 +12,7 @@ import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.core.service.player.PlayerService;
 import fr.sii.survival.core.service.player.SimplePlayerService;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @Configuration
 public class PlayerConfiguration {

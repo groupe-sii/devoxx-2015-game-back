@@ -2,16 +2,17 @@ package fr.sii.survival.core.listener.action;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.AddImage;
-import fr.sii.survival.core.domain.action.UpdatePosition;
-import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.action.MoveImage;
 import fr.sii.survival.core.domain.action.RemoveImage;
 import fr.sii.survival.core.domain.action.StartAnimation;
 import fr.sii.survival.core.domain.action.StopAnimation;
 import fr.sii.survival.core.domain.action.UpdateLife;
+import fr.sii.survival.core.domain.action.UpdatePosition;
+import fr.sii.survival.core.domain.action.UpdateStates;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.exception.ActionListenerException;
 import fr.sii.survival.core.service.extension.ExtensionService;
@@ -57,7 +58,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 
 	@Override
 	public void triggerLifeUpdated(Game game, Player player, UpdateLife action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.lifeUpdated(game, player, action);
 			} catch(Exception e) {
@@ -68,7 +69,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 
 	@Override
 	public void triggerPositionChanged(Game game, Player player, UpdatePosition action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.positionChanged(game, player, action);
 			} catch(Exception e) {
@@ -79,7 +80,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 
 	@Override
 	public void triggerImageAdded(Game game, AddImage action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.imageAdded(game, action);
 			} catch(Exception e) {
@@ -90,7 +91,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	
 	@Override
 	public void triggerImageMoved(Game game, MoveImage action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.imageMoved(game, action);
 			} catch(Exception e) {
@@ -101,7 +102,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 
 	@Override
 	public void triggerImageRemoved(Game game, RemoveImage action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.imageRemoved(game, action);
 			} catch(Exception e) {
@@ -112,7 +113,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 	
 	@Override
 	public void triggerStateChanged(Game game, Player player, UpdateStates action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.stateChanged(game, player, action);
 			} catch(Exception e) {
@@ -123,7 +124,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 
 	@Override
 	public void triggerAnimationStarted(Game game, StartAnimation action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.animationStarted(game, action);
 			} catch(Exception e) {
@@ -134,7 +135,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 
 	@Override
 	public void triggerAnimationStopped(Game game, StopAnimation action) {
-		for(ActionListener listener : listeners.values()) {
+		for(ActionListener listener : getListeners()) {
 			try {
 				listener.animationStopped(game, action);
 			} catch(Exception e) {
@@ -143,6 +144,10 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		}
 	}
 	
+	private CopyOnWriteArrayList<ActionListener> getListeners() {
+		return new CopyOnWriteArrayList<>(listeners.values());
+	}
+
 	private void manageError(String event, ActionListener listener, Exception e) {
 		errorService.addError(new ActionListenerException("failed to trigger "+event+" event on listener "+listener.getClass().getName(), extensionService.getDeveloper(listener), e));
 	}

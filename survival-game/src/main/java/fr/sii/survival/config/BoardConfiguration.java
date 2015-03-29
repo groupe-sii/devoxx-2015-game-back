@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 
 import fr.sii.survival.config.options.BoardOptions;
 import fr.sii.survival.config.options.RuleOptions;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.board.BoardListenerManager;
 import fr.sii.survival.core.listener.board.SimpleBoardListenerManager;
 import fr.sii.survival.core.service.board.BoardService;
@@ -22,6 +21,7 @@ import fr.sii.survival.core.service.board.rule.registry.PostFilteredMoveRuleRegi
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.core.service.rule.registry.predicate.RegexRulePredicate;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @Configuration
 public class BoardConfiguration {

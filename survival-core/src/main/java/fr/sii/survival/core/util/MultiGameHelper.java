@@ -1,4 +1,4 @@
-package fr.sii.survival.core.helper;
+package fr.sii.survival.core.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,6 +41,7 @@ public class MultiGameHelper {
 		gamesById.put(gameId, game);
 	}
 	
+	
 	public Game getGame(Player player) throws GameNotFoundException {
 		if(player==null) {
 			throw new GameNotFoundException("Player is null");
@@ -68,5 +69,4 @@ public class MultiGameHelper {
 	public List<Game> getGames() {
 		return new ArrayList<>(gamesById.values());
 	}
-
 }

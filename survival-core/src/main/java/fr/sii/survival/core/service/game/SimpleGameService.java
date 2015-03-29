@@ -17,10 +17,10 @@ import fr.sii.survival.core.exception.FullGameException;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.exception.GameNotFoundException;
 import fr.sii.survival.core.exception.PlayerNotFoundException;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListener;
 import fr.sii.survival.core.listener.game.GameListenerRegistry;
 import fr.sii.survival.core.service.board.BoardService;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 
 public class SimpleGameService implements GameService {

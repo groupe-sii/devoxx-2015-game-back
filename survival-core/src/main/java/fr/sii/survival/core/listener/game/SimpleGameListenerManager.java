@@ -2,6 +2,7 @@ package fr.sii.survival.core.listener.game;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.player.Player;
@@ -50,7 +51,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 
 	@Override
 	public void triggerStarted(Game game) {
-		for(GameListener listener : listeners.values()) {
+		for(GameListener listener : getListeners()) {
 			try {
 				listener.started(game);
 			} catch(Exception e) {
@@ -61,7 +62,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 
 	@Override
 	public void triggerStopped(Game game) {
-		for(GameListener listener : listeners.values()) {
+		for(GameListener listener : getListeners()) {
 			try {
 				listener.stopped(game);
 			} catch(Exception e) {
@@ -72,7 +73,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 
 	@Override
 	public void triggerJoined(Player player, Game game) {
-		for(GameListener listener : listeners.values()) {
+		for(GameListener listener : getListeners()) {
 			try {
 				listener.joined(player, game);
 			} catch(Exception e) {
@@ -83,13 +84,17 @@ public class SimpleGameListenerManager implements GameListenerManager {
 
 	@Override
 	public void triggerLeaved(Player player, Game game) {
-		for(GameListener listener : listeners.values()) {
+		for(GameListener listener : getListeners()) {
 			try {
 				listener.left(player, game);
 			} catch(Exception e) {
 				manageError("leaved", listener, e);
 			}
 		}
+	}
+
+	private CopyOnWriteArrayList<GameListener> getListeners() {
+		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 	
 	private String getKey(GameListener listener) {

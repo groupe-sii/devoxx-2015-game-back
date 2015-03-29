@@ -19,7 +19,6 @@ import fr.sii.survival.core.ext.registry.ExtensionRegistry;
 import fr.sii.survival.core.ext.registry.PostFilteredRegistry;
 import fr.sii.survival.core.ext.registry.predicate.RegexPredicate;
 import fr.sii.survival.core.ext.registry.predicate.TypePredicate;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.game.GameListenerManager;
 import fr.sii.survival.core.listener.game.SimpleGameListenerManager;
 import fr.sii.survival.core.service.action.ActionService;
@@ -33,6 +32,7 @@ import fr.sii.survival.core.service.game.SimpleGameSelector;
 import fr.sii.survival.core.service.game.SimpleGameService;
 import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.core.service.player.PlayerService;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @Configuration
 public class GameConfiguration {

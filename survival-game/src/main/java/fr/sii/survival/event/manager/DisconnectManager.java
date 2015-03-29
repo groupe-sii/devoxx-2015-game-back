@@ -24,7 +24,10 @@ public class DisconnectManager implements ApplicationListener<SessionDisconnectE
 	@Override
 	public void onApplicationEvent(SessionDisconnectEvent event) {
 		try {
-			gameController.quit(userContext.getGameId());
+			// game id is null when the player has never joined a game
+			if(userContext.getGameId()!=null) {
+				gameController.quit(userContext.getGameId());
+			}
 		} catch (GameException e) {
 			LOG.warn("Failed to disconnect user with session id: {}. Cause: {}", event.getSessionId(), e);
 		}

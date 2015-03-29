@@ -18,10 +18,10 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.exception.GameNotFoundException;
-import fr.sii.survival.core.helper.MultiGameHelper;
 import fr.sii.survival.core.listener.player.PlayerListenerManager;
 import fr.sii.survival.core.service.player.PlayerService;
 import fr.sii.survival.core.service.player.SimplePlayerService;
+import fr.sii.survival.core.util.MultiGameHelper;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PlayerServiceTest {
