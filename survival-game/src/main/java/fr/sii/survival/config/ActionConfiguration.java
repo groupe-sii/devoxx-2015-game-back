@@ -16,7 +16,6 @@ import fr.sii.survival.core.service.action.ActionManager;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.action.AddImageActionManager;
 import fr.sii.survival.core.service.action.ChangePositionActionManager;
-import fr.sii.survival.core.service.action.UpdateStateActionManager;
 import fr.sii.survival.core.service.action.DelegateActionService;
 import fr.sii.survival.core.service.action.MoveImageActionManager;
 import fr.sii.survival.core.service.action.RemoveImageActionManager;
@@ -24,11 +23,13 @@ import fr.sii.survival.core.service.action.StartAnimationActionManager;
 import fr.sii.survival.core.service.action.StopAnimationActionManager;
 import fr.sii.survival.core.service.action.UpdateCurrentLifeActionManager;
 import fr.sii.survival.core.service.action.UpdateMaxLifeActionManager;
+import fr.sii.survival.core.service.action.UpdateStateActionManager;
 import fr.sii.survival.core.service.action.rule.AllowActionRule;
 import fr.sii.survival.core.service.action.rule.DelegateRulesActionService;
 import fr.sii.survival.core.service.action.rule.registry.AllowActionRuleRegistry;
 import fr.sii.survival.core.service.action.rule.registry.AutoDiscoveryActionRuleRegistry;
-import fr.sii.survival.core.service.action.rule.registry.PostFilteredActionRuleRegistry;
+import fr.sii.survival.core.service.action.rule.registry.PreFilteredActionRuleRegistry;
+import fr.sii.survival.core.service.action.rule.registry.SimpleActionRuleRegistry;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
@@ -67,7 +68,7 @@ public class ActionConfiguration {
 									.<Predicate<AllowActionRule>>map(exclude -> new RegexRulePredicate<AllowActionRule>(exclude))
 									.reduce(Predicate::or)
 									.orElse(p -> false);
-		return new PostFilteredActionRuleRegistry(excludeFilter.negate(), new AutoDiscoveryActionRuleRegistry(extensionService, "fr.sii.survival.ext.rules"));
+		return new AutoDiscoveryActionRuleRegistry(new PreFilteredActionRuleRegistry(excludeFilter.negate(), new SimpleActionRuleRegistry()), extensionService, "fr.sii.survival.ext.rules");
 	}
 
 	@Bean

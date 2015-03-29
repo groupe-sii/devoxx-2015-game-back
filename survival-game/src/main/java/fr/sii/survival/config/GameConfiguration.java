@@ -16,7 +16,8 @@ import fr.sii.survival.core.ext.provider.MaxProvider;
 import fr.sii.survival.core.ext.provider.RandomProvider;
 import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
 import fr.sii.survival.core.ext.registry.ExtensionRegistry;
-import fr.sii.survival.core.ext.registry.PostFilteredRegistry;
+import fr.sii.survival.core.ext.registry.PreFilteredRegistry;
+import fr.sii.survival.core.ext.registry.SimpleEnemyExtensionRegistry;
 import fr.sii.survival.core.ext.registry.predicate.RegexPredicate;
 import fr.sii.survival.core.ext.registry.predicate.TypePredicate;
 import fr.sii.survival.core.listener.game.GameListenerManager;
@@ -84,19 +85,14 @@ public class GameConfiguration {
 
 	@Bean
 	public ExtensionProvider extensionProvider() {
-		// transform list of exclusion patterns into a list of RegexPredicate. Then the list of predicates is combined using a Or operator
-		Predicate<Class<?>> excludeFilter = enemyOptions.getExcludes().stream()
-									.<Predicate<Class<?>>>map(exclude -> new RegexPredicate(exclude))
-									.reduce(Predicate::or)
-									.orElse(p -> false);
 		// basic enemy filter -> if predicate returns true, then enemy is added to the registry
-		Predicate<Class<?>> basicEnemyFilter = new TypePredicate(SpecialEnemy.class).negate().and(excludeFilter.negate());
+		Predicate<Class<?>> basicEnemyFilter = new TypePredicate(SpecialEnemy.class).negate();
 		// special enemy filter -> if predicate returns true, then enemy is added to the registry
-		Predicate<Class<?>> specialEnemyFilter = new TypePredicate(SpecialEnemy.class).and(excludeFilter.negate());
+		Predicate<Class<?>> specialEnemyFilter = new TypePredicate(SpecialEnemy.class);
 		// provider for basic enemies
-		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, new PostFilteredRegistry(basicEnemyFilter, extensionRegistry()));
+		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, filteredRegistry(basicEnemyFilter));
 		// provider for special enemies
-		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, new PostFilteredRegistry(specialEnemyFilter, extensionRegistry()));
+		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, filteredRegistry(specialEnemyFilter));
 		// invoke special enemies every n basic enemies
 		ExtensionProvider everyProvider = new EveryEnemyProvider(enemyOptions.getSpecialEvery(), basicRandomProvider, specialRandomProvider);
 		// limit the maximum number of enemies on the board
@@ -105,8 +101,13 @@ public class GameConfiguration {
 		return new DelayProvider(enemyOptions.getAddDelay(), maxProvider);
 	}
 
-	@Bean
-	public ExtensionRegistry extensionRegistry() {
-		return new AutoDiscoveryExtensionRegistry(extensionService);
+	public ExtensionRegistry filteredRegistry(Predicate<Class<?>> enemyFilter) {
+		// transform list of exclusion patterns into a list of RegexPredicate. Then the list of predicates is combined using a Or operator
+		Predicate<Class<?>> excludeFilter = enemyOptions.getExcludes().stream()
+									.<Predicate<Class<?>>>map(exclude -> new RegexPredicate(exclude))
+									.reduce(Predicate::or)
+									.orElse(p -> false);
+		// registry that remove all excluded extensions
+		return new AutoDiscoveryExtensionRegistry(new PreFilteredRegistry(enemyFilter.and(excludeFilter.negate()), new SimpleEnemyExtensionRegistry()), extensionService);
 	}
 }

@@ -12,13 +12,13 @@ import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.ext.annotation.AnnotationDeveloperProvider;
 import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
 import fr.sii.survival.core.ext.registry.ExtensionRegistry;
+import fr.sii.survival.core.ext.registry.PreFilteredRegistry;
 import fr.sii.survival.core.ext.registry.SimpleEnemyExtensionRegistry;
 import fr.sii.survival.core.service.extension.DelegateExtensionService;
 import fr.sii.survival.core.service.extension.ExtensionService;
-import fr.sii.survival.mock.ext.BasicEnemyExtension;
 
 @RunWith(MockitoJUnitRunner.class)
-public class AutoDiscoveryExtensionRegistryTest {
+public class PreFilterExtensionRegistryTest {
 
 	ExtensionService extensionService;
 
@@ -27,15 +27,12 @@ public class AutoDiscoveryExtensionRegistryTest {
 	@Before
 	public void setUp() {
 		extensionService = new DelegateExtensionService(new AnnotationDeveloperProvider());
-		registry = new AutoDiscoveryExtensionRegistry(new SimpleEnemyExtensionRegistry(), extensionService, "fr.sii.survival.mock.ext");
+		registry = new AutoDiscoveryExtensionRegistry(new PreFilteredRegistry(p -> false, new SimpleEnemyExtensionRegistry()), extensionService, "fr.sii.survival.mock.ext");
 	}
 
 	@Test
 	public void basicEnemy() {
 		List<Class<EnemyExtension>> classes = registry.getEnemyExtensions();
-		Assert.assertEquals("should have 1 valid extension", 1, classes.size());
-		Class<EnemyExtension> clazz = classes.get(0);
-		Assert.assertEquals("class should be "+BasicEnemyExtension.class.getSimpleName(), BasicEnemyExtension.class, clazz);
-		Assert.assertEquals("developer should be abaudet", "abaudet", extensionService.getDeveloper(clazz).getNickname());
+		Assert.assertEquals("should have 0 valid extension", 0, classes.size());
 	}
 }

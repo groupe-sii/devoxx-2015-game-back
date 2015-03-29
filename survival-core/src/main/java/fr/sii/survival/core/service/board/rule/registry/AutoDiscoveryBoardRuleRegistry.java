@@ -6,8 +6,8 @@ import fr.sii.survival.core.service.rule.registry.AutoDiscoveryRuleRegistry;
 
 public class AutoDiscoveryBoardRuleRegistry extends AutoDiscoveryRuleRegistry<AllowMoveRule> implements AllowMoveRuleRegistry {
 
-	public AutoDiscoveryBoardRuleRegistry(ExtensionService extensionService, String... packageNames) {
-		super(extensionService, AllowMoveRule.class, packageNames);
+	public AutoDiscoveryBoardRuleRegistry(AllowMoveRuleRegistry delegate, ExtensionService extensionService, String... packageNames) {
+		super(delegate, extensionService, AllowMoveRule.class, packageNames);
 	}
 
 

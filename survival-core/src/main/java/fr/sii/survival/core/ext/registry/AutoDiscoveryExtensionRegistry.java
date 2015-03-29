@@ -2,6 +2,7 @@ package fr.sii.survival.core.ext.registry;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
+import java.util.List;
 import java.util.function.Function;
 
 import org.slf4j.Logger;
@@ -11,15 +12,41 @@ import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.util.AutoDiscoveryUtil;
 
-public class AutoDiscoveryExtensionRegistry extends SimpleEnemyExtensionRegistry {
+public class AutoDiscoveryExtensionRegistry implements ExtensionRegistry {
 	private static final Logger LOG = LoggerFactory.getLogger(AutoDiscoveryExtensionRegistry.class);
 
-	public AutoDiscoveryExtensionRegistry(ExtensionService extensionService) {
-		this(extensionService, "fr.sii.survival.ext");
+	private ExtensionRegistry delegate;
+
+	private ExtensionService extensionService;
+
+	private String[] packageNames;
+	
+	public AutoDiscoveryExtensionRegistry(ExtensionRegistry delegate, ExtensionService extensionService) {
+		this(delegate, extensionService, "fr.sii.survival.ext");
 	}
 
-	public AutoDiscoveryExtensionRegistry(ExtensionService extensionService, String... packageNames) {
-		super(AutoDiscoveryUtil.find(EnemyExtension.class, new EnemyExtensionProvider(extensionService), packageNames));
+	public AutoDiscoveryExtensionRegistry(ExtensionRegistry delegate, ExtensionService extensionService, String... packageNames) {
+		super();
+		this.delegate = delegate;
+		this.extensionService = extensionService;
+		this.packageNames = packageNames;
+		register();
+	}
+	
+	public void register() {
+		for(Class<EnemyExtension> ext : AutoDiscoveryUtil.find(EnemyExtension.class, new EnemyExtensionProvider(extensionService), packageNames)) {
+			register(ext);
+		}
+	}
+	
+	@Override
+	public void register(Class<EnemyExtension> extension) {
+		delegate.register(extension);
+	}
+
+	@Override
+	public List<Class<EnemyExtension>> getEnemyExtensions() {
+		return delegate.getEnemyExtensions();
 	}
 	
 	private static final class EnemyExtensionProvider implements Function<Class<? extends EnemyExtension>, Class<EnemyExtension>> {
@@ -45,4 +72,5 @@ public class AutoDiscoveryExtensionRegistry extends SimpleEnemyExtensionRegistry
 		}
 		
 	}
+
 }

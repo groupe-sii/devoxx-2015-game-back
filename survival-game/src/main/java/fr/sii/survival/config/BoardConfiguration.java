@@ -17,7 +17,8 @@ import fr.sii.survival.core.service.board.rule.AllowMoveRule;
 import fr.sii.survival.core.service.board.rule.DelegateRulesBoardService;
 import fr.sii.survival.core.service.board.rule.registry.AllowMoveRuleRegistry;
 import fr.sii.survival.core.service.board.rule.registry.AutoDiscoveryBoardRuleRegistry;
-import fr.sii.survival.core.service.board.rule.registry.PostFilteredMoveRuleRegistry;
+import fr.sii.survival.core.service.board.rule.registry.PreFilteredMoveRuleRegistry;
+import fr.sii.survival.core.service.board.rule.registry.SimpleMoveRuleRegistry;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 import fr.sii.survival.core.service.rule.registry.predicate.RegexRulePredicate;
@@ -55,7 +56,7 @@ public class BoardConfiguration {
 									.<Predicate<AllowMoveRule>>map(exclude -> new RegexRulePredicate<AllowMoveRule>(exclude))
 									.reduce(Predicate::or)
 									.orElse(p -> false);
-		return new PostFilteredMoveRuleRegistry(excludeFilter.negate(), new AutoDiscoveryBoardRuleRegistry(extensionService, "fr.sii.survival.ext.rules"));
+		return new AutoDiscoveryBoardRuleRegistry(new PreFilteredMoveRuleRegistry(excludeFilter.negate(), new SimpleMoveRuleRegistry()), extensionService, "fr.sii.survival.ext.rules");
 	}
 
 	@Bean

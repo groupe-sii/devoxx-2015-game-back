@@ -1,6 +1,7 @@
 package fr.sii.survival.core.service.rule.registry;
 
 import java.lang.reflect.Modifier;
+import java.util.List;
 import java.util.function.Function;
 
 import org.slf4j.Logger;
@@ -19,17 +20,46 @@ import fr.sii.survival.core.util.AutoDiscoveryUtil;
  * @param <R>
  *            The type of the rules
  */
- public class AutoDiscoveryRuleRegistry<R extends Rule> extends SimpleRuleRegistry<R> {
+ public class AutoDiscoveryRuleRegistry<R extends Rule> implements RuleRegistry<R> {
 	private static final Logger LOG = LoggerFactory.getLogger(AutoDiscoveryExtensionRegistry.class);
+	
+	private RuleRegistry<R> delegate;
+	
+	private ExtensionService extensionService;
+	
+	private Class<R> clazz;
+	
+	private String[] packageNames;
 
-	public AutoDiscoveryRuleRegistry(ExtensionService extensionService, Class<R> clazz) {
-		this(extensionService, clazz, "fr.sii.survival.ext.rules");
+	public AutoDiscoveryRuleRegistry(RuleRegistry<R> delegate, ExtensionService extensionService, Class<R> clazz) {
+		this(delegate, extensionService, clazz, "fr.sii.survival.ext.rules");
 	}
 
-	public AutoDiscoveryRuleRegistry(ExtensionService extensionService, Class<R> clazz, String... packageNames) {
-		super(AutoDiscoveryUtil.find(clazz, new RuleProvider<R>(extensionService), packageNames));
+	public AutoDiscoveryRuleRegistry(RuleRegistry<R> delegate, ExtensionService extensionService, Class<R> clazz, String... packageNames) {
+		super();
+		this.delegate = delegate;
+		this.extensionService = extensionService;
+		this.clazz = clazz;
+		this.packageNames = packageNames;
+		register();
+	}
+	
+	public void register() {
+		for(R rule : AutoDiscoveryUtil.find(clazz, new RuleProvider<R>(extensionService), packageNames)) {
+			register(rule);
+		}
 	}
 
+	@Override
+	public void register(R rule) {
+		delegate.register(rule);
+	}
+
+	@Override
+	public List<R> getRules() {
+		return delegate.getRules();
+	}
+	
 	private static final class RuleProvider<R> implements Function<Class<? extends R>, R> {
 
 		private ExtensionService extensionService;
@@ -53,5 +83,6 @@ import fr.sii.survival.core.util.AutoDiscoveryUtil;
 		}
 
 	}
+
 
 }
