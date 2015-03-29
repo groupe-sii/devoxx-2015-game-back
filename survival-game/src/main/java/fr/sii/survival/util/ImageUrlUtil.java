@@ -6,13 +6,27 @@ import java.net.URI;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import fr.sii.survival.config.StaticResourcesConfig;
 import fr.sii.survival.core.util.FileUtil;
 
 public class ImageUrlUtil {
+	private static URI baseUrl;
+	
 	private ImageUrlUtil() {
 		super();
+	}
+	
+	public static void init() {
+		getBaseUrl();
+	}
+	
+	public static URI getBaseUrl() {
+		if(baseUrl==null) {
+			baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().encode().toUri();
+		}
+		return baseUrl;
 	}
 
 	/**
@@ -43,7 +57,7 @@ public class ImageUrlUtil {
 	 *            the relative path to append to the base URL provided by Spring
 	 * @return the absolute URL
 	 */
-	public static URI absoluteUrl(ServletUriComponentsBuilder builder, String relativePath) {
+	public static URI absoluteUrl(UriComponentsBuilder builder, String relativePath) {
 		return builder.path("/").path(StaticResourcesConfig.STATIC_RESOURCE_URL_PREFIX).path(relativePath).build().encode().toUri();
 	}
 
@@ -86,6 +100,6 @@ public class ImageUrlUtil {
 	 * @return the absolute URL
 	 */
 	public static URI absoluteUrl(URI uri) throws IOException {
-		return absoluteUrl(ServletUriComponentsBuilder.fromCurrentContextPath(), getRelativePath(uri.toString()));
+		return absoluteUrl(UriComponentsBuilder.fromUri(getBaseUrl()), getRelativePath(uri.toString()));
 	}
 }
