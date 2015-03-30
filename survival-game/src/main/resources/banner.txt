@@ -24,5 +24,5 @@
     "╜╣╬╬▓▓▄▒▒▒▒╨  ,╥▒▄╬▓▓▓▒   ^`                                           
         ""╙╜▀▀╨  -ê▀╜╙^"'                                                   
                                                                             
- Survival Game             ${application.formatted-version}
+ Coding Game             ${application.formatted-version}
 

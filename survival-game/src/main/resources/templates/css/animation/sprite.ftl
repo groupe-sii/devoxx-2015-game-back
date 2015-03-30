@@ -5,7 +5,7 @@
 	${vendorPrefix}animation-name: ${animation.name};
 	${vendorPrefix}animation-duration: ${animation.duration?c}ms;
 	${vendorPrefix}animation-delay: ${animation.options.delay?c}ms;
-	/*${vendorPrefix}animation-timing-function: steps(${animation.frames?size});*/
+	${vendorPrefix}animation-timing-function: steps(${animation.frames?size});
 	background: transparent url("${toCssUrl(animation.sprite.image)}") no-repeat left center;
 }
 

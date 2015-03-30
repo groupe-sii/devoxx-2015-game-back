@@ -12,8 +12,8 @@
 	<artifactId>survival-game</artifactId>
 	<packaging>war</packaging>
 
-	<name>Survival Game</name>
-	<description></description>
+	<name>Coding Game</name>
+	<description>Coding Game for Devoxx France 2015</description>
 
 	<properties>
 		<start-class>fr.sii.survival.GameApplication</start-class>
@@ -60,6 +60,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-browser-detection</artifactId>
 			<version>${spring-boot.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>de.codecentric</groupId>
+			<artifactId>spring-boot-admin-starter-client</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<!-- Dependency issue in Eclipse -->
+		<dependency>
+		    <groupId>com.googlecode.json-simple</groupId>
+		    <artifactId>json-simple</artifactId>
 		</dependency>
 	</dependencies>
 
