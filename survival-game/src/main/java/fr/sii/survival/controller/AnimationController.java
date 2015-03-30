@@ -20,21 +20,20 @@ import fr.sii.survival.core.domain.animation.Animation;
 import fr.sii.survival.core.service.animation.AnimationService;
 
 @Controller
-@RequestMapping("animation")
 public class AnimationController {
 	@Autowired
 	AnimationService animationService;
 	
 	@MessageMapping(ANIMATION_MAPPING_PREFIX+"/all")
 	@SendToUser(SERVER_PUBLISH_PREFIX+"/animation/all")
-	@RequestMapping(method=RequestMethod.GET)
+	@RequestMapping(value="animation", method=RequestMethod.GET)
 	@ResponseBody
 	@Cacheable("animations")
 	public List<Animation> all() {
 		return animationService.getAvailableAnimations();
 	}
 
-	@RequestMapping(method=RequestMethod.GET, headers="Accept=text/css*", produces="text/css")
+	@RequestMapping(value="animations.css", method=RequestMethod.GET, headers="Accept=text/css*", produces="text/css")
 	public ModelAndView cssAnimations(Browser browser) {
 		return new ModelAndView("css/animations", "animations", all()).addObject("vendorPrefix", browser.getVendorPrefix());
 	}

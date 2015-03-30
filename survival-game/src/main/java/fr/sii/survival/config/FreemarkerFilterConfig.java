@@ -19,7 +19,7 @@ public class FreemarkerFilterConfig {
 	@Bean
 	public FilterRegistrationBean freemarkerFilterRegistrationBean() {
 		FilterRegistrationBean registration = new FilterRegistrationBean(new FreemarkerStaticModelsFilter());
-		registration.addUrlPatterns("/animation");
+		registration.addUrlPatterns("/animations.css");
 		return registration;
 	}
 }
