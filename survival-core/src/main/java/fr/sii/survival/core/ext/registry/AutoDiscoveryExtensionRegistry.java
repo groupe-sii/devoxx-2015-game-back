@@ -62,7 +62,7 @@ public class AutoDiscoveryExtensionRegistry implements ExtensionRegistry {
 		public Class<EnemyExtension> apply(Class<? extends EnemyExtension> type) {
 			if(!type.isInterface() && !Modifier.isAbstract(type.getModifiers()) && type.getConstructors().length>0) {
 				if(type.isAnnotationPresent(Developer.class)) {
-					checkDefaultConstructor(type);
+					return checkDefaultConstructor(type);
 				} else {
 					LOG.error("Enemy: {} has no @Developer information => skipped", type.getName());
 				}
