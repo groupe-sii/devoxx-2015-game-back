@@ -1,5 +1,6 @@
 package fr.sii.survival.core.util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -37,7 +38,7 @@ public class ScanUtil {
 		Collections.sort(files, comparator);
 		List<R> results = new ArrayList<>(files.size());
 		for (String file : files) {
-			if (file.startsWith(folder) && predicate.test(file)) {
+			if (isChild(folder, file) && predicate.test(file)) {
 				results.add(transform.apply(file));
 			}
 		}
@@ -57,16 +58,7 @@ public class ScanUtil {
 	 * @return the list of found files
 	 */
 	public static List<String> scan(String folder, Comparator<String> comparator, Predicate<String> predicate) {
-		Reflections reflections = new Reflections(ClasspathHelper.forResource(folder), new ResourcesScanner());
-		List<String> files = new ArrayList<>(reflections.getResources(f -> true));
-		Collections.sort(files, comparator);
-		List<String> filesInFolder = new ArrayList<>(files.size());
-		for (String file : files) {
-			if (file.startsWith(folder) && predicate.test(file)) {
-				filesInFolder.add(file);
-			}
-		}
-		return filesInFolder;
+		return scan(folder, comparator, predicate, f -> f);
 	}
 
 	/**
@@ -131,5 +123,15 @@ public class ScanUtil {
 	 */
 	public static <R> List<R> scan(String folder, Function<String, R> transform) {
 		return scan(folder, false, transform);
+	}
+
+
+	private static boolean isChild(String folder, String file) {
+		File folderFile = new File(folder);
+		File f = new File(file);
+		while(f!=null && !folderFile.equals(f)) {
+			f = f.getParentFile();
+		}
+		return folderFile.equals(f);
 	}
 }

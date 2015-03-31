@@ -34,8 +34,11 @@ public class ConcurrentHelper {
 	}
 
 	public static void stop(String gameId) {
-		factoriesByGameId.get(gameId).stop();
-		factoriesByGameId.remove(gameId);
+		GameConcurrentFactory factory = factoriesByGameId.get(gameId);
+		if(factory!=null) {
+			factory.stop();
+			factoriesByGameId.remove(gameId);
+		}
 	}
 
 	public static class GameConcurrentFactory {

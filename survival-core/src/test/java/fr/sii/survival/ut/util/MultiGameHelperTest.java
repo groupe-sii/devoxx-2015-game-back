@@ -1,4 +1,4 @@
-package fr.sii.survival.ut.helper;
+package fr.sii.survival.ut.util;
 
 import static org.mockito.Mockito.when;
 

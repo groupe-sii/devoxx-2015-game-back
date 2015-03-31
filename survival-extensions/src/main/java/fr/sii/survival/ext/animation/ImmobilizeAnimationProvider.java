@@ -9,6 +9,7 @@ import fr.sii.survival.core.exception.AnimationInitializationException;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
 import fr.sii.survival.core.ext.animation.AnimationProvider;
 import fr.sii.survival.core.ext.annotation.Developer;
+import fr.sii.survival.ext.constants.States;
 
 /**
  * Animation that will start every time the CSS class "immobilized" is added on a player.
@@ -22,7 +23,7 @@ public class ImmobilizeAnimationProvider implements AnimationProvider {
 	@Override
 	public Animation provide() throws AnimationInitializationException {
 		try {
-			return new SpriteAnimation("immobilized", 5000, new UriSprite("images/immobilize"), new float[] {
+			return new SpriteAnimation(States.IMMOBILIZED.toString(), 5000, new UriSprite("images/immobilize"), new float[] {
 				// roots are getting out the earth
 				0,
 				2,
