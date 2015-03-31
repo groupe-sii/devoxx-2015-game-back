@@ -1,4 +1,4 @@
-<configuration>
+<configuration scan="true">
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
@@ -7,10 +7,17 @@
 			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
 		</encoder>
 	</appender>
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>/var/log/coding-game.log</file>
+
+		<encoder>
+			<pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n</pattern>
+		</encoder>
+	</appender>
 
 	<logger name="fr.sii.survival.core.log.LogBoardListener" level="WARN" />
 	<logger name="fr.sii.survival.core.log.LogActionListener" level="WARN" />
-	<logger name="fr.sii.survival.core.log.LogPlayerListener" level="WARN" />
+	<logger name="fr.sii.survival.core.log.LogPlayerListener" level="INFO" />
 	<logger name="net.sf.jmimemagic.MagicParser" level="WARN" />
 	<logger name="org.reflections" level="WARN" />
 	<!-- logger name="fr.sii.survival.core.service.action.ChangeStateActionManager" level="DEBUG" />
@@ -18,6 +25,7 @@
 	<logger name="fr.sii.survival.core.ext.behavior.action.RepeatedActionBehavior" level="DEBUG" /-->
 
 	<root level="INFO">
+		<appender-ref ref="FILE" />
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
