@@ -6,6 +6,8 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import fr.sii.survival.core.domain.image.Image;
 
 public class SimplePlayer implements Player {
+	private static final int DEFAULT_FILE = 1000;
+	
 	/**
 	 * Counter used to generate a unique id
 	 */
@@ -38,7 +40,7 @@ public class SimplePlayer implements Player {
 	 *            the player information (name and avatar)
 	 */
 	public SimplePlayer(PlayerInfo info) {
-		this(info, 1000);
+		this(info, DEFAULT_FILE);
 	}
 
 	/**

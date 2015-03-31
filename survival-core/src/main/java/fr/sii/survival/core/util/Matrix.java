@@ -14,6 +14,8 @@ import com.google.common.base.Strings;
  *            The type of the values contained in the matrix
  */
 public class Matrix<T> {
+	private static final int DELTA = 3;
+	
 	private T[] arr;
 
 	private int rows;
@@ -105,7 +107,7 @@ public class Matrix<T> {
 			}
 		}
 		StringJoiner joiner = new StringJoiner(" | ");
-		builder.append(Strings.padEnd("", cols * (max + 3)-3, '_'));
+		builder.append(Strings.padEnd("", cols * (max + DELTA)-DELTA, '_'));
 		for (int i = 0, l = arr.length; i < l; i++) {
 			if (i % cols == 0) {
 				builder.append(joiner.toString());
@@ -116,7 +118,7 @@ public class Matrix<T> {
 		}
 		builder.append(joiner.toString());
 		builder.append(System.getProperty("line.separator"));
-		builder.append(Strings.padEnd("", cols * (max + 3)-3, '⎺'));
+		builder.append(Strings.padEnd("", cols * (max + DELTA)-DELTA, '⎺'));
 		return builder.toString();
 	}
 }

@@ -59,20 +59,26 @@ public class AutoDiscoveryExtensionRegistry implements ExtensionRegistry {
 		}
 
 		@Override
-		@SuppressWarnings("unchecked")
 		public Class<EnemyExtension> apply(Class<? extends EnemyExtension> type) {
 			if(!type.isInterface() && !Modifier.isAbstract(type.getModifiers()) && type.getConstructors().length>0) {
 				if(type.isAnnotationPresent(Developer.class)) {
-					for(Constructor<?> constructor : type.getConstructors()) {
-						if(constructor.getParameterCount()==0) {
-							LOG.info("Enemy: {} found and created by {}", type.getName(), extensionService.getDeveloper(type));
-							return (Class<EnemyExtension>) type;
-						}
-					}
+					checkDefaultConstructor(type);
 				} else {
 					LOG.error("Enemy: {} has no @Developer information => skipped", type.getName());
 				}
 			}
+			return null;
+		}
+
+		@SuppressWarnings("unchecked")
+		private Class<EnemyExtension> checkDefaultConstructor(Class<? extends EnemyExtension> type) {
+			for(Constructor<?> constructor : type.getConstructors()) {
+				if(constructor.getParameterCount()==0) {
+					LOG.info("Enemy: {} found and created by {}", type.getName(), extensionService.getDeveloper(type));
+					return (Class<EnemyExtension>) type;
+				}
+			}
+			LOG.error("Enemy: {} has no default constructor => skipped", type.getName());
 			return null;
 		}
 		

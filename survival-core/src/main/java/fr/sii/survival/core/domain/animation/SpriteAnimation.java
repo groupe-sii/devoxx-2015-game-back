@@ -21,6 +21,8 @@ import fr.sii.survival.core.domain.image.Sprite;
  *
  */
 public class SpriteAnimation extends PropertiesAnimation {
+	private static final int PERCENT = 100;
+	
 	/**
 	 * The sprite image to animate
 	 */
@@ -107,7 +109,7 @@ public class SpriteAnimation extends PropertiesAnimation {
 		List<Frame> frames = new ArrayList<Frame>(numImages);
 		for (int i = 0; i < numImages; i++) {
 			int x = i * sprite.getFrameWidth();
-			float percentage = steps == null ? (float) i * 100 / (float) numImages : steps[i];
+			float percentage = steps == null ? (float) i * PERCENT / (float) numImages : steps[i];
 			frames.add(new Frame(percentage, toProps(x)));
 		}
 		return frames;
