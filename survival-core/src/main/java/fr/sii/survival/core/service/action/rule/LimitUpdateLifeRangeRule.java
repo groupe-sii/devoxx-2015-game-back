@@ -4,6 +4,7 @@ import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.domain.action.UpdateLife;
 import fr.sii.survival.core.domain.player.Player;
+import fr.sii.survival.core.ext.annotation.Developer;
 import fr.sii.survival.core.util.CellUtil;
 
 /**
@@ -12,6 +13,7 @@ import fr.sii.survival.core.util.CellUtil;
  * 
  * @author Aurélien Baudet
  */
+@Developer(value="abaudet", name="Aurélien Baudet", email="abaudet@sii.fr")
 public class LimitUpdateLifeRangeRule implements AllowActionRule {
 
 	private int max;

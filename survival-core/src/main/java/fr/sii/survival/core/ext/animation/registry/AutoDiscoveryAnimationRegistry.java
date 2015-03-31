@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.ext.animation.AnimationProvider;
+import fr.sii.survival.core.ext.annotation.Developer;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.util.AutoDiscoveryUtil;
 
@@ -59,11 +60,15 @@ public class AutoDiscoveryAnimationRegistry implements AnimationRegistry {
 		@Override
 		public AnimationProvider apply(Class<? extends AnimationProvider> type) {
 			if (!type.isInterface() && !Modifier.isAbstract(type.getModifiers())) {
-				try {
-					LOG.info("found animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
-					return type.newInstance();
-				} catch (InstantiationException | IllegalAccessException e) {
-					LOG.error("cannot instantiate animation {} created by {}. Cause: {}", type.getName(), extensionService.getDeveloper(type), e);
+				if(type.isAnnotationPresent(Developer.class)) {
+					try {
+						LOG.info("found animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
+						return type.newInstance();
+					} catch (InstantiationException | IllegalAccessException e) {
+						LOG.error("cannot instantiate animation {} created by {}. Cause: {}", type.getName(), extensionService.getDeveloper(type), e);
+					}
+				} else {
+					LOG.error("Animation {} has no @Developer information. This animation is discarded", type.getName());
 				}
 			}
 			return null;

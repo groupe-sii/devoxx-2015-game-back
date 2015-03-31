@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.ext.EnemyExtension;
+import fr.sii.survival.core.ext.annotation.Developer;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.util.AutoDiscoveryUtil;
 
@@ -61,11 +62,15 @@ public class AutoDiscoveryExtensionRegistry implements ExtensionRegistry {
 		@SuppressWarnings("unchecked")
 		public Class<EnemyExtension> apply(Class<? extends EnemyExtension> type) {
 			if(!type.isInterface() && !Modifier.isAbstract(type.getModifiers()) && type.getConstructors().length>0) {
-				for(Constructor<?> constructor : type.getConstructors()) {
-					if(constructor.getParameterCount()==0) {
-						LOG.info("found enemy extension {} created by {}", type.getName(), extensionService.getDeveloper(type));
-						return (Class<EnemyExtension>) type;
+				if(type.isAnnotationPresent(Developer.class)) {
+					for(Constructor<?> constructor : type.getConstructors()) {
+						if(constructor.getParameterCount()==0) {
+							LOG.info("found enemy extension {} created by {}", type.getName(), extensionService.getDeveloper(type));
+							return (Class<EnemyExtension>) type;
+						}
 					}
+				} else {
+					LOG.error("Enemy extension {} has no @Developer information. This enemy is discarded", type.getName());
 				}
 			}
 			return null;
