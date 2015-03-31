@@ -1,0 +1,3 @@
+[submodule "spring-browser"]
+	path = spring-browser
+	url = https://github.com/aurelien-baudet/spring-browser.git
