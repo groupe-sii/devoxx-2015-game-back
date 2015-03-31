@@ -196,7 +196,7 @@ public class Game {
 		return builder.toString();
 	}
 
-	private CopyOnWriteArrayList<Player> getReadOnlyPlayers() {
+	private List<Player> getReadOnlyPlayers() {
 		return new CopyOnWriteArrayList<>(players);
 	}
 

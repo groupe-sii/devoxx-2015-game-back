@@ -65,12 +65,12 @@ public class AutoDiscoveryExtensionRegistry implements ExtensionRegistry {
 				if(type.isAnnotationPresent(Developer.class)) {
 					for(Constructor<?> constructor : type.getConstructors()) {
 						if(constructor.getParameterCount()==0) {
-							LOG.info("found enemy extension {} created by {}", type.getName(), extensionService.getDeveloper(type));
+							LOG.info("Enemy: {} found and created by {}", type.getName(), extensionService.getDeveloper(type));
 							return (Class<EnemyExtension>) type;
 						}
 					}
 				} else {
-					LOG.error("Enemy extension {} has no @Developer information. This enemy is discarded", type.getName());
+					LOG.error("Enemy: {} has no @Developer information => skipped", type.getName());
 				}
 			}
 			return null;

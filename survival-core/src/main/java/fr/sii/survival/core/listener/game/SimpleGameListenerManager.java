@@ -1,6 +1,7 @@
 package fr.sii.survival.core.listener.game;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -93,7 +94,7 @@ public class SimpleGameListenerManager implements GameListenerManager {
 		}
 	}
 
-	private CopyOnWriteArrayList<GameListener> getListeners() {
+	private List<GameListener> getListeners() {
 		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 	

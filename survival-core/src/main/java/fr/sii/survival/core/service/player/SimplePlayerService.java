@@ -16,6 +16,7 @@ import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.domain.player.PlayerInfo;
 import fr.sii.survival.core.domain.player.SimpleWizard;
 import fr.sii.survival.core.exception.GameException;
+import fr.sii.survival.core.exception.GameNotFoundException;
 import fr.sii.survival.core.listener.player.PlayerListener;
 import fr.sii.survival.core.listener.player.PlayerListenerManager;
 import fr.sii.survival.core.listener.player.PlayerListenerRegistry;
@@ -99,7 +100,6 @@ public class SimplePlayerService implements PlayerService {
 		int oldValue = life.getCurrent();
 		int lifeValue = life.updateCurrent(inc);
 		LOG.debug("update player life from {} to {}", oldValue, lifeValue);
-		Game game = gameHelper.getGame(player);
 		if (lifeValue <= 0) {
 			// new life<=0 => player is now dead
 			life.setCurrent(0);
@@ -110,6 +110,12 @@ public class SimplePlayerService implements PlayerService {
 			inc = life.getMax() - oldValue;
 		}
 		// trigger events
+		triggerEvents(player, inc, oldValue, lifeValue);
+		return inc;
+	}
+
+	private void triggerEvents(Player player, int inc, int oldValue, int lifeValue) throws GameNotFoundException {
+		Game game = gameHelper.getGame(player);
 		if(lifeValue <= 0 && oldValue>0) {
 			// player was alive and new life<=0 => player dead
 			playerListenerTrigger.triggerHit(game, player, -inc);
@@ -125,7 +131,6 @@ public class SimplePlayerService implements PlayerService {
 			// player is hit
 			playerListenerTrigger.triggerHit(game, player, -inc);
 		}
-		return inc;
 	}
 
 	@Override

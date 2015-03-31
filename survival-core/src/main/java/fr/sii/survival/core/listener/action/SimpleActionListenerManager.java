@@ -1,6 +1,7 @@
 package fr.sii.survival.core.listener.action;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -144,7 +145,7 @@ public class SimpleActionListenerManager implements ActionListenerManager {
 		}
 	}
 	
-	private CopyOnWriteArrayList<ActionListener> getListeners() {
+	private List<ActionListener> getListeners() {
 		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 

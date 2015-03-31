@@ -1,6 +1,7 @@
 package fr.sii.survival.core.listener.message;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -66,7 +67,7 @@ public class SimpleMessageListenerManager implements MessageListenerManager {
 		}
 	}
 
-	private CopyOnWriteArrayList<MessageListener> getListeners() {
+	private List<MessageListener> getListeners() {
 		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 

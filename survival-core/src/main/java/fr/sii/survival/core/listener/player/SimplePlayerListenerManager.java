@@ -115,7 +115,7 @@ public class SimplePlayerListenerManager implements PlayerListenerManager {
 		}
 	}
 
-	private CopyOnWriteArrayList<PlayerListener> getListeners() {
+	private List<PlayerListener> getListeners() {
 		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 	

@@ -1,6 +1,7 @@
 package fr.sii.survival.core.listener.board;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -82,7 +83,7 @@ public class SimpleBoardListenerManager implements BoardListenerManager {
 		}
 	}
 
-	private CopyOnWriteArrayList<BoardListener> getListeners() {
+	private List<BoardListener> getListeners() {
 		return new CopyOnWriteArrayList<>(listeners.values());
 	}
 	

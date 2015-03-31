@@ -1,20 +1,13 @@
 package fr.sii.survival.core.ext.animation.registry;
 
-import java.lang.reflect.Modifier;
 import java.util.List;
-import java.util.function.Function;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import fr.sii.survival.core.ext.animation.AnimationProvider;
-import fr.sii.survival.core.ext.annotation.Developer;
 import fr.sii.survival.core.service.extension.ExtensionService;
+import fr.sii.survival.core.util.AutoDiscoveryInstanceProvider;
 import fr.sii.survival.core.util.AutoDiscoveryUtil;
 
 public class AutoDiscoveryAnimationRegistry implements AnimationRegistry {
-	private static final Logger LOG = LoggerFactory.getLogger(AutoDiscoveryAnimationRegistry.class);
-	
 	private AnimationRegistry delegate;
 	
 	private ExtensionService extensionService;
@@ -34,7 +27,7 @@ public class AutoDiscoveryAnimationRegistry implements AnimationRegistry {
 	}
 	
 	public void register() {
-		for(AnimationProvider provider : AutoDiscoveryUtil.find(AnimationProvider.class, new AnimationLoaderProvider(extensionService), packageNames)) {
+		for(AnimationProvider provider : AutoDiscoveryUtil.find(AnimationProvider.class, new AutoDiscoveryInstanceProvider<>("Animation", extensionService), packageNames)) {
 			register(provider);
 		}
 	}
@@ -47,33 +40,6 @@ public class AutoDiscoveryAnimationRegistry implements AnimationRegistry {
 	@Override
 	public List<AnimationProvider> getProviders() {
 		return delegate.getProviders();
-	}
-	
-	private static final class AnimationLoaderProvider implements Function<Class<? extends AnimationProvider>, AnimationProvider> {
-		private ExtensionService extensionService;
-
-		public AnimationLoaderProvider(ExtensionService extensionService) {
-			super();
-			this.extensionService = extensionService;
-		}
-
-		@Override
-		public AnimationProvider apply(Class<? extends AnimationProvider> type) {
-			if (!type.isInterface() && !Modifier.isAbstract(type.getModifiers())) {
-				if(type.isAnnotationPresent(Developer.class)) {
-					try {
-						LOG.info("found animation {} created by {}", type.getName(), extensionService.getDeveloper(type));
-						return type.newInstance();
-					} catch (InstantiationException | IllegalAccessException e) {
-						LOG.error("cannot instantiate animation {} created by {}. Cause: {}", type.getName(), extensionService.getDeveloper(type), e);
-					}
-				} else {
-					LOG.error("Animation {} has no @Developer information. This animation is discarded", type.getName());
-				}
-			}
-			return null;
-		}
-		
 	}
 
 }

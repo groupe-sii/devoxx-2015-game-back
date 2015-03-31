@@ -16,6 +16,10 @@ import fr.sii.survival.core.domain.Game;
  *
  */
 public class ConcurrentHelper {
+	private ConcurrentHelper() {
+		super();
+	}
+	
 	private static Map<String, GameConcurrentFactory> factoriesByGameId = new HashMap<>();
 
 	public static GameConcurrentFactory getGameFactory(Game game) {
