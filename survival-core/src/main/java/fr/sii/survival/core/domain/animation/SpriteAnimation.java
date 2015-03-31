@@ -11,9 +11,11 @@ import fr.sii.survival.core.domain.image.Sprite;
  * Generates an animation based on the provided sprite image. Each frame
  * represents one image of the sprite.
  * 
- * The animation can automatically generates linear percentage for frames. But
- * if steps are provided, the animation is no more linear and let you provide
- * manually the steps.
+ * The animation automatically generates linear percentage for frames.
+ * 
+ * If steps are provided, the animation is no more linear and let you provide
+ * manually the steps. Unfortunately, CSS3 animations doesn't support manual
+ * steps so this feature is hidden.
  * 
  * @author Aurélien Baudet
  *
@@ -58,6 +60,8 @@ public class SpriteAnimation extends PropertiesAnimation {
 
 	/**
 	 * Generates a manual repartition for the animation based on provided steps.
+	 * This constructor is now private because the steps doesn't work on client
+	 * side with CSS animations
 	 * 
 	 * @param name
 	 *            the name of the animation
@@ -70,13 +74,15 @@ public class SpriteAnimation extends PropertiesAnimation {
 	 * @param steps
 	 *            the manual percentage steps
 	 */
-	public SpriteAnimation(String name, long duration, Sprite sprite, AnimationOptions options, float... steps) {
+	private SpriteAnimation(String name, long duration, Sprite sprite, AnimationOptions options, float... steps) {
 		super(name, duration, options, toFrames(sprite, steps));
 		this.sprite = sprite;
 	}
 
 	/**
 	 * Generates a manual repartition for the animation based on provided steps.
+	 * This constructor is now private because the steps doesn't work on client
+	 * side with CSS animations
 	 * 
 	 * @param name
 	 *            the name of the animation
@@ -87,7 +93,7 @@ public class SpriteAnimation extends PropertiesAnimation {
 	 * @param steps
 	 *            the manual percentage steps
 	 */
-	public SpriteAnimation(String name, long duration, Sprite sprite, float... steps) {
+	private SpriteAnimation(String name, long duration, Sprite sprite, float... steps) {
 		super(name, duration, toFrames(sprite, steps));
 		this.sprite = sprite;
 	}

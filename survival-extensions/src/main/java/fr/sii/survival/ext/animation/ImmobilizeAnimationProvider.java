@@ -23,25 +23,7 @@ public class ImmobilizeAnimationProvider implements AnimationProvider {
 	@Override
 	public Animation provide() throws AnimationInitializationException {
 		try {
-			return new SpriteAnimation(States.IMMOBILIZED.toString(), 5000, new UriSprite("images/immobilize"), new float[] {
-				// roots are getting out the earth
-				0,
-				2,
-				4,
-				6,
-				8,
-				10,
-				12,
-				14,
-				16,
-				// roots are out and don't move any more
-				
-				// roots are going back to earth
-				94,
-				96,
-				98,
-				100
-			});
+			return new SpriteAnimation(States.IMMOBILIZED.toString(), 5000, new UriSprite("images/immobilize"));
 		} catch(IOException | MimetypeDetectionException e) {
 			throw new AnimationInitializationException("Failed to initialize 'immobilized' animation", e);
 		}

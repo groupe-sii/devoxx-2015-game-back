@@ -18,11 +18,11 @@ public class ImageUrlUtil {
 		super();
 	}
 	
-	public static void init() {
+	public static synchronized void init() {
 		getBaseUrl();
 	}
 	
-	public static URI getBaseUrl() {
+	public static synchronized URI getBaseUrl() {
 		if(baseUrl==null) {
 			baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().encode().toUri();
 		}

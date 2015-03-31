@@ -27,7 +27,9 @@ public class StopAppManager implements ApplicationListener<ContextClosedEvent> {
 		// stop all games
 		for(Game game : gameHelper.getGames()) {
 			try {
-				gameService.stop(game);
+				if(gameService.isStarted(game)) {
+					gameService.stop(game);
+				}
 			} catch (GameException e) {
 				LOG.error("Failed to stop game {}. Cause: {}", game, e);
 			}
