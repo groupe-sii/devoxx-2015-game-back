@@ -1,3 +1,6 @@
 [submodule "spring-browser"]
 	path = spring-browser
 	url = https://github.com/aurelien-baudet/spring-browser.git
+[submodule "survival-extensions"]
+	path = survival-extensions
+	url = https://github.com/groupe-sii/devoxx-2015-game-back-ext.git
