@@ -12,7 +12,6 @@ import fr.sii.survival.core.exception.BoardListenerException;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 
-// TODO: manage locks to avoid concurrentmodifexception
 public class SimpleBoardListenerManager implements BoardListenerManager {
 
 	private Map<String, BoardListener> listeners;

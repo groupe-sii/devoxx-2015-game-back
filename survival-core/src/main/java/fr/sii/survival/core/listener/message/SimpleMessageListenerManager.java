@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import fr.sii.survival.core.domain.message.GameMessage;
 import fr.sii.survival.core.exception.GameException;
 
-// TODO: manage locks to avoid concurrentmodifexception
 public class SimpleMessageListenerManager implements MessageListenerManager {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SimpleMessageListenerManager.class);

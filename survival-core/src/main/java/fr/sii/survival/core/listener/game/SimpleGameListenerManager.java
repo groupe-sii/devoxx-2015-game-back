@@ -11,7 +11,6 @@ import fr.sii.survival.core.exception.GameListenerException;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 
-// TODO: manage locks to avoid concurrentmodifexception
 public class SimpleGameListenerManager implements GameListenerManager {
 
 	private Map<String, GameListener> listeners;

@@ -19,7 +19,6 @@ import fr.sii.survival.core.exception.ActionListenerException;
 import fr.sii.survival.core.service.extension.ExtensionService;
 import fr.sii.survival.core.service.message.MessageService;
 
-// TODO: manage locks to avoid concurrentmodifexception
 public class SimpleActionListenerManager implements ActionListenerManager {
 
 	private Map<String, ActionListener> listeners;
