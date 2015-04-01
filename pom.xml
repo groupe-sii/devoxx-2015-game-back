@@ -34,6 +34,8 @@
 		<commons-io.version>2.4</commons-io.version>
 		<commons-lang.version>3.0</commons-lang.version>
 		<jmimemagic.version>0.1.3</jmimemagic.version>
+		<nexus.release.url>http://nexus.devoxx.sii.fr/content/repositories/releases</nexus.release.url>
+		<nexus.snapshot.url>http://nexus.devoxx.sii.fr/content/repositories/snapshots</nexus.snapshot.url>
 	</properties>
 
 	<dependencyManagement>
@@ -83,4 +85,18 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	
+	
+	<distributionManagement>
+		<repository>
+			<id>nexus</id>
+			<name>Internal Releases</name>
+			<url>${nexus.release.url}</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus</id>
+			<name>Internal Snapshots</name>
+			<url>${nexus.snapshot.url}</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
