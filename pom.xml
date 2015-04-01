@@ -13,7 +13,7 @@
 
 	<modules>
 		<module>survival-core</module>
-		<module>survival-extensions</module>
+		<!-- <module>survival-extensions</module> -->
 		<module>spring-browser</module>
 		<module>survival-game</module>
 	</modules>
