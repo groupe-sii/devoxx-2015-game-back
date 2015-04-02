@@ -12,15 +12,15 @@ Game development for devoxx 2015. This is the main repository for the whole serv
 - a local git repository with a correct configuration (cf . [documentation](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git) )
 
 ## Install and run the server
-1. Grab the code
+### Grab the code (once)
 Warning : The git repository contains some submodules. In order to get a clean local repository, you should do something similar to :
 ```~/git> $ git clone --recursive https://github.com/groupe-sii/devoxx-2015-game-back```
 ```~/git> cd devoxx-2015-game-back```
 ```~/git/devoxx-2015-game-back> git submodule foreach --recursive git checkout master```
-2. Compile and install the server
+### Compile and install the server (once)
 Our server comes with a spring-boot standalone integration. 
 Spring-boot will just check for the server artifacts in your local maven repository. So you just need a 
 ```~/git/devoxx-2015-game-back> mvn clean install```
-3. Run the server
+### Run the server
 Now each time you would want to run the server, you'll need to run from the *survival-game* directory:
 ```~/git/devoxx-2015-game-back> mvn spring:boot```
