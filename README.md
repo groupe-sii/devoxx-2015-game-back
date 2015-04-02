@@ -30,7 +30,10 @@ So you just need to type :
 ### Run the server
 Now each time you would want to run the server, you'll need to run from the *survival-game* directory :
 
-```~/git/devoxx-2015-game-back> mvn spring-boot:run```
+```
+~/git/devoxx-2015-game-back> cd survival-game
+~/git/devoxx-2015-game-back/survival-game> mvn spring-boot:run
+```
 
 ## What's inside ? 
 Feel free to take a look at the different javadocs :
