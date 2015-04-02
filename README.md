@@ -14,17 +14,15 @@ Game development for devoxx 2015. This is the main repository for the whole serv
 ## Install and run the server
 ### Grab the code (once)
 Warning : The git repository contains some submodules. In order to get a clean local repository, you should type something similar to :
-```~/git> $ git clone --recursive https://github.com/groupe-sii/devoxx-2015-game-back```
-
-```~/git> cd devoxx-2015-game-back```
-
-```~/git/devoxx-2015-game-back> git submodule foreach --recursive git checkout master```
+```
+~/git> $ git clone --recursive https://github.com/groupe-sii/devoxx-2015-game-back
+~/git> cd devoxx-2015-game-back
+~/git/devoxx-2015-game-back> git submodule foreach --recursive git checkout master
+```
 
 ### Compile and install the server (once)
 Our server comes with a spring-boot standalone integration. 
-
 Spring-boot will just check for the server artifacts in your local maven repository. 
-
 So you just need to type : 
 
 ```~/git/devoxx-2015-game-back> mvn clean install```
