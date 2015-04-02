@@ -26,12 +26,12 @@ public abstract class EnemyExtension {
 	protected BoardService boardService;
 
 	/**
-	 * The service used to manage board
+	 * The service used to manage player
 	 */
 	protected PlayerService playerService;
 
 	/**
-	 * The enemy the extension is managing
+	 * The enemy managed by the extension
 	 */
 	protected Enemy enemy;
 
