@@ -3,16 +3,38 @@ Game development for devoxx 2015. This is the main repository for the whole serv
 
 ## Requirements
 ### Sofwtares installed on your computer :
-- git
-- Java JDK 1.8
-- maven 3.x
-- 
+* git
+* Java JDK 1.8
+* maven 3.x
+ 
 
 ### Other prerequisites
 - a local git repository with a correct configuration (cf . [documentation](http://git-scm.com/book/en/v2/Getting-Started-Installing-Git) )
 
-## Install
+## Install and run the server
+### Grab the code (once)
+Warning : The git repository contains some submodules. In order to get a clean local repository, you should type something similar to :
+```
+~/git> $ git clone --recursive https://github.com/groupe-sii/devoxx-2015-game-back
+~/git> cd devoxx-2015-game-back
+~/git/devoxx-2015-game-back> git submodule foreach --recursive git checkout master
+```
 
-Run
+### Compile and install the server (once)
+Our server comes with a spring-boot standalone integration. 
+Spring-boot will just check for the server artifacts in your local maven repository. 
+So you just need to type : 
 
-```mvn clean install```
+```~/git/devoxx-2015-game-back> mvn clean install```
+
+### Run the server
+Now each time you would want to run the server, you'll need to run from the *survival-game* directory :
+
+```~/git/devoxx-2015-game-back> mvn spring-boot:run```
+
+## What's inside ? 
+Feel free to take a look at the different javadocs :
+* Main module and game API : http://game.javadoc.devoxx.sii.fr/core/
+* Game extensions API : http://game.javadoc.devoxx.sii.fr/extensions/
+* Provided WebSocket interface for GUI clients : http://game.javadoc.devoxx.sii.fr/web/
+
