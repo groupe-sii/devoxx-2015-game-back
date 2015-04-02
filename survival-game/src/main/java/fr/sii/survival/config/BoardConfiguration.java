@@ -56,7 +56,7 @@ public class BoardConfiguration {
 									.<Predicate<AllowMoveRule>>map(exclude -> new RegexRulePredicate<AllowMoveRule>(exclude))
 									.reduce(Predicate::or)
 									.orElse(p -> false);
-		return new AutoDiscoveryBoardRuleRegistry(new PreFilteredMoveRuleRegistry(excludeFilter.negate(), new SimpleMoveRuleRegistry()), extensionService, "fr.sii.survival.ext.rules");
+		return new AutoDiscoveryBoardRuleRegistry(new PreFilteredMoveRuleRegistry(excludeFilter.negate(), new SimpleMoveRuleRegistry()), extensionService, "fr.sii.survival.ext");
 	}
 
 	@Bean

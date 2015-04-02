@@ -68,7 +68,7 @@ public class ActionConfiguration {
 									.<Predicate<AllowActionRule>>map(exclude -> new RegexRulePredicate<AllowActionRule>(exclude))
 									.reduce(Predicate::or)
 									.orElse(p -> false);
-		return new AutoDiscoveryActionRuleRegistry(new PreFilteredActionRuleRegistry(excludeFilter.negate(), new SimpleActionRuleRegistry()), extensionService, "fr.sii.survival.ext.rules");
+		return new AutoDiscoveryActionRuleRegistry(new PreFilteredActionRuleRegistry(excludeFilter.negate(), new SimpleActionRuleRegistry()), extensionService, "fr.sii.survival.ext");
 	}
 
 	@Bean

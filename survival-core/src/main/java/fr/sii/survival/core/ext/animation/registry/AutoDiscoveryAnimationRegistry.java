@@ -15,7 +15,7 @@ public class AutoDiscoveryAnimationRegistry implements AnimationRegistry {
 	private String[] packageNames;
 
 	public AutoDiscoveryAnimationRegistry(AnimationRegistry delegate, ExtensionService extensionService) {
-		this(delegate, extensionService, "fr.sii.survival.ext.animation");
+		this(delegate, extensionService, "fr.sii.survival.ext");
 	}
 
 	public AutoDiscoveryAnimationRegistry(AnimationRegistry delegate, ExtensionService extensionService, String... packageNames) {

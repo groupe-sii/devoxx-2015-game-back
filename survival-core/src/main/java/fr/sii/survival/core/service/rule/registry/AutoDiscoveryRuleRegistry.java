@@ -25,7 +25,7 @@ import fr.sii.survival.core.util.AutoDiscoveryUtil;
 	private String[] packageNames;
 
 	public AutoDiscoveryRuleRegistry(RuleRegistry<R> delegate, ExtensionService extensionService, Class<R> clazz) {
-		this(delegate, extensionService, clazz, "fr.sii.survival.ext.rules");
+		this(delegate, extensionService, clazz, "fr.sii.survival.ext");
 	}
 
 	public AutoDiscoveryRuleRegistry(RuleRegistry<R> delegate, ExtensionService extensionService, Class<R> clazz, String... packageNames) {
