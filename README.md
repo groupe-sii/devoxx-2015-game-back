@@ -31,3 +31,10 @@ So you just need to type :
 Now each time you would want to run the server, you'll need to run from the *survival-game* directory :
 
 ```~/git/devoxx-2015-game-back> mvn spring-boot:run```
+
+## What's inside ? 
+Feel free to take a look at the different javadocs :
+* Main module and game API : http://game.javadoc.devoxx.sii.fr/core/
+* Game extensions API : http://game.javadoc.devoxx.sii.fr/extensions/
+* Provided WebSocket interface for GUI clients : http://game.javadoc.devoxx.sii.fr/web/
+
