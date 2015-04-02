@@ -1,7 +1,7 @@
 .${animation.name} {
 	display: block;
-	width: ${animation.sprite.frameWidth}px;
-	height: ${animation.sprite.frameHeight}px;
+	width: ${animation.sprite.frameWidth?c}px;
+	height: ${animation.sprite.frameHeight?c}px;
 	${vendorPrefix}animation-fill-mode: none;
 	${vendorPrefix}animation-direction: normal;
 	${vendorPrefix}animation-iteration-count: ${animation.options.count?c};
