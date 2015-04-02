@@ -28,7 +28,8 @@ public abstract class DelegateEnemyExtension extends EnemyExtension {
 	 * extension delegates the behavior of the enemy to specialized behaviors
 	 * provided by implementing abstract methods.
 	 * 
-	 * The specialized behaviors won't be reload every execution of run method.
+	 * The specialized behaviors won't be reloaded every execution of run
+	 * method.
 	 * 
 	 * @param enemy
 	 *            the enemy managed by the extension
@@ -42,7 +43,8 @@ public abstract class DelegateEnemyExtension extends EnemyExtension {
 	 * extension delegates the behavior of the enemy to specialized behaviors
 	 * provided by implementing abstract methods.
 	 * 
-	 * The specialized behaviors won't be reload every execution of run method.
+	 * The specialized behaviors won't be reloaded every execution of run
+	 * method.
 	 * 
 	 * @param name
 	 *            the name of the enemy managed by the extension
