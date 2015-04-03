@@ -79,6 +79,19 @@ public class Game {
 	}
 
 	/**
+	 * Get the first single player that matches the provided condition
+	 * 
+	 * @param predicate
+	 *            the filter condition
+	 * @return the found player that matches the condition or null if no player
+	 *         matches
+	 */
+	public Player getPlayer(Predicate<Player> predicate) {
+		List<Player> players = getPlayers(predicate);
+		return players.size()==0 ? null : players.get(0);
+	}
+
+	/**
 	 * Get the board information
 	 * 
 	 * @return the board information

@@ -1,7 +1,7 @@
 package fr.sii.survival.core.domain.player;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Groups the list of states for a player
@@ -13,15 +13,15 @@ public class PlayerStates {
 	/**
 	 * The list of states
 	 */
-	private List<String> states;
+	private Set<String> states;
 
-	public PlayerStates(List<String> states) {
+	public PlayerStates(Set<String> states) {
 		super();
 		this.states = states;
 	}
 
 	public PlayerStates() {
-		this(new ArrayList<>());
+		this(new HashSet<>());
 	}
 
 	/**
@@ -29,7 +29,7 @@ public class PlayerStates {
 	 * 
 	 * @return the list of states
 	 */
-	public List<String> getStates() {
+	public Set<String> getStates() {
 		return states;
 	}
 
@@ -42,11 +42,7 @@ public class PlayerStates {
 	 * @return true if the state has been added, false otherwise
 	 */
 	public boolean addState(String state) {
-		if (!states.contains(state)) {
-			states.add(state);
-			return true;
-		}
-		return false;
+		return states.add(state);
 	}
 
 	/**
