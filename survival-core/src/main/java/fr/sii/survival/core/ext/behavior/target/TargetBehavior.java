@@ -5,6 +5,7 @@ import java.util.List;
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.ext.GameContext;
 
+@FunctionalInterface
 public interface TargetBehavior {
 	public List<Cell> getTargetPositions(GameContext context);
 }
