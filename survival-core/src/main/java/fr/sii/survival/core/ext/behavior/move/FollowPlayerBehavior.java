@@ -13,9 +13,9 @@ import fr.sii.survival.core.ext.GameContext;
  */
 public class FollowPlayerBehavior implements EnemyMoveBehavior {
 	/** Number of cells the follower will move each time */
-	private int speed;
-	private Player follower;
-	private Player followed;
+	protected int speed;
+	protected Player follower;
+	protected Player followed;
 
 
 	public FollowPlayerBehavior(Player follower, Player followed, int speed) {
