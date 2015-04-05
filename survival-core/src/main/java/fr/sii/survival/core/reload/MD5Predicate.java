@@ -86,7 +86,7 @@ public class MD5Predicate implements Predicate<Object> {
 		}
 
 		public Map<String, String> generate(URL url) throws URISyntaxException, IOException {
-			Map<String, String> map = new HashMap<>();
+			Map<String, String> fileMap = new HashMap<>();
 			for (File f : Files.fileTreeTraverser().breadthFirstTraversal(new File(url.toURI()))) {
 				String hash;
 				if (f.isDirectory()) {
@@ -94,14 +94,19 @@ public class MD5Predicate implements Predicate<Object> {
 				} else {
 					hash = Files.hash(f, Hashing.md5()).toString();
 				}
-				map.put(f.getAbsolutePath(), hash);
+				fileMap.put(f.getAbsolutePath(), hash);
 			}
-			return map;
+			return fileMap;
 		}
-
+		
 		@Override
 		public String toString() {
 			return map.toString();
+		}
+
+		@Override
+		public int hashCode() {
+			return map.hashCode();
 		}
 
 	}
@@ -131,6 +136,11 @@ public class MD5Predicate implements Predicate<Object> {
 		@Override
 		public String toString() {
 			return hash;
+		}
+
+		@Override
+		public int hashCode() {
+			return hash.hashCode();
 		}
 
 	}

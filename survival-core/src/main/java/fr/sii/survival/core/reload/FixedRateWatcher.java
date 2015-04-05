@@ -91,7 +91,7 @@ public class FixedRateWatcher extends BaseReloadWatcher {
 	 *            immediately start the timer if true
 	 */
 	public FixedRateWatcher(Predicate<?> predicate, int rate, TimeUnit unit, boolean start) {
-		this(predicate, TimeUnit.MILLISECONDS.convert(rate, unit));
+		this(predicate, TimeUnit.MILLISECONDS.convert(rate, unit), start);
 	}
 
 	@Override
