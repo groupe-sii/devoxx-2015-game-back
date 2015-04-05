@@ -28,4 +28,9 @@ public class SimpleAnimationRegistry implements AnimationRegistry {
 		return providers;
 	}
 
+	@Override
+	public void reset() {
+		providers.clear();
+	}
+
 }

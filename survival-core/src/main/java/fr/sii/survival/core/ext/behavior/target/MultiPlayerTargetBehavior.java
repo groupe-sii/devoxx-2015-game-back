@@ -8,10 +8,17 @@ import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.ext.GameContext;
 
+/**
+ * Target behavior that returns position of all targeted players. The list of
+ * players to target can be updated.
+ * 
+ * @author Aurélien Baudet
+ *
+ */
 public class MultiPlayerTargetBehavior implements TargetBehavior {
 
 	private List<Player> players;
-	
+
 	public MultiPlayerTargetBehavior() {
 		this(new ArrayList<>());
 	}
@@ -24,7 +31,7 @@ public class MultiPlayerTargetBehavior implements TargetBehavior {
 	@Override
 	public List<Cell> getTargetPositions(GameContext context) {
 		List<Cell> cells = new ArrayList<Cell>(players.size());
-		for(Player player : new CopyOnWriteArrayList<>(players)) {
+		for (Player player : new CopyOnWriteArrayList<>(players)) {
 			Cell cell = context.getBoard().getCell(player);
 			cells.add(cell);
 		}
@@ -34,7 +41,7 @@ public class MultiPlayerTargetBehavior implements TargetBehavior {
 	public void addPlayer(Player player) {
 		players.add(player);
 	}
-	
+
 	public void removePlayer(Player player) {
 		players.remove(player);
 	}

@@ -5,10 +5,16 @@ import java.util.List;
 
 import fr.sii.survival.core.ext.EnemyExtension;
 
-public class SimpleEnemyExtensionRegistry implements ExtensionRegistry {
+/**
+ * Simple registry that stores in memory enemy extensions.
+ * 
+ * @author Aurélien Baudet
+ *
+ */
+public class SimpleEnemyExtensionRegistry implements EnemyRegistry {
 
 	private List<Class<EnemyExtension>> enemyExtensions;
-	
+
 	public SimpleEnemyExtensionRegistry() {
 		this(new ArrayList<>());
 	}
@@ -16,6 +22,11 @@ public class SimpleEnemyExtensionRegistry implements ExtensionRegistry {
 	public SimpleEnemyExtensionRegistry(List<Class<EnemyExtension>> enemyExtensions) {
 		super();
 		this.enemyExtensions = enemyExtensions;
+	}
+
+	@Override
+	public void reset() {
+		enemyExtensions.clear();
 	}
 
 	@Override

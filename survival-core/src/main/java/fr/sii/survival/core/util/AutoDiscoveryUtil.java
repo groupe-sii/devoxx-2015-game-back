@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
 
+import org.reflections.Configuration;
 import org.reflections.Reflections;
 import org.reflections.util.ClasspathHelper;
 import org.reflections.util.ConfigurationBuilder;
@@ -33,7 +34,7 @@ public class AutoDiscoveryUtil {
 	 *            The type for the provided object for each found class
 	 */
 	public static <T, R> List<R> find(Class<T> clazz, Function<Class<? extends T>, R> provider, String... packageNames) {
-		ConfigurationBuilder builder = getBuilder(packageNames);
+		Configuration builder = getBuilder(packageNames);
 		Reflections reflections = new Reflections(builder);
 		Set<Class<? extends T>> subTypes = reflections.getSubTypesOf(clazz);
 		List<R> impls = new ArrayList<>(subTypes.size());
@@ -46,8 +47,8 @@ public class AutoDiscoveryUtil {
 		return impls;
 	}
 
-	public static ConfigurationBuilder getBuilder(String... packageNames) {
-		ConfigurationBuilder builder = new ConfigurationBuilder();
+	public static Configuration getBuilder(String... packageNames) {
+		ConfigurationBuilder builder = ClassLoaderHelper.getReflectionsBuilder();
 		for (String packageName : packageNames) {
 			builder.addUrls(ClasspathHelper.forPackage(packageName));
 		}

@@ -43,4 +43,9 @@ public class PostFilteredRegistry<R extends Rule> implements RuleRegistry<R> {
 		return filtered;
 	}
 
+	@Override
+	public void reset() {
+		delegate.reset();
+	}
+
 }

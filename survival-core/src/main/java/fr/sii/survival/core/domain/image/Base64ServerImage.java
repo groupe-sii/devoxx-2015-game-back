@@ -19,6 +19,7 @@ import com.google.common.io.ByteStreams;
 import com.google.common.io.Closeables;
 
 import fr.sii.survival.core.exception.MimetypeDetectionException;
+import fr.sii.survival.core.util.ClassLoaderHelper;
 
 /**
  * Image that is located on the server. The image is serialized into base64 in
@@ -170,7 +171,7 @@ public class Base64ServerImage implements ServerImage {
 	 *             when the image can't be read
 	 */
 	public Base64ServerImage(String relativePath, String mimetype) throws IOException {
-		this(Base64ServerImage.class.getResourceAsStream("/" + relativePath), mimetype);
+		this(ClassLoaderHelper.getResourceAsStream(relativePath), mimetype);
 	}
 
 	/**
@@ -184,7 +185,7 @@ public class Base64ServerImage implements ServerImage {
 	 *             when mimetype detection failed
 	 */
 	public Base64ServerImage(String relativePath) throws IOException, MimetypeDetectionException {
-		this(Base64ServerImage.class.getResourceAsStream("/" + relativePath));
+		this(ClassLoaderHelper.getResourceAsStream(relativePath));
 	}
 
 	public String getId() {

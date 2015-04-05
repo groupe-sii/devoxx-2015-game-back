@@ -14,13 +14,13 @@ import fr.sii.survival.core.ext.EnemyExtension;
  * @author Aurélien Baudet
  *
  */
-public class PostFilteredRegistry implements ExtensionRegistry {
+public class PostFilteredRegistry implements EnemyRegistry {
 
-	private ExtensionRegistry delegate;
+	private EnemyRegistry delegate;
 	
 	private Predicate<Class<?>> predicate;
 	
-	public PostFilteredRegistry(Predicate<Class<?>> predicate, ExtensionRegistry delegate) {
+	public PostFilteredRegistry(Predicate<Class<?>> predicate, EnemyRegistry delegate) {
 		super();
 		this.predicate = predicate;
 		this.delegate = delegate;
@@ -41,6 +41,11 @@ public class PostFilteredRegistry implements ExtensionRegistry {
 			}
 		}
 		return filtered;
+	}
+
+	@Override
+	public void reset() {
+		delegate.reset();
 	}
 
 }

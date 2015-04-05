@@ -55,9 +55,12 @@ public class ImageUtil {
 	 *             when the mimetype of an image couldn't be found
 	 */
 	public static List<InputStream> loadStreams(String folder, boolean reverse) throws IOException, MimetypeDetectionException {
-		List<InputStream> images = ScanUtil.scan(folder, reverse, file -> Base64ServerImage.class.getResourceAsStream("/" + file));
+		List<InputStream> images = ScanUtil.scan(folder, reverse, file -> ClassLoaderHelper.getResourceAsStream(file));
 		if(images.isEmpty()) {
 			throw new IOException("Folder "+folder+" doesn't contain any image");
+		}
+		if(images.stream().anyMatch(i -> i==null)) {
+			throw new IOException("Couldn't read images in folder "+folder);
 		}
 		return images;
 	}

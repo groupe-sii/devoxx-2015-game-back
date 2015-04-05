@@ -10,8 +10,8 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import fr.sii.survival.core.ext.EnemyExtension;
 import fr.sii.survival.core.ext.annotation.AnnotationDeveloperProvider;
-import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
-import fr.sii.survival.core.ext.registry.ExtensionRegistry;
+import fr.sii.survival.core.ext.registry.AutoDiscoveryEnemyRegistry;
+import fr.sii.survival.core.ext.registry.EnemyRegistry;
 import fr.sii.survival.core.ext.registry.SimpleEnemyExtensionRegistry;
 import fr.sii.survival.core.service.extension.DelegateExtensionService;
 import fr.sii.survival.core.service.extension.ExtensionService;
@@ -22,12 +22,12 @@ public class AutoDiscoveryExtensionRegistryTest {
 
 	ExtensionService extensionService;
 
-	ExtensionRegistry registry;
+	EnemyRegistry registry;
 
 	@Before
 	public void setUp() {
 		extensionService = new DelegateExtensionService(new AnnotationDeveloperProvider());
-		registry = new AutoDiscoveryExtensionRegistry(new SimpleEnemyExtensionRegistry(), extensionService, "fr.sii.survival.mock.ext");
+		registry = new AutoDiscoveryEnemyRegistry(new SimpleEnemyExtensionRegistry(), extensionService, "fr.sii.survival.mock.ext");
 	}
 
 	@Test

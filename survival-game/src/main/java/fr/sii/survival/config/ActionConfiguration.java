@@ -7,11 +7,13 @@ import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import fr.sii.survival.config.options.RuleOptions;
 import fr.sii.survival.core.domain.action.Action;
 import fr.sii.survival.core.listener.action.ActionListenerManager;
 import fr.sii.survival.core.listener.action.SimpleActionListenerManager;
+import fr.sii.survival.core.reload.ReloadWatcher;
 import fr.sii.survival.core.service.action.ActionManager;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.action.AddImageActionManager;
@@ -28,6 +30,7 @@ import fr.sii.survival.core.service.action.rule.AllowActionRule;
 import fr.sii.survival.core.service.action.rule.DelegateRulesActionService;
 import fr.sii.survival.core.service.action.rule.registry.AllowActionRuleRegistry;
 import fr.sii.survival.core.service.action.rule.registry.AutoDiscoveryActionRuleRegistry;
+import fr.sii.survival.core.service.action.rule.registry.HotReloadActionRuleRegistry;
 import fr.sii.survival.core.service.action.rule.registry.PreFilteredActionRuleRegistry;
 import fr.sii.survival.core.service.action.rule.registry.SimpleActionRuleRegistry;
 import fr.sii.survival.core.service.board.BoardService;
@@ -55,6 +58,9 @@ public class ActionConfiguration {
 	@Autowired
 	RuleOptions ruleOptions;
 	
+	@Autowired
+	ReloadWatcher reloadWatcher;
+	
 	@Bean
 	public ActionService actionService() {
 		ActionService simpleActionService = new DelegateActionService(actionListenerManager(), actionManagers());
@@ -62,13 +68,14 @@ public class ActionConfiguration {
 	}
 	
 	@Bean
+	@DependsOn("classLoaderReloader")
 	public AllowActionRuleRegistry allowActionRuleRegistry() {
 		// transform list of exclusion patterns into a list of RegexPredicate. Then the list of predicates is combined using a Or operator
 		Predicate<AllowActionRule> excludeFilter = ruleOptions.getExcludes().stream()
 									.<Predicate<AllowActionRule>>map(exclude -> new RegexRulePredicate<AllowActionRule>(exclude))
 									.reduce(Predicate::or)
 									.orElse(p -> false);
-		return new AutoDiscoveryActionRuleRegistry(new PreFilteredActionRuleRegistry(excludeFilter.negate(), new SimpleActionRuleRegistry()), extensionService, "fr.sii.survival.ext");
+		return new HotReloadActionRuleRegistry(reloadWatcher, new AutoDiscoveryActionRuleRegistry(new PreFilteredActionRuleRegistry(excludeFilter.negate(), new SimpleActionRuleRegistry()), extensionService, "fr.sii.survival.ext"));
 	}
 
 	@Bean

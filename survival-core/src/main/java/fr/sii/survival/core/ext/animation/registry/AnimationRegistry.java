@@ -19,4 +19,9 @@ public interface AnimationRegistry {
 	 * @return the list of available animation providers
 	 */
 	public List<AnimationProvider> getProviders();
+
+	/**
+	 * Reset the registry and empty all registered animations
+	 */
+	public void reset();
 }

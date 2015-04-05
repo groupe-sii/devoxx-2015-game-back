@@ -6,6 +6,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import fr.sii.survival.core.util.ClassLoaderHelper;
+
 public class UriImage implements ServerImage {
 	private static long counter = 0;
 
@@ -20,7 +22,7 @@ public class UriImage implements ServerImage {
 	private URI uri;
 
 	public UriImage(String path) throws IOException, URISyntaxException {
-		this(check(UriImage.class.getResource("/"+path), path));
+		this(check(ClassLoaderHelper.getResource(path), path));
 	}
 
 	public UriImage(URL url) throws IOException, URISyntaxException {
