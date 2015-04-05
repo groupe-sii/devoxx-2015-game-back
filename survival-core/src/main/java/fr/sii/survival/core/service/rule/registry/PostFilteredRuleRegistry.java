@@ -14,13 +14,13 @@ import fr.sii.survival.core.service.rule.Rule;
  * @author Aurélien Baudet
  *
  */
-public class PostFilteredRegistry<R extends Rule> implements RuleRegistry<R> {
+public class PostFilteredRuleRegistry<R extends Rule> implements RuleRegistry<R> {
 
 	private RuleRegistry<R> delegate;
 	
 	private Predicate<R> predicate;
 	
-	public PostFilteredRegistry(Predicate<R> predicate, RuleRegistry<R> delegate) {
+	public PostFilteredRuleRegistry(Predicate<R> predicate, RuleRegistry<R> delegate) {
 		super();
 		this.predicate = predicate;
 		this.delegate = delegate;
