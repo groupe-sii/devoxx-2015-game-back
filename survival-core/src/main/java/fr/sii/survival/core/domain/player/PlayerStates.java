@@ -63,8 +63,6 @@ public class PlayerStates {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(states);
-		return builder.toString();
+		return states.toString();
 	}
 }
