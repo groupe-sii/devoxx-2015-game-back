@@ -78,6 +78,9 @@ You can use the maven plugin provided by Spring Boot to help us running the serv
 
 ### Get the client
 
+To view the client, you need to either build it from sources or directly download the generated zip.
+
+
 #### From sources
 
 To see the game running, you need to download the [web client game](https://github.com/groupe-sii/devoxx-2015-game-front).
