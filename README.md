@@ -78,7 +78,13 @@ You can use the maven plugin provided by Spring Boot to help us running the serv
 
 ### Get the client
 
+#### From sources
+
 To see the game running, you need to download the [web client game](https://github.com/groupe-sii/devoxx-2015-game-front).
+
+#### Download it
+
+If you don't want to create front extensions, you can simply [download the client](http://jenkins.devoxx.sii.fr/job/devoxx-game-front/ws/dist/*zip*/dist.zip). Then you have to configure your HTTP server (Apache for example) to serve the static html page.
 
 
 ### Hot reload
