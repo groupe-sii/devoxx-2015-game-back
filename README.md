@@ -75,6 +75,12 @@ You can use the maven plugin provided by Spring Boot to help us running the serv
 ~/git/devoxx-2015-game-back/survival-game> mvn spring-boot:run
 ```
 
+
+### Get the client
+
+To see the game running, you need to download the [web client game](https://github.com/groupe-sii/devoxx-2015-game-front).
+
+
 ### Hot reload
 
 When you create your own extensions by following [this guide](https://github.com/groupe-sii/devoxx-2015-game-back-ext/blob/master/README.md#devoxx-2015-game-back-ext), the server doesn't need to be restarted. It will automatically detect changes and reload your extensions.
