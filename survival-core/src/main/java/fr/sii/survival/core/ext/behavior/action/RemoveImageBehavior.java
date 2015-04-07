@@ -8,10 +8,17 @@ import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.exception.GameException;
 import fr.sii.survival.core.service.action.ActionService;
 
+/**
+ * A behavior that removes an image from the board. See {@link RemoveImage} for
+ * more information about the executed action.
+ * 
+ * @author Aurélien Baudet
+ *
+ */
 public class RemoveImageBehavior extends SimpleActionBehavior {
 
 	private Image image;
-	
+
 	public RemoveImageBehavior(ActionService actionService, Enemy enemy, Image image) {
 		super(actionService, enemy);
 		this.image = image;

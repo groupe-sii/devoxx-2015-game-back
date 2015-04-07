@@ -8,12 +8,13 @@ import org.junit.Test;
 
 import fr.sii.survival.core.domain.image.Base64ServerImage;
 import fr.sii.survival.core.exception.MimetypeDetectionException;
+import fr.sii.survival.core.util.ClassLoaderHelper;
 
 public class Base64ServerImageTest {
 	@Test
 	public void relative() throws IOException, MimetypeDetectionException {
 		Base64ServerImage image = new Base64ServerImage("images/Green-Monster-icon.png");
-		String expected = IOUtils.toString(getClass().getResourceAsStream("/base64/Green-Monster-icon.txt"));
+		String expected = IOUtils.toString(ClassLoaderHelper.getResourceAsStream("base64/Green-Monster-icon.txt"));
 		Assert.assertEquals("base64 encoding should give same result", expected, image.getContent());
 		Assert.assertEquals("mimetype should be image/png", "image/png", image.getMimetype());
 	}

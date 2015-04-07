@@ -7,7 +7,7 @@ import java.util.List;
 import fr.sii.survival.core.domain.Game;
 import fr.sii.survival.core.exception.ExtensionInitializationException;
 import fr.sii.survival.core.ext.EnemyExtension;
-import fr.sii.survival.core.ext.registry.ExtensionRegistry;
+import fr.sii.survival.core.ext.registry.EnemyRegistry;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
@@ -21,9 +21,9 @@ import fr.sii.survival.core.service.player.PlayerService;
  */
 public class RandomProvider extends AbstractProvider {
 
-	private ExtensionRegistry registry;
+	private EnemyRegistry registry;
 
-	public RandomProvider(ActionService actionService, BoardService boardService, PlayerService playerService, ExtensionService extensionService, ExtensionRegistry registry) {
+	public RandomProvider(ActionService actionService, BoardService boardService, PlayerService playerService, ExtensionService extensionService, EnemyRegistry registry) {
 		super(actionService, boardService, playerService, extensionService);
 		this.registry = registry;
 	}

@@ -64,7 +64,7 @@ public class DelegateEnemyBehavior {
 	private TargetBehavior getTargetBehavior() {
 		if(targetBehavior==null) {
 			LOG.warn("{}: target behavior is null so no action will be executed", enemy);
-			return (c) -> new ArrayList<>();
+			return c -> new ArrayList<>();
 		} else {
 			return targetBehavior;
 		}
@@ -81,7 +81,7 @@ public class DelegateEnemyBehavior {
 	private EnemyMoveBehavior getMoveBehavior() {
 		if(moveBehavior==null) {
 			LOG.warn("{}: move behavior is null so your enemy will never move", enemy);
-			return (c) -> c.getBoard().getCell(enemy);
+			return c -> c.getBoard().getCell(enemy);
 		} else {
 			return moveBehavior;
 		}

@@ -11,6 +11,7 @@ import java.util.function.Predicate;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
 import org.reflections.util.ClasspathHelper;
+import org.reflections.util.ConfigurationBuilder;
 
 public class ScanUtil {
 	private ScanUtil() {
@@ -33,7 +34,7 @@ public class ScanUtil {
 	 *            The type of the result after transform
 	 */
 	public static <R> List<R> scan(String folder, Comparator<String> comparator, Predicate<String> predicate, Function<String, R> transform) {
-		Reflections reflections = new Reflections(ClasspathHelper.forResource(folder), new ResourcesScanner());
+		Reflections reflections = new Reflections(getBuilder(folder));
 		List<String> files = new ArrayList<>(reflections.getResources(f -> true));
 		Collections.sort(files, comparator);
 		List<R> results = new ArrayList<>(files.size());
@@ -124,7 +125,13 @@ public class ScanUtil {
 	public static <R> List<R> scan(String folder, Function<String, R> transform) {
 		return scan(folder, false, transform);
 	}
-
+	
+	private static ConfigurationBuilder getBuilder(String resource) {
+		ConfigurationBuilder builder = ClassLoaderHelper.getReflectionsBuilder();
+		builder.addUrls(ClasspathHelper.forResource(resource));
+		builder.setScanners(new ResourcesScanner());
+		return builder;
+	}
 
 	private static boolean isChild(String folder, String file) {
 		File folderFile = new File(folder);

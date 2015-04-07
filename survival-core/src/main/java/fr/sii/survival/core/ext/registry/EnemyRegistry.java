@@ -4,7 +4,7 @@ import java.util.List;
 
 import fr.sii.survival.core.ext.EnemyExtension;
 
-public interface ExtensionRegistry {
+public interface EnemyRegistry {
 	/**
 	 * Register an extension
 	 * 
@@ -19,4 +19,9 @@ public interface ExtensionRegistry {
 	 * @return the list of available extensions
 	 */
 	public List<Class<EnemyExtension>> getEnemyExtensions();
+
+	/**
+	 * Reset the registry and empty all registered extensions
+	 */
+	public void reset();
 }

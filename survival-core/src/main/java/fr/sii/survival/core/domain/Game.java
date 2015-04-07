@@ -87,8 +87,8 @@ public class Game {
 	 *         matches
 	 */
 	public Player getPlayer(Predicate<Player> predicate) {
-		List<Player> players = getPlayers(predicate);
-		return players.size()==0 ? null : players.get(0);
+		List<Player> filtered = getPlayers(predicate);
+		return filtered.isEmpty() ? null : filtered.get(0);
 	}
 
 	/**

@@ -42,4 +42,9 @@ public class AutoDiscoveryAnimationRegistry implements AnimationRegistry {
 		return delegate.getProviders();
 	}
 
+	@Override
+	public void reset() {
+		delegate.reset();
+	}
+
 }

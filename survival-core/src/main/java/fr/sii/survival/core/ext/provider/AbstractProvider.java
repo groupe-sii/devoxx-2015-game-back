@@ -37,7 +37,7 @@ public abstract class AbstractProvider implements ExtensionProvider {
 			instance.setPlayerService(playerService);
 			instance.setBoardService(boardService);
 			return instance;
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (Exception e) {
 			throw new ExtensionInitializationException("failed to initialize extension " + type.getName(), extensionService.getDeveloper(type), e);
 		}
 	}

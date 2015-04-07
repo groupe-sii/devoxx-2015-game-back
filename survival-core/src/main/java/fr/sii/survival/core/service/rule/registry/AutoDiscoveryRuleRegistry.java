@@ -53,4 +53,9 @@ import fr.sii.survival.core.util.AutoDiscoveryUtil;
 		return delegate.getRules();
 	}
 
+	@Override
+	public void reset() {
+		delegate.reset();
+	}
+
 }

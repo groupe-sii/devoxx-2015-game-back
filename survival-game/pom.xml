@@ -22,10 +22,10 @@
 	<dependencies>
 		<dependency>
 			<groupId>fr.sii.survival</groupId>
-			<artifactId>survival-extensions</artifactId>
+			<artifactId>survival-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>

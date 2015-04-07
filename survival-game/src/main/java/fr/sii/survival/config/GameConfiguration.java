@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import fr.sii.survival.config.options.EnemyOptions;
 import fr.sii.survival.config.options.GameOptions;
@@ -14,14 +15,17 @@ import fr.sii.survival.core.ext.provider.EveryEnemyProvider;
 import fr.sii.survival.core.ext.provider.ExtensionProvider;
 import fr.sii.survival.core.ext.provider.MaxProvider;
 import fr.sii.survival.core.ext.provider.RandomProvider;
-import fr.sii.survival.core.ext.registry.AutoDiscoveryExtensionRegistry;
-import fr.sii.survival.core.ext.registry.ExtensionRegistry;
-import fr.sii.survival.core.ext.registry.PreFilteredRegistry;
+import fr.sii.survival.core.ext.registry.AutoDiscoveryEnemyRegistry;
+import fr.sii.survival.core.ext.registry.EnemyRegistry;
+import fr.sii.survival.core.ext.registry.HotReloadRegistry;
+import fr.sii.survival.core.ext.registry.PostFilteredRegistry;
+import fr.sii.survival.core.ext.registry.PreFilteredEnemyRegistry;
 import fr.sii.survival.core.ext.registry.SimpleEnemyExtensionRegistry;
 import fr.sii.survival.core.ext.registry.predicate.RegexPredicate;
 import fr.sii.survival.core.ext.registry.predicate.TypePredicate;
 import fr.sii.survival.core.listener.game.GameListenerManager;
 import fr.sii.survival.core.listener.game.SimpleGameListenerManager;
+import fr.sii.survival.core.reload.ReloadWatcher;
 import fr.sii.survival.core.service.action.ActionService;
 import fr.sii.survival.core.service.board.BoardService;
 import fr.sii.survival.core.service.extension.ExtensionService;
@@ -62,6 +66,9 @@ public class GameConfiguration {
 	
 	@Autowired
 	MultiGameHelper gameHelper;
+
+	@Autowired
+	ReloadWatcher reloadWatcher;
 	
 	@Bean
 	public GameService gameService() {
@@ -85,14 +92,10 @@ public class GameConfiguration {
 
 	@Bean
 	public ExtensionProvider extensionProvider() {
-		// basic enemy filter -> if predicate returns true, then enemy is added to the registry
-		Predicate<Class<?>> basicEnemyFilter = new TypePredicate(SpecialEnemy.class).negate();
-		// special enemy filter -> if predicate returns true, then enemy is added to the registry
-		Predicate<Class<?>> specialEnemyFilter = new TypePredicate(SpecialEnemy.class);
 		// provider for basic enemies
-		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, filteredRegistry(basicEnemyFilter));
+		ExtensionProvider basicRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, basicEnemyRegistry());
 		// provider for special enemies
-		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, filteredRegistry(specialEnemyFilter));
+		ExtensionProvider specialRandomProvider = new RandomProvider(actionService, boardService, playerService, extensionService, specialEnemyRegistry());
 		// invoke special enemies every n basic enemies
 		ExtensionProvider everyProvider = new EveryEnemyProvider(enemyOptions.getSpecialEvery(), basicRandomProvider, specialRandomProvider);
 		// limit the maximum number of enemies on the board
@@ -101,13 +104,29 @@ public class GameConfiguration {
 		return new DelayProvider(enemyOptions.getAddDelay(), maxProvider);
 	}
 
-	public ExtensionRegistry filteredRegistry(Predicate<Class<?>> enemyFilter) {
+	@Bean
+	public EnemyRegistry basicEnemyRegistry() {
+		// basic enemy filter -> if predicate returns true, then enemy is added to the registry
+		Predicate<Class<?>> basicEnemyFilter = new TypePredicate(SpecialEnemy.class).negate();
+		return new PostFilteredRegistry(basicEnemyFilter, preFilteredRegistry());
+	}
+	
+	@Bean
+	public EnemyRegistry specialEnemyRegistry() {
+		// special enemy filter -> if predicate returns true, then enemy is added to the registry
+		Predicate<Class<?>> specialEnemyFilter = new TypePredicate(SpecialEnemy.class);
+		return new PostFilteredRegistry(specialEnemyFilter, preFilteredRegistry());
+	}
+	
+	@Bean
+	@DependsOn("classLoaderReloader")
+	public EnemyRegistry preFilteredRegistry() {
 		// transform list of exclusion patterns into a list of RegexPredicate. Then the list of predicates is combined using a Or operator
 		Predicate<Class<?>> excludeFilter = enemyOptions.getExcludes().stream()
 									.<Predicate<Class<?>>>map(exclude -> new RegexPredicate(exclude))
 									.reduce(Predicate::or)
 									.orElse(p -> false);
 		// registry that remove all excluded extensions
-		return new AutoDiscoveryExtensionRegistry(new PreFilteredRegistry(enemyFilter.and(excludeFilter.negate()), new SimpleEnemyExtensionRegistry()), extensionService);
+		return new HotReloadRegistry(reloadWatcher, new AutoDiscoveryEnemyRegistry(new PreFilteredEnemyRegistry(excludeFilter.negate(), new SimpleEnemyExtensionRegistry()), extensionService));
 	}
 }

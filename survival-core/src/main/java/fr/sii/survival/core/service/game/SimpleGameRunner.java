@@ -78,21 +78,43 @@ public class SimpleGameRunner implements GameRunner {
 		}
 	}
 
-	private void addEnemies() throws ExtensionInitializationException, GameException {
-		List<EnemyExtension> enemies = extensionProvider.getEnemies(game);
+	private void addEnemies() {
+		List<EnemyExtension> enemies = getEnemies();
+		List<EnemyExtension> added = new ArrayList<>(enemies.size());
 		for(EnemyExtension enemy : enemies) {
-			enemy.init();
-			gameService.join(game, enemy.getEnemy());
+			try {
+				enemy.init();
+				gameService.join(game, enemy.getEnemy());
+				added.add(enemy);
+			} catch (Exception e) {
+				LOG.error("Failed to add enemy on game {}. Cause: {}", game, e);
+				messageService.addError(new GameException("Failed to add enemy", e));
+			}
 		}
-		extensions.addAll(enemies);
+		extensions.addAll(added);
+	}
+
+	private List<EnemyExtension> getEnemies() {
+		try {
+			return extensionProvider.getEnemies(game);
+		} catch (ExtensionInitializationException e) {
+			LOG.error("Failed to get enemies for game {}. Cause: {}", game, e);
+			messageService.addError(new GameException("Failed to get enemies", e));
+			return new ArrayList<>(0);
+		}
 	}
 
 	private void removeEnemies() throws GameException {
 		for(Iterator<EnemyExtension> it = extensions.iterator() ; it.hasNext() ; ) {
-			EnemyExtension ext = it.next();
-			if(!ext.getEnemy().isAlive()) {
-				gameService.quit(game, ext.getEnemy());
-				it.remove();
+			try {
+				EnemyExtension ext = it.next();
+				if(!ext.getEnemy().isAlive()) {
+					gameService.quit(game, ext.getEnemy());
+					it.remove();
+				}
+			} catch (Exception e) {
+				LOG.error("Failed to remove enemy from game {}. Cause: {}", game, e);
+				messageService.addError(new GameException("Failed to remove enemy", e));
 			}
 		}
 	}
@@ -101,6 +123,7 @@ public class SimpleGameRunner implements GameRunner {
 		try {
 			extension.run(new GameContext(game, game.getBoard(), boardService.getCell(game.getBoard(), extension.getEnemy())));
 		} catch (Exception e) {
+			LOG.error("Failed to get enemies run extension for game {}. Cause: {}", game, e);
 			messageService.addError(new GameException("Failed to run extension", e));
 		}
 	}

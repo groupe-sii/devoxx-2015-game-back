@@ -1,5 +1,6 @@
 package fr.sii.survival.core.domain.player;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +15,10 @@ public class PlayerStates {
 	 * The list of states
 	 */
 	private Set<String> states;
+
+	public PlayerStates(String... states) {
+		this(new HashSet<>(Arrays.asList(states)));
+	}
 
 	public PlayerStates(Set<String> states) {
 		super();
@@ -58,8 +63,6 @@ public class PlayerStates {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append(states);
-		return builder.toString();
+		return states.toString();
 	}
 }

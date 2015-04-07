@@ -27,4 +27,9 @@ public interface RuleRegistry<R extends Rule> {
 	 * @return the list of rules
 	 */
 	public List<R> getRules();
+
+	/**
+	 * Reset the registry and empty all registered rules
+	 */
+	public void reset();
 }

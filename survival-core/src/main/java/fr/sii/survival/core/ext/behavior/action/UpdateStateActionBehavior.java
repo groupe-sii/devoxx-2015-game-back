@@ -9,6 +9,14 @@ import fr.sii.survival.core.domain.player.Enemy;
 import fr.sii.survival.core.exception.ActionException;
 import fr.sii.survival.core.service.action.ActionService;
 
+/**
+ * Behavior that change a state on all players available on the cell. The state
+ * can either be added or removed. See {@link UpdateStates} for more information
+ * about the executed action
+ * 
+ * @author Aurélien Baudet
+ *
+ */
 public class UpdateStateActionBehavior extends SimpleActionBehavior {
 
 	private StateChange change;
