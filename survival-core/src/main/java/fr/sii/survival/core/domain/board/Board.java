@@ -1,5 +1,6 @@
 package fr.sii.survival.core.domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -103,6 +104,25 @@ public class Board {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Get a snapshot of the board with only occupied cells
+	 * 
+	 * @return the list of occupied cells and for each the players that are on
+	 *         it
+	 */
+	public List<CellWithPlayers> getOccupiedCells() {
+		List<CellWithPlayers> occupied = new ArrayList<>();
+		for (int i = 0; i < matrix.getCols(); i++) {
+			for (int j = 0; j < matrix.getRows(); j++) {
+				List<Player> players = matrix.get(i, j);
+				if(!players.isEmpty()) {
+					occupied.add(new CellWithPlayers(new Cell(i, j), players));
+				}
+			}
+		}
+		return occupied;
 	}
 
 	public int getHeight() {
