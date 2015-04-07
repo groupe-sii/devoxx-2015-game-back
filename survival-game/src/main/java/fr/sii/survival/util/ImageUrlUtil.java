@@ -5,6 +5,8 @@ import java.net.URI;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -12,6 +14,8 @@ import fr.sii.survival.config.StaticResourcesConfig;
 import fr.sii.survival.core.util.FileUtil;
 
 public class ImageUrlUtil {
+	private static final Logger LOG = LoggerFactory.getLogger(ImageUrlUtil.class);
+
 	private static URI baseUrl;
 	
 	private ImageUrlUtil() {
@@ -25,6 +29,7 @@ public class ImageUrlUtil {
 	public static synchronized URI getBaseUrl() {
 		if(baseUrl==null) {
 			baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().encode().toUri();
+			LOG.info("Base url={}", baseUrl);
 		}
 		return baseUrl;
 	}
