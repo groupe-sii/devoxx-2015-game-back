@@ -28,6 +28,7 @@ The server for the game can run standalone. You can either run it using the buil
 
 You can download the generated version from our Jenkins: [survival-game.war](http://jenkins.devoxx.sii.fr/view/Devoxx/job/devoxx-game-back/lastSuccessfulBuild/artifact/survival-game/target/survival-game-0.0.1-SNAPSHOT.war).
 
+**NOTE**: Please note that the domain ```jenkins.devoxx.sii.fr```pointes to our local machine where Jenkins is installed, you may not have access to it from outside our local network.
 
 #### Build yourself
 
@@ -99,6 +100,7 @@ To see the game running, you need to download the [web client game](https://gith
 
 If you don't want to create front extensions, you can simply [download the client](http://jenkins.devoxx.sii.fr/job/devoxx-game-front/ws/dist/*zip*/dist.zip). Then you have to configure your HTTP server (Apache for example) to serve the static html page.
 
+**NOTE**: Please note that the domain ```jenkins.devoxx.sii.fr```pointes to our local machine where Jenkins is installed, you may not have access to it from outside our local network.
 
 ### Hot reload
 
