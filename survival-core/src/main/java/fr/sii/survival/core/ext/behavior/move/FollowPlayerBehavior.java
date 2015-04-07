@@ -20,15 +20,23 @@ public class FollowPlayerBehavior implements EnemyMoveBehavior {
 	/** Number of cells the follower will move each time */
 	private int speed;
 
+	/** Distance minimum between the follower and the followed */
+	private int distance;
+
 	private Player follower;
 
 	private Player followed;
 
 	public FollowPlayerBehavior(Player follower, Player followed, int speed) {
+		this(follower, followed, speed, 0);
+	}
+
+	public FollowPlayerBehavior(Player follower, Player followed, int speed, int distance) {
 		super();
 		this.follower = follower;
 		this.followed = followed;
 		this.speed = speed;
+		this.distance = distance;
 	}
 
 	@Override
@@ -54,7 +62,7 @@ public class FollowPlayerBehavior implements EnemyMoveBehavior {
 	 *            where the followed is
 	 * @return the chosen cell where the follower should move to get closer
 	 */
-	protected static Cell computeNextCellMoveOne(Cell from, Cell to) {
+	protected Cell computeNextCellMoveOne(Cell from, Cell to) {
 		if (from == null) {
 			return null;
 		}
@@ -68,11 +76,11 @@ public class FollowPlayerBehavior implements EnemyMoveBehavior {
 		int yDistance = to.getY() - from.getY();
 
 		if (Math.abs(xDistance) >= Math.abs(yDistance)) {
-			if (Math.abs(xDistance) > 0) {
+			if (Math.abs(xDistance) > distance) {
 				// move +1 or -1 cell on x axis
 				result = new Cell(from.getX() + (int) Math.signum(xDistance), from.getY());
 			}
-		} else if (Math.abs(yDistance) > 0) {
+		} else if (Math.abs(yDistance) > distance) {
 			// move +1 or -1 cell on y axis
 			result = new Cell(from.getX(), from.getY() + (int) Math.signum(yDistance));
 		}
