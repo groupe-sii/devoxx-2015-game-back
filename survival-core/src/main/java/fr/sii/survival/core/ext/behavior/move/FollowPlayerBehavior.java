@@ -1,5 +1,8 @@
 package fr.sii.survival.core.ext.behavior.move;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import fr.sii.survival.core.domain.board.Cell;
 import fr.sii.survival.core.domain.player.Player;
 import fr.sii.survival.core.ext.GameContext;
@@ -12,30 +15,40 @@ import fr.sii.survival.core.ext.GameContext;
  *
  */
 public class FollowPlayerBehavior implements EnemyMoveBehavior {
+	private static final Logger LOG = LoggerFactory.getLogger(FollowPlayerBehavior.class);
+
 	/** Number of cells the follower will move each time */
 	private int speed;
+
+	/** Distance minimum between the follower and the followed */
+	private int distance;
+
 	private Player follower;
+
 	private Player followed;
 
-
 	public FollowPlayerBehavior(Player follower, Player followed, int speed) {
+		this(follower, followed, speed, 0);
+	}
+
+	public FollowPlayerBehavior(Player follower, Player followed, int speed, int distance) {
 		super();
 		this.follower = follower;
 		this.followed = followed;
 		this.speed = speed;
+		this.distance = distance;
 	}
 
 	@Override
 	public Cell getNextPosition(GameContext context) {
-		Cell cellFrom = context.getBoard().getCell(follower);
+		LOG.debug("{} following {} at {} speed.", follower, followed, speed);
+		Cell cellFrom = context.getBoard().getCell(getFollower());
 
 		// Might move several times, depending on the speed
-		for (int i = 0; i < speed;	 i++) {
+		for (int i = 0; i < speed; i++) {
 			// The board refers the position of the different players
-			Cell cellTo = context.getBoard().getCell(followed);
-			
+			Cell cellTo = context.getBoard().getCell(getFollowed());
 			cellFrom = computeNextCellMoveOne(cellFrom, cellTo);
-
 		}
 		return cellFrom;
 	}
@@ -43,30 +56,48 @@ public class FollowPlayerBehavior implements EnemyMoveBehavior {
 	/**
 	 * Main algorithm to follow a player.
 	 * 
-	 * @param cellFrom
+	 * @param from
 	 *            where the follower is
-	 * @param cellTo
+	 * @param to
 	 *            where the followed is
 	 * @return the chosen cell where the follower should move to get closer
 	 */
-	protected static Cell computeNextCellMoveOne(Cell cellFrom, Cell cellTo) {
-		int xDistance = cellTo.getX() - cellFrom.getX();
-		int yDistance = cellTo.getY() - cellFrom.getY();
-		
-		if (Math.abs(xDistance) >= Math.abs(yDistance)) {
-			if (Math.abs(xDistance) > 0) {
-				// move +1 or -1 cell on x axis
-				cellFrom = new Cell(cellFrom.getX() + (int) Math.signum(xDistance), cellFrom.getY());
-			}
-		} else if (Math.abs(yDistance) > 0) {
-			// move +1 or -1 cell on y axis
-			cellFrom = new Cell(cellFrom.getX(), cellFrom.getY() + (int) Math.signum(yDistance));
+	protected Cell computeNextCellMoveOne(Cell from, Cell to) {
+		if (from == null) {
+			return null;
 		}
-		return cellFrom;
+		if (to == null) {
+			return from;
+		}
+
+		Cell result = from;
+
+		int xDistance = to.getX() - from.getX();
+		int yDistance = to.getY() - from.getY();
+
+		if (Math.abs(xDistance) >= Math.abs(yDistance)) {
+			if (Math.abs(xDistance) > distance) {
+				// move +1 or -1 cell on x axis
+				result = new Cell(from.getX() + (int) Math.signum(xDistance), from.getY());
+			}
+		} else if (Math.abs(yDistance) > distance) {
+			// move +1 or -1 cell on y axis
+			result = new Cell(from.getX(), from.getY() + (int) Math.signum(yDistance));
+		}
+		LOG.debug("Compute following move between {} and {} : {} ", from, to, result);
+
+		return result;
 	}
 
-	public void setFollowed(Player followed) {
-		this.followed = followed;
+	public int getSpeed() {
+		return speed;
 	}
 
+	public Player getFollower() {
+		return follower;
+	}
+
+	public Player getFollowed() {
+		return followed;
+	}
 }
