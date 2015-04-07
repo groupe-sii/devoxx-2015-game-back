@@ -24,7 +24,6 @@ public class FollowPlayerBehavior implements EnemyMoveBehavior {
 
 	private Player followed;
 
-
 	public FollowPlayerBehavior(Player follower, Player followed, int speed) {
 		super();
 		this.follower = follower;
@@ -38,7 +37,7 @@ public class FollowPlayerBehavior implements EnemyMoveBehavior {
 		Cell cellFrom = context.getBoard().getCell(getFollower());
 
 		// Might move several times, depending on the speed
-		for (int i = 0; i < speed;	 i++) {
+		for (int i = 0; i < speed; i++) {
 			// The board refers the position of the different players
 			Cell cellTo = context.getBoard().getCell(getFollowed());
 			cellFrom = computeNextCellMoveOne(cellFrom, cellTo);
@@ -67,7 +66,7 @@ public class FollowPlayerBehavior implements EnemyMoveBehavior {
 
 		int xDistance = to.getX() - from.getX();
 		int yDistance = to.getY() - from.getY();
-		
+
 		if (Math.abs(xDistance) >= Math.abs(yDistance)) {
 			if (Math.abs(xDistance) > 0) {
 				// move +1 or -1 cell on x axis
