@@ -57,7 +57,7 @@ devoxx-2015/devoxx-2015-game-back> mvn clean install
 
 ## 3. Run the server
 
-The WAR file only provides the logic of the game but not the extensions. You now need to get [sources of extensions](https://github.com/groupe-sii/devoxx-2015-game-back-ext) and [follow these instructions to build them](https://github.com/groupe-sii/devoxx-2015-game-back-ext/blob/master/README.md#get-the-sources).
+The WAR file only provides the logic of the game but not the extensions. You now need to get the sources of extensions and [follow these instructions to build them](https://github.com/groupe-sii/devoxx-2015-game-back-ext/blob/master/README.md#2-grab-the-code).
 
 The WAR can be run either in an existing web server or directly as Java application.
 The recommended way is to run as Java application.
@@ -101,7 +101,7 @@ To see the game running, you need to download the [web client game](https://gith
 
 ## 5. Hot reload
 
-When you create your own extensions by following [this guide](https://github.com/groupe-sii/devoxx-2015-game-back-ext/blob/master/README.md#devoxx-2015-game-back-ext), the server doesn't need to be restarted. It will automatically detect changes and reload your extensions.
+When you create your own extensions by following [this guide](https://github.com/groupe-sii/devoxx-2015-game-back-ext/blob/master/README.md#3-start-coding-extensions), the server doesn't need to be restarted. It will automatically detect changes and reload your extensions.
 
 
 ## 6. What's inside ? 
