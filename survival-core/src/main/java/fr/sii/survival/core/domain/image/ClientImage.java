@@ -11,7 +11,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author Aurélien Baudet
  *
  */
-public class ClientImage implements Image {
+public class ClientImage implements ClientHostedImage {
 	private static long counter = 0;
 	
 	/**
