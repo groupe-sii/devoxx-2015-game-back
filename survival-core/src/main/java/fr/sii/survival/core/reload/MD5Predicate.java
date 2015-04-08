@@ -71,7 +71,10 @@ public class MD5Predicate implements Predicate<Object> {
 		private Map<String, String> map;
 
 		public FolderHash(URL url) throws URISyntaxException, IOException {
-			map = generate(url);
+			// if the folder doesn't exist, then do not try to regenerate the MD5
+			if(new File(url.toURI()).exists()) {
+				map = generate(url);
+			}
 		}
 
 		@Override
@@ -114,8 +117,15 @@ public class MD5Predicate implements Predicate<Object> {
 	private static class UrlHash implements Hash {
 		private String hash;
 
-		public UrlHash(URL url) throws IOException {
-			hash = generate(url);
+		public UrlHash(URL url) throws IOException, URISyntaxException {
+			if(url.toURI().getScheme().equals("file")) {
+				// Do not try to generate MD5 if file doesn't exist
+				if(new File(url.toURI()).exists()) {
+					hash = generate(url);
+				}
+			} else {
+				hash = generate(url);
+			}
 		}
 
 		@Override
