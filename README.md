@@ -1,3 +1,8 @@
+# WARNING: UNMAINTAINED PROJECT
+
+This project is no longer supported or maintained. Please consider reviewing code and dependencies before using it.
+
+
 # devoxx-2015-game-back
 
 Game development for devoxx 2015. This is the main repository for the whole server code. Typically, you would want to grap the code and launch the server. To add an extension, you **should not** modify anything but the [ext  submodule](https://github.com/groupe-sii/devoxx-2015-game-back-ext).
